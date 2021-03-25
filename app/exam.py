@@ -13,3 +13,9 @@ bp = Blueprint('exam', __name__, url_prefix='/exam')
 def init_exam():
     print(request.json)
     return json.dumps({"number": "1", "audio": "/PATH/TO/AUDIO/IN/STATIC/DIRECTORY"})
+
+def text_to_speech(question_type):
+    pass
+
+def long_answer_question_xml(question_list):
+    return xml_list
