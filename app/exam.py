@@ -1,6 +1,6 @@
 import simplejson as json
 import app.schema as sc
-from xml.dom import minidom
+import xml.etree.ElementTree as ET
 from azure.cognitiveservices.speech import AudioDataStream, SpeechConfig, SpeechSynthesizer, SpeechSynthesisOutputFormat
 from azure.cognitiveservices.speech.audio import AudioOutputConfig
 from flask import (
@@ -42,11 +42,21 @@ def question_parser(questions_json):
     return es_questions,ma_questions
 
 def es_question_xml():
+
+    speak = ET.Element('speak')
+    voice = ET.SubElement(speak, 'voice')
+    speak.set('version','1.0')
+    speak.set('xmlns','https://www.w3.org/2001/10/synthesis')
+    speak.set('xml:lang','en-US')
+    voice.set('name',"en-GB-George-Apollo")
+    voice.text = 'When you\'re on the motorway, it\'s a good idea to use a sat-nav.'
+    question_string = ET.tostring(speak,encoding='unicode', method='xml')
+    print(type(question_string))
     speech_config = SpeechConfig(endpoint="https://westeurope.api.cognitive.microsoft.com/sts/v1.0/issuetoken")
     speech_config.authorization_token="2a32fa5f2c504b34bd6ba61d496fed6f"
     synthesizer = SpeechSynthesizer(speech_config=speech_config, audio_config=None)
-    ssml_string = "<speak version=\"1.0\" xmlns=\"https://www.w3.org/2001/10/synthesis\" xml:lang=\"en-US\"> <voice name=\"en-GB-George-Apollo\"> When you're on the motorway, it's a good idea to use a sat-nav.</voice> </speak>"
-    result = synthesizer.speak_ssml_async(ssml_string).get()
+    
+    result = synthesizer.speak_ssml_async(question_string).get()
     
     stream = AudioDataStream(result)
     stream.save_to_wav_file("./app/static/audio/test.wav")
