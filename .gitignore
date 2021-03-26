@@ -16,3 +16,5 @@ build/
 .idea/
 
 .DS_Store
+
+app/static/audio/*

@@ -13,7 +13,6 @@ def create_app():
         os.makedirs(app.instance_path)
     except OSError:
         print("ERR: instance path does not exist \n {}".format(OSError))
-    print(app.config)
 
     @app.route('/', methods=['GET'])
     def hello():
