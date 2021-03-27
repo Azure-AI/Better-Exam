@@ -1,6 +1,7 @@
 import simplejson as json
 import app.schema as sc
 import os
+import time
 from werkzeug.utils import secure_filename
 import xml.etree.ElementTree as ET
 from azure.cognitiveservices.speech import AudioDataStream, SpeechConfig, SpeechSynthesizer, SpeechSynthesisOutputFormat
@@ -75,17 +76,62 @@ def answer():
     f.save(os.path.join(current_app.config['UPLOAD_FOLDER'], secure_filename(f.filename)))
     speech_config = speechsdk.SpeechConfig(subscription="2a32fa5f2c504b34bd6ba61d496fed6f", region="westeurope")
     speech_config.speech_recognition_language = "en-US"
-    audio_input = speechsdk.AudioConfig(filename="app/uploads/test1.wav")
+    speech_config.enable_dictation()
+    audio_input = speechsdk.AudioConfig(filename="app/uploads/test2.wav")
     speech_recognizer = speechsdk.SpeechRecognizer(speech_config=speech_config, audio_config=audio_input)
-    result = speech_recognizer.recognize_once_async().get()
-    print(result.text)
-    if result.reason == speechsdk.ResultReason.RecognizedSpeech:
-        print("Recognized: {}".format(result.text))
-    elif result.reason == speechsdk.ResultReason.NoMatch:
-        print("No speech could be recognized: {}".format(result.no_match_details))
-    elif result.reason == speechsdk.ResultReason.Canceled:
-        cancellation_details = result.cancellation_details
-        print("Speech Recognition canceled: {}".format(cancellation_details.reason))
-        if cancellation_details.reason == speechsdk.CancellationReason.Error:
-            print("Error details: {}".format(cancellation_details.error_details))
-    return result.text
+    # result = speech_recognizer.recognize_once_async().get()
+    result = speech_recognize_continuous_from_file(speech_recognizer)
+    print(result[0])
+    # print(result.text)
+    # if result.reason == speechsdk.ResultReason.RecognizedSpeech:
+    #     print("Recognized: {}".format(result.text))
+    # elif result.reason == speechsdk.ResultReason.NoMatch:
+    #     print("No speech could be recognized: {}".format(result.no_match_details))
+    # elif result.reason == speechsdk.ResultReason.Canceled:
+    #     cancellation_details = result.cancellation_details
+    #     print("Speech Recognition canceled: {}".format(cancellation_details.reason))
+    #     if cancellation_details.reason == speechsdk.CancellationReason.Error:
+    #         print("Error details: {}".format(cancellation_details.error_details))
+    # return result.text
+    return result[0]
+
+
+def speech_recognize_continuous_from_file(speech_recognizer):
+    """performs continuous speech recognition with input from an audio file"""
+    # <SpeechContinuousRecognitionWithFile>
+
+    done = False
+
+    def stop_cb(evt):
+        """callback that signals to stop continuous recognition upon receiving an event `evt`"""
+        print('CLOSING on {}'.format(evt))
+        nonlocal done
+        done = True
+
+    # Gets the output text
+    all_results = []
+    def handle_final_result(evt):
+        all_results.append(evt.result.text)
+
+    speech_recognizer.recognized.connect(handle_final_result)
+
+    
+    # Connect callbacks to the events fired by the speech recognizer
+    speech_recognizer.recognizing.connect(lambda evt: print('RECOGNIZING: {}'.format(evt)))
+    speech_recognizer.recognized.connect(lambda evt: print('RECOGNIZED: {}'.format(evt)))
+    speech_recognizer.session_started.connect(lambda evt: print('SESSION STARTED: {}'.format(evt)))
+    speech_recognizer.session_stopped.connect(lambda evt: print('SESSION STOPPED {}'.format(evt)))
+    speech_recognizer.canceled.connect(lambda evt: print('CANCELED {}'.format(evt)))
+    # stop continuous recognition on either session stopped or canceled events
+    speech_recognizer.session_stopped.connect(stop_cb)
+    speech_recognizer.canceled.connect(stop_cb)
+
+    # Start continuous speech recognition
+    speech_recognizer.start_continuous_recognition()
+    while not done:
+        time.sleep(.5)
+
+    speech_recognizer.stop_continuous_recognition()
+    return all_results
+    # </SpeechContinuousRecognitionWithFile>
+    
