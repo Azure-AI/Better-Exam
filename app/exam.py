@@ -2,6 +2,7 @@ import time
 import simplejson as json
 import app.schema as sc
 import os
+import time
 from werkzeug.utils import secure_filename
 import xml.etree.ElementTree as ET
 from azure.cognitiveservices.speech import AudioDataStream, SpeechConfig, SpeechSynthesizer, SpeechSynthesisOutputFormat
@@ -84,7 +85,6 @@ def speech_recognize_continuous_from_file(filename):
     # <SpeechContinuousRecognitionWithFile>
     speech_config = speechsdk.SpeechConfig(subscription="2a32fa5f2c504b34bd6ba61d496fed6f", region="westeurope")
     audio_config = speechsdk.audio.AudioConfig(filename=filename)
-
     speech_recognizer = speechsdk.SpeechRecognizer(speech_config=speech_config, audio_config=audio_config)
 
     done = False
@@ -102,6 +102,7 @@ def speech_recognize_continuous_from_file(filename):
         all_results += evt.result.text
 
     speech_recognizer.recognized.connect(handle_final_result)
+
     # Connect callbacks to the events fired by the speech recognizer
     speech_recognizer.recognizing.connect(lambda evt: print('RECOGNIZING: {}'.format(evt)))
     speech_recognizer.recognized.connect(lambda evt: print('RECOGNIZED: {}'.format(evt)))
@@ -120,3 +121,4 @@ def speech_recognize_continuous_from_file(filename):
     speech_recognizer.stop_continuous_recognition()
     return all_results
     # </SpeechContinuousRecognitionWithFile>
+
