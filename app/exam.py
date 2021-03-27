@@ -1,10 +1,12 @@
 import simplejson as json
 import app.schema as sc
+import os
+from werkzeug.utils import secure_filename
 import xml.etree.ElementTree as ET
 from azure.cognitiveservices.speech import AudioDataStream, SpeechConfig, SpeechSynthesizer, SpeechSynthesisOutputFormat
 from azure.cognitiveservices.speech.audio import AudioOutputConfig
 from flask import (
-    Blueprint, flash, g, redirect, render_template, request, session, url_for
+    Blueprint, flash, g, redirect, render_template, request, session, url_for, current_app
 )
 from flask_expects_json import expects_json
 
@@ -68,4 +70,7 @@ def es_question_xml():
 
 @bp.route('answer', methods=["POST"])
 def answer():
-    pass
+    f = request.files['file']
+    f.save(os.path.join(current_app.config['UPLOAD_FOLDER'], secure_filename(f.filename)))
+
+    return ""
