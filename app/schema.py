@@ -57,3 +57,18 @@ EXAM_SCHEMA = {
     },
     "required": ["exam"]
 }
+
+ANSWER_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "number": {
+            "description": "Question Number",
+            "type": "string",
+        },
+        "type": {
+            "description": "Question Type --> ES:essay, MC:multiple choice",
+            "type": "string"
+        }
+    },
+    "required": ["number", "type"]
+}

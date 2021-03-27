@@ -5,6 +5,7 @@ from werkzeug.utils import secure_filename
 import xml.etree.ElementTree as ET
 from azure.cognitiveservices.speech import AudioDataStream, SpeechConfig, SpeechSynthesizer, SpeechSynthesisOutputFormat
 from azure.cognitiveservices.speech.audio import AudioOutputConfig
+import azure.cognitiveservices.speech as speechsdk
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, session, url_for, current_app
 )
@@ -72,5 +73,19 @@ def es_question_xml():
 def answer():
     f = request.files['file']
     f.save(os.path.join(current_app.config['UPLOAD_FOLDER'], secure_filename(f.filename)))
-
-    return ""
+    speech_config = speechsdk.SpeechConfig(subscription="2a32fa5f2c504b34bd6ba61d496fed6f", region="westeurope")
+    speech_config.speech_recognition_language = "en-US"
+    audio_input = speechsdk.AudioConfig(filename="app/uploads/test1.wav")
+    speech_recognizer = speechsdk.SpeechRecognizer(speech_config=speech_config, audio_config=audio_input)
+    result = speech_recognizer.recognize_once_async().get()
+    print(result.text)
+    if result.reason == speechsdk.ResultReason.RecognizedSpeech:
+        print("Recognized: {}".format(result.text))
+    elif result.reason == speechsdk.ResultReason.NoMatch:
+        print("No speech could be recognized: {}".format(result.no_match_details))
+    elif result.reason == speechsdk.ResultReason.Canceled:
+        cancellation_details = result.cancellation_details
+        print("Speech Recognition canceled: {}".format(cancellation_details.reason))
+        if cancellation_details.reason == speechsdk.CancellationReason.Error:
+            print("Error details: {}".format(cancellation_details.error_details))
+    return result.text
