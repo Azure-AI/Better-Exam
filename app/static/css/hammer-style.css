@@ -1,0 +1,69 @@
+body {
+  margin: 0;
+}
+
+.yeller {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1337;
+  font-family: "Andale Mono";
+  font-size: 4em;
+  pointer-events: none;
+}
+
+.canvas {
+  position: relative;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+.block {
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+}
+
+.yellow {
+  background: #FFF380;
+}
+
+.green {
+  background: green;
+  left: 100vw;
+}
+
+.red {
+  background: red;
+  left: 200vw;
+}
+
+.blue {
+  background: blue;
+  top: 100vh;
+}
+
+.pink {
+  background: pink;
+  top: 100vh;
+  left: 100vw;
+}
+
+.orange {
+  background: orange;
+  top: 100vh;
+  left: 200vw;
+}
+
+.brown {
+  background: brown;
+  top: 200vh;
+}
+
+.lime {
+  background: lime;
+  top: 200vh;
+  left: 100vw;
+}
