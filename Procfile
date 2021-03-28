@@ -1,0 +1,1 @@
+web: python app.front_app
