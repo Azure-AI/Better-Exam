@@ -1,1 +1,1 @@
-web: python app.front_app
+web: cd app; python front_app.py
