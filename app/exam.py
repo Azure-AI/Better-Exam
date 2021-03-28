@@ -3,8 +3,11 @@ import simplejson as json
 import app.schema as sc
 import os
 import time
-import shutil
-import threading
+from reportlab.platypus import SimpleDocTemplate
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.platypus import Paragraph, Spacer, Table, Image
+from reportlab.platypus import SimpleDocTemplate
+
 from werkzeug.utils import secure_filename
 import xml.etree.ElementTree as ET
 from azure.cognitiveservices.speech import AudioDataStream, SpeechConfig, SpeechSynthesizer, SpeechSynthesisOutputFormat
@@ -155,10 +158,19 @@ def question():
 @bp.route('terminate', methods=["GET"])
 def terminate():
     token = request.headers["token-id"]
+    f = open('app/static/users/'+token+'/'+'exam_json.json')
+    exam_json = json.load(f)
+    json_to_pdf(exam_json, token)
+    return current_app.send_static_file('./users/' + token + '/' + 'report.pdf')
 
-    return "terminated"
 
+def json_to_pdf(exam_json, token):
+    report = SimpleDocTemplate("app/static/users/"+token+"/"+"report.pdf")
+    styles = getSampleStyleSheet()
+    doc_paragraphs = []
+    for question in exam_json["exam"]["questions"]:
+        doc_paragraphs.append(Paragraph(question["number"]+". "+question["text"], styles["Normal"]))
+    report.build(doc_paragraphs)
+    return ""
 
-def json_to_pdf(exam_json):
-    pass
 
