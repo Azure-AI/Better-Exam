@@ -3,6 +3,8 @@ import simplejson as json
 import app.schema as sc
 import os
 import time
+import shutil
+import threading
 from werkzeug.utils import secure_filename
 import xml.etree.ElementTree as ET
 from azure.cognitiveservices.speech import AudioDataStream, SpeechConfig, SpeechSynthesizer, SpeechSynthesisOutputFormat
@@ -16,11 +18,20 @@ from flask_expects_json import expects_json
 bp = Blueprint('exam', __name__, url_prefix='/exam')
 
 
+# Initializing exam:
+# 1. Get the JSON from client or Processed results of Form Recognizer (schema is available in app/schema.py)
+# 2. Create folder for user with the value in the token-id header
+# 3. Save request.json (json of the exam) in the folder as exam_json.json
+# 4. Categorize question into: Essay(ES), Multiple Choice(MC)
+# 5. Get audio for all questions and save it in app/static/users/<TOKEN>/audio
+# 6. Name audio files based on question number in the exam
 @bp.route('init', methods=["POST"])
 @expects_json(sc.EXAM_SCHEMA)
 def init_exam():
-    # print(request.json)
-    es_question_xml()
+    os.makedirs("app/static/users/"+request.headers["token-id"])
+    with open('app/static/users/'+request.headers["token-id"]+'/'+'exam_json.json', 'w') as f:
+        json.dump(request.json, f)
+    #es_question_xml()
     return json.dumps({"number": "1", "audio": "/PATH/TO/AUDIO/IN/STATIC/DIRECTORY"})
 
 
@@ -70,12 +81,19 @@ def es_question_xml():
     stream.save_to_wav_file("./app/static/audio/test.wav")
 
 
+# Process answer of a question:
+# 1. Get the audio file and save it in app/uploads
+# 2. Call speech_recognize_continuous_from_file() for Speech to Text
+# 3. Remove the audio file from uploads folder
+# 4. Save answer in the JSON dedicated to this user
+#todo get answer audio and question number from client and add the answer to the exam json
 @bp.route('answer', methods=["POST"])
 def answer():
     f = request.files['file']
     f.save(os.path.join(current_app.config['UPLOAD_FOLDER'], secure_filename(f.filename)))
     time.sleep(0.5)
-    answer_text = speech_recognize_continuous_from_file(os.path.join(current_app.config['UPLOAD_FOLDER'], secure_filename(f.filename)))
+    answer_text = speech_recognize_continuous_from_file(
+        os.path.join(current_app.config['UPLOAD_FOLDER'], secure_filename(f.filename)))
     os.remove(os.path.join(current_app.config['UPLOAD_FOLDER'], secure_filename(f.filename)))
     return answer_text
 
@@ -121,4 +139,26 @@ def speech_recognize_continuous_from_file(filename):
     speech_recognizer.stop_continuous_recognition()
     return all_results
     # </SpeechContinuousRecognitionWithFile>
+
+
+# Get audio file for a specific question (User's state like current question is handled on client side):
+# 1. Receive question number as parameter in the url --> qnumber
+# 2. Return the corresponding audio file from app/static/audio
+@bp.route('question', methods=["GET"])
+def question():
+    args = request.args
+    try:
+        return current_app.send_static_file('./users/' + request.headers["token-id"] + '/audio/' + args["qnumber"] + '.wav')
+    except Exception as e:
+        return "file not found", 404
+
+@bp.route('terminate', methods=["GET"])
+def terminate():
+    token = request.headers["token-id"]
+
+    return "terminated"
+
+
+def json_to_pdf(exam_json):
+    pass
 
