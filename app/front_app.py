@@ -21,8 +21,3 @@ app.jinja_env.globals.update(send_post=send_post, names =test)
 @app.route('/')
 def root():
     return render_template('test.html')
-
-
-@app.route('/hammer')
-def hammer():
-    return render_template('hi.html')
