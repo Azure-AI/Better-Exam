@@ -155,6 +155,8 @@ def question():
     except Exception as e:
         return "file not found", 404
 
+# Terminate the exam and generate the pdf
+# return the pdf
 @bp.route('terminate', methods=["GET"])
 def terminate():
     token = request.headers["token-id"]
