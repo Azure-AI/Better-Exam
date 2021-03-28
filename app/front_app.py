@@ -9,17 +9,23 @@ def send_post():
     print(r.text)
     return json.loads(r.text)['result']['ip']
 
-names = ['Ali', 'Faezeh', 'an', 'goh']
+
+def test():
+    names = ['Ali', 'Faezeh', 'Arman', 'Afshin']
+    return names
+
+
 app = Flask(__name__)
-app.jinja_env.globals.update(send_post=send_post, names =names)
+app.jinja_env.globals.update(send_post=send_post, names =test)
 
 @app.route('/')
 def root():
-    return render_template('index.html')
+    return render_template('test.html')
+
 
 @app.route('/hammer')
 def hammer():
-    return render_template('hi.html')
+    return render_template('test.html')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')

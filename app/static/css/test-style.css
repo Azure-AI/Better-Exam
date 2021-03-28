@@ -1,0 +1,64 @@
+*{
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+ }
+ body{
+    font-family: "Open sans";
+    height: 100vh;
+ }
+ .gal-tabs{
+    text-align: center;
+    font-size: 22px;
+ }
+ .gal-tabs a{
+    margin: 0 12px;
+ }
+ .gal-list{
+    padding: 0;
+ }
+ .gal-list li{
+    display: inline-block;
+    vertical-align: top;
+ }
+ .gal-tabs a.prv{
+    float: left;
+ }
+ .gal-tabs a.nxt{
+    float: right;
+ }
+ .gallery-boxes{
+    position: relative;
+    margin: 15px auto;
+ }
+ .gallery-boxes .gal-descrip{
+    background: #383636;
+    overflow: hidden;
+    padding: 10px;
+    color: #fff;
+    font-size: 20px;
+    margin-top: -5px;
+ }
+ .gallery-boxes .gal-box{
+    display: none;
+ }
+ .gallery-boxes .gal-box.galcurr{
+    display: block;
+ }
+
+ 
+ /* #myElement {
+   background: silver;
+   height: 300px;
+   text-align: center;
+   font: 30px/300px Helvetica, Arial, sans-serif;
+ } */
+
+ .blue {
+   background: #b31515;
+    overflow: hidden;
+    padding: 10px;
+    color: rgb(38, 52, 235);
+    font-size: 20px;
+    margin-top: -5px;
+ }
