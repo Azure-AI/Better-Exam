@@ -20,6 +20,3 @@ def root():
 @app.route('/hammer')
 def hammer():
     return render_template('hi.html')
-
-if __name__ == '__main__':
-    app.run(host='0.0.0.0')
