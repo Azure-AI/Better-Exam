@@ -221,11 +221,55 @@ def json_to_pdf(exam_json, token):
 
 # FRONT
 
+
+
+def questions():
+
+    # some JSON:
+    
+
+    x = {
+        "exam":{
+            "questions":[
+            {
+                "number":"1",
+                "type":"MC",
+                "text":"What is 2+2",
+                "choices":[
+                {
+                    "letter":"A",
+                    "text":"1"
+                },
+                {
+                    "letter":"B",
+                    "text":"4"
+                }
+                ],
+                "answer":None
+            },
+            {
+                "number":"2",
+                "type":"ES",
+                "text":"What is Cloud Computing?",
+                "answer":None
+            }
+            ]
+        }
+        }
+
+    # parse x:
+    y = (x["exam"]["questions"])
+    print(y)
+    return y
+
+
 def names():
     names = ['Ali', 'Faezeh', 'Arman', 'Afshin']
     return names
 
 
 jinja_globals = {
-    'names': names
+    'names': names,
+    'questions': questions
+
 }
