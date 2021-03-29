@@ -44,8 +44,9 @@ def init_exam():
 # Parses the questions. Creates an audio file for each of them
 def text_to_speech(questions_json,token):
     es_list,mc_list = question_parser(questions_json)
-    print(es_list)
+    print(mc_list)
     es_question_audio_creation(es_list,token)
+    mc_question_audio_creation(mc_list,token)
     
 
 
@@ -57,41 +58,28 @@ def es_question_audio_creation(long_questions,token):
 # Gets the multiple choice questions in the form of a dict. Creates an audio file for each of them
 def mc_question_audio_creation(multiple_choice_questions,token):
     for question in multiple_choice_questions:
-        es_question_xml(question,token)
+        mc_question_xml(question,token)
 
 
 # Gets the whole questions' JSON as input. Seperates the questions based on their type into dicts
 def question_parser(questions_json):
     questions = questions_json['exam']['questions']
     es_questions = []
-    ma_questions = []
+    mc_questions = []
     for question in questions:
         if question['type'] == 'ES':
             es_questions.append(question)
-        elif question['type'] == 'MA':
-            ma_questions.append(question)
-    return es_questions, ma_questions
+        elif question['type'] == 'MC':
+            mc_questions.append(question)
+    return es_questions, mc_questions
 
 
 def es_question_xml(question,user_token_id):
-    # speak = ET.Element('speak')
-    # voice = ET.SubElement(speak, 'voice')
-    # breakTag = ET.SubElement(voice, 'break')
-    # speak.set('version', '1.0')
-    # speak.set('xmlns', 'https://www.w3.org/2001/10/synthesis')
-    # speak.set('xml:lang', 'en-US')
-    # voice.set('name', "en-US-AriaNeural")
-    # breakTag.set('time','200ms')
-    # # voice.text = 'What is 2+2?'
-    # voice.text = "Essay question 2: " + question["text"]
-    # question_string = ET.tostring(speak, encoding='unicode', method='xml')
-    # print("XML Created")
-
     # Themp solution - might change
     ssml_string_speak = "<speak version=\"1.0\" xmlns=\"https://www.w3.org/2001/10/synthesis\" xml:lang=\"en-US\">"
     ssml_string_voice = "<voice name=\"en-US-AriaNeural\">"
     ssml_string_break = "<break time=\"500ms\"/>"
-    ssml_string_question_info = "Essay question 2: " 
+    ssml_string_question_info = "Question" + question["number"] 
     ssml_string_question_text =  question["text"]
     ssml_string_voice_end = "</voice>"
     ssml_string_speak_end = "</speak>"
@@ -100,44 +88,41 @@ def es_question_xml(question,user_token_id):
     
 
     print(ssml_message)
-
-
-
-    # speech_config = SpeechConfig(endpoint="https://westeurope.api.cognitive.microsoft.com/sts/v1.0/issuetoken")
-    # speech_config.authorization_token = "e78f9b5578f046a4bb1355956f6ac380"
     speech_config = SpeechConfig(subscription="2a32fa5f2c504b34bd6ba61d496fed6f",region="westeurope")
-    # audio_config = AudioOutputConfig(use_default_speaker=True)
     synthesizer = SpeechSynthesizer(speech_config=speech_config, audio_config=None)
-    # print("XML is: "+question_string)
     result = synthesizer.speak_ssml_async(ssml_message).get()
-    # print(result)
-    # cancelation_detail = CancellationDetails._from_result(result)
-    # print(result.cancellation_details) 
     stream = AudioDataStream(result)
-    # stream.save_to_wav_file("./app/static/users/"+user_token_id+"/audio/test.wav")
     stream.save_to_wav_file_async("./app/static/users/"+user_token_id+"/audio/"+question["type"]+question["number"]+".wav")
     print("File saved")
 
 
 def mc_question_xml(question,user_token_id):
-    speak = ET.Element('speak')
-    voice = ET.SubElement(speak, 'voice')
-    speak.set('version', '1.0')
-    speak.set('xmlns', 'https://www.w3.org/2001/10/synthesis')
-    speak.set('xml:lang', 'en-US')
-    voice.set('name', "en-GB-George-Apollo")
-    # voice.text = 'What is 2+2?'
-    voice.text = "Essay question 2: "+question["text"]
-    question_string = ET.tostring(speak, encoding='unicode', method='xml')
-    print("XML Created")
+
     speech_config = SpeechConfig(subscription="2a32fa5f2c504b34bd6ba61d496fed6f",region="westeurope")
-    # audio_config = AudioOutputConfig(use_default_speaker=True)
     synthesizer = SpeechSynthesizer(speech_config=speech_config, audio_config=None)
-    print("XML is: "+question_string)
-    result = synthesizer.speak_ssml_async(question_string).get()
+
+    # Themp solution - might change
+    ssml_string_speak = "<speak version=\"1.0\" xmlns=\"https://www.w3.org/2001/10/synthesis\" xml:lang=\"en-US\">"
+    ssml_string_voice = "<voice name=\"en-US-AriaNeural\">"
+    ssml_string_break = "<break time=\"500ms\"/>"
+    ssml_string_question_info = "Question" + question["number"] 
+    ssml_string_question_text =  question["text"]
+    choices = question["choices"]
+    ssml_string_choices = ''
+    for choice in choices:
+       ssml_string_choices+= "choice" + choice["letter"] + "<break time=\"300ms\"/>" + choice["text"] + "<break time=\"300ms\"/>"
+    ssml_string_voice_end = "</voice>"
+    ssml_string_speak_end = "</speak>"
+    ssml_message = ssml_string_speak + ssml_string_voice + ssml_string_question_info + ssml_string_break + \
+            ssml_string_question_text +ssml_string_break + ssml_string_choices +ssml_string_voice_end + ssml_string_speak_end
+    
+
+    print(ssml_message)
+
+
+    result = synthesizer.speak_ssml_async(ssml_message).get()
 
     stream = AudioDataStream(result)
-    # stream.save_to_wav_file("./app/static/users/"+user_token_id+"/audio/test.wav")
     stream.save_to_wav_file("./app/static/users/"+user_token_id+"/audio/"+question["type"]+question["number"]+".wav")
     print("File saved")
 
