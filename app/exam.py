@@ -78,13 +78,15 @@ def es_question_xml(question,user_token_id):
     # Themp solution - might change
     ssml_string_speak = "<speak version=\"1.0\" xmlns=\"https://www.w3.org/2001/10/synthesis\" xml:lang=\"en-US\">"
     ssml_string_voice = "<voice name=\"en-US-AriaNeural\">"
+    ssml_string_prosody = "<prosody rate=\"0.85\">"
     ssml_string_break = "<break time=\"500ms\"/>"
     ssml_string_question_info = "Question" + question["number"] 
     ssml_string_question_text =  question["text"]
+    ssml_string_prosody_end = "</prosody>"
     ssml_string_voice_end = "</voice>"
     ssml_string_speak_end = "</speak>"
-    ssml_message = ssml_string_speak + ssml_string_voice + ssml_string_question_info + ssml_string_break + \
-            ssml_string_question_text + ssml_string_voice_end + ssml_string_speak_end
+    ssml_message = ssml_string_speak + ssml_string_voice +ssml_string_prosody+ ssml_string_question_info + ssml_string_break + \
+            ssml_string_question_text+ssml_string_prosody_end + ssml_string_voice_end + ssml_string_speak_end
     
 
     print(ssml_message)
@@ -104,6 +106,7 @@ def mc_question_xml(question,user_token_id):
     # Themp solution - might change
     ssml_string_speak = "<speak version=\"1.0\" xmlns=\"https://www.w3.org/2001/10/synthesis\" xml:lang=\"en-US\">"
     ssml_string_voice = "<voice name=\"en-US-AriaNeural\">"
+    ssml_string_prosody = "<prosody rate=\"0.85\">"
     ssml_string_break = "<break time=\"500ms\"/>"
     ssml_string_question_info = "Question" + question["number"] 
     ssml_string_question_text =  question["text"]
@@ -111,10 +114,12 @@ def mc_question_xml(question,user_token_id):
     ssml_string_choices = ''
     for choice in choices:
        ssml_string_choices+= "choice" + choice["letter"] + "<break time=\"300ms\"/>" + choice["text"] + "<break time=\"300ms\"/>"
+    ssml_string_prosody_end = "</prosody>"
     ssml_string_voice_end = "</voice>"
     ssml_string_speak_end = "</speak>"
-    ssml_message = ssml_string_speak + ssml_string_voice + ssml_string_question_info + ssml_string_break + \
-            ssml_string_question_text +ssml_string_break + ssml_string_choices +ssml_string_voice_end + ssml_string_speak_end
+    
+    ssml_message = ssml_string_speak + ssml_string_voice + ssml_string_prosody + ssml_string_question_info + ssml_string_break + \
+            ssml_string_question_text +ssml_string_break + ssml_string_choices+ ssml_string_prosody_end +ssml_string_voice_end + ssml_string_speak_end
     
 
     print(ssml_message)
