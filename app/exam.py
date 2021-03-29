@@ -255,7 +255,7 @@ def questions():
             }
             ]
         }
-        }
+    }
 
     # parse x:
     y = (x["exam"]["questions"])

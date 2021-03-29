@@ -2,59 +2,49 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <title>CodePen - Simple previous and next pagination Jquery</title>
-    <link rel="stylesheet" href="/static/css/test-style.css">
+	<meta charset="UTF-8">
+	<title>CodePen - Simple previous and next pagination Jquery</title>
+	<link rel="stylesheet" href="/static/css/test-style.css">
 
 </head>
 
 <body id="myElement">
+	<div class="gallery-boxes">
 
-    <!-- <div id="myElement"></div> -->
-    <!-- partial:index.partial.html -->
+		<div class="gal-box galcurr">
+			<div class="gal-descrip"><b>Welcome Page!</b></div>
+		</div>
+		{% for q in questions() %}
+		<div class="gal-box">
 
+			{% if q["type"] == "MC" %}
+			<div class="gal-descrip">
+				<div class="q-num">
+					<p>Question number {{q["number"]}}</p>
+				</div>
 
-    <div class="gallery-boxes">
+			</div>
+			{% endif %}
 
-
-        <div class="gal-box galcurr">
-            <div class="gal-descrip"><b>Welcome Page!</b></div>
-        </div>
-        {% for q in questions() %}
-        <div class="gal-box">
-
-            {% if q["type"] == "MC" %}
-            <div class="gal-descrip">
-                <div class="q-num">
-                    <p>Question number {{q["number"]}}</p>
-                </div>
-
-            </div>
-            {% endif %}
-
-            {% if q["type"] == "ES" %}
-            <div class="gal-descrip">
-                <div class="q-num">
-                    <p>Question number {{q["number"]}}</p>
-                </div>
-
-    
-            </div>
-            {% endif %}
+			{% if q["type"] == "ES" %}
+			<div class="gal-descrip">
+				<div class="q-num">
+					<p>Question number {{q["number"]}}</p>
+				</div>
 
 
+			</div>
+			{% endif %}
 
-        </div>
-        {% endfor %}
+		</div>
+		{% endfor %}
 
-
-    </div>
-    <!-- partial -->
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'>
-    </script>
-    <script src='https://hammerjs.github.io/dist/hammer.min.js'></script>
-    <script src="/static/js/test-script.js"></script>
+	</div>
+	<!-- partial -->
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'>
+	</script>
+	<script src='https://hammerjs.github.io/dist/hammer.min.js'></script>
+	<script src="/static/js/test-script.js"></script>
 
 </body>
-
 </html>
