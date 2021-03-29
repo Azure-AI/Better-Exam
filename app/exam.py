@@ -1,4 +1,5 @@
 import time
+from azure.cognitiveservices.speech.speech_py_impl import CancellationDetails
 import simplejson as json
 import app.schema as sc
 import os
@@ -31,58 +32,99 @@ bp = Blueprint('exam', __name__, url_prefix='/exam')
 @bp.route('init', methods=["POST"])
 @expects_json(sc.EXAM_SCHEMA)
 def init_exam():
-    os.makedirs("app/static/users/"+request.headers["token-id"])
+    os.makedirs("app/static/users/"+request.headers["token-id"],exist_ok =True)
+    os.makedirs("app/static/users/"+request.headers["token-id"]+"/audio",exist_ok =True)
     with open('app/static/users/'+request.headers["token-id"]+'/'+'exam_json.json', 'w') as f:
         json.dump(request.json, f)
-    #es_question_xml()
+    print("start operation")
+    text_to_speech(request.json,request.headers["token-id"])
     return json.dumps({"number": "1", "audio": "/PATH/TO/AUDIO/IN/STATIC/DIRECTORY"})
 
 
 # Parses the questions. Creates an audio file for each of them
-def text_to_speech(questions_json):
-    question_parser(questions_json)
-    long_answer_question_xml()
-    pass
+def text_to_speech(questions_json,token):
+    es_list,mc_list = question_parser(questions_json)
+    print(mc_list)
+    es_question_audio_creation(es_list,token)
+    mc_question_audio_creation(mc_list,token)
+    
 
 
 # Gets the long answer questions in the form of a dict. Creates an audio file for each of them
-def long_answer_question_xml(long_questions):
-    questions = json.loads(long_questions)
-    pass
+def es_question_audio_creation(long_questions,token):
+    for question in long_questions:
+        es_question_xml(question,token)
+    
+# Gets the multiple choice questions in the form of a dict. Creates an audio file for each of them
+def mc_question_audio_creation(multiple_choice_questions,token):
+    for question in multiple_choice_questions:
+        mc_question_xml(question,token)
 
 
 # Gets the whole questions' JSON as input. Seperates the questions based on their type into dicts
 def question_parser(questions_json):
     questions = questions_json['exam']['questions']
     es_questions = []
-    ma_questions = []
+    mc_questions = []
     for question in questions:
         if question['type'] == 'ES':
             es_questions.append(question)
-        elif question['type'] == 'MA':
-            ma_questions.append(question)
-    return es_questions, ma_questions
+        elif question['type'] == 'MC':
+            mc_questions.append(question)
+    return es_questions, mc_questions
 
 
-def es_question_xml():
-    speak = ET.Element('speak')
-    voice = ET.SubElement(speak, 'voice')
-    speak.set('version', '1.0')
-    speak.set('xmlns', 'https://www.w3.org/2001/10/synthesis')
-    speak.set('xml:lang', 'en-US')
-    voice.set('name', "en-GB-George-Apollo")
-    voice.text = 'When you\'re on the motorway, it\'s a good idea to use a sat-nav.'
-    question_string = ET.tostring(speak, encoding='unicode', method='xml')
-    print(type(question_string))
-    speech_config = SpeechConfig(endpoint="https://westeurope.api.cognitive.microsoft.com/sts/v1.0/issuetoken")
-    speech_config.authorization_token = "2a32fa5f2c504b34bd6ba61d496fed6f"
+def es_question_xml(question,user_token_id):
+    # Themp solution - might change
+    ssml_string_speak = "<speak version=\"1.0\" xmlns=\"https://www.w3.org/2001/10/synthesis\" xml:lang=\"en-US\">"
+    ssml_string_voice = "<voice name=\"en-US-AriaNeural\">"
+    ssml_string_break = "<break time=\"500ms\"/>"
+    ssml_string_question_info = "Question" + question["number"] 
+    ssml_string_question_text =  question["text"]
+    ssml_string_voice_end = "</voice>"
+    ssml_string_speak_end = "</speak>"
+    ssml_message = ssml_string_speak + ssml_string_voice + ssml_string_question_info + ssml_string_break + \
+            ssml_string_question_text + ssml_string_voice_end + ssml_string_speak_end
+    
+
+    print(ssml_message)
+    speech_config = SpeechConfig(subscription="2a32fa5f2c504b34bd6ba61d496fed6f",region="westeurope")
+    synthesizer = SpeechSynthesizer(speech_config=speech_config, audio_config=None)
+    result = synthesizer.speak_ssml_async(ssml_message).get()
+    stream = AudioDataStream(result)
+    stream.save_to_wav_file_async("./app/static/users/"+user_token_id+"/audio/"+question["type"]+question["number"]+".wav")
+    print("File saved")
+
+
+def mc_question_xml(question,user_token_id):
+
+    speech_config = SpeechConfig(subscription="2a32fa5f2c504b34bd6ba61d496fed6f",region="westeurope")
     synthesizer = SpeechSynthesizer(speech_config=speech_config, audio_config=None)
 
-    result = synthesizer.speak_ssml_async(question_string).get()
+    # Themp solution - might change
+    ssml_string_speak = "<speak version=\"1.0\" xmlns=\"https://www.w3.org/2001/10/synthesis\" xml:lang=\"en-US\">"
+    ssml_string_voice = "<voice name=\"en-US-AriaNeural\">"
+    ssml_string_break = "<break time=\"500ms\"/>"
+    ssml_string_question_info = "Question" + question["number"] 
+    ssml_string_question_text =  question["text"]
+    choices = question["choices"]
+    ssml_string_choices = ''
+    for choice in choices:
+       ssml_string_choices+= "choice" + choice["letter"] + "<break time=\"300ms\"/>" + choice["text"] + "<break time=\"300ms\"/>"
+    ssml_string_voice_end = "</voice>"
+    ssml_string_speak_end = "</speak>"
+    ssml_message = ssml_string_speak + ssml_string_voice + ssml_string_question_info + ssml_string_break + \
+            ssml_string_question_text +ssml_string_break + ssml_string_choices +ssml_string_voice_end + ssml_string_speak_end
+    
+
+    print(ssml_message)
+
+
+    result = synthesizer.speak_ssml_async(ssml_message).get()
 
     stream = AudioDataStream(result)
-    stream.save_to_wav_file("./app/static/audio/test.wav")
-
+    stream.save_to_wav_file("./app/static/users/"+user_token_id+"/audio/"+question["type"]+question["number"]+".wav")
+    print("File saved")
 
 # Process answer of a question:
 # 1. Get the audio file and save it in app/uploads
