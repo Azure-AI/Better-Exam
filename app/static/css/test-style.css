@@ -2,43 +2,35 @@
     box-sizing: border-box;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
+    padding: 0px;
+    margin: 0px;
  }
  body{
     font-family: "Open sans";
     height: 100vh;
+    padding: 0px;
+    margin: 0px;
  }
- .gal-tabs{
-    text-align: center;
-    font-size: 22px;
- }
- .gal-tabs a{
-    margin: 0 12px;
- }
- .gal-list{
-    padding: 0;
- }
- .gal-list li{
-    display: inline-block;
-    vertical-align: top;
- } 
- .gal-tabs a.prv{
-    float: left;
- }
- .gal-tabs a.nxt{
-    float: right;
- }
+ 
  .gallery-boxes{
     position: relative;
-    margin: 15px auto;
+    text-align: center;
+   
  }
  .gallery-boxes .gal-descrip{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+ 
+   vertical-align: middle;
+   line-height: normal;
     background: #0072b2;
     height: 100vh;
     overflow: hidden;
     padding: 10px;
     color: #fff;
     font-size: 20px;
-    margin-top: -5px;
+    /* margin-top: -5px; */
  }
  .gallery-boxes .gal-box{
     display: none;
@@ -47,6 +39,10 @@
     display: block;
  }
 
+ .q-num {
+    font-size: 60px;
+    font-weight: bold;
+ }
  
  /* #myElement {
    background: silver;

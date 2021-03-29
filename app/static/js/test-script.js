@@ -11,7 +11,12 @@ mc.get('swipe').set({
 });
 
 // listen to events...
-mc.on("swipeup swipedown swipeleft swiperight tap press", function(ev) {
+
+// swipeup swipedown swipeleft swiperight tap press
+
+
+
+mc.on("swipeleft", function(ev) {
 //   myElement.textContent = ev.type + " gesture detected.";
   $('.gal-box.galcurr').each(function () {
     if ($(".gal-box:visible").next().length != 0) {
@@ -25,6 +30,22 @@ mc.on("swipeup swipedown swipeleft swiperight tap press", function(ev) {
   
   
 });
+
+
+mc.on("swiperight", function(ev) {
+    //   myElement.textContent = ev.type + " gesture detected.";
+    $('.gal-box.galcurr').each(function () {
+        if ($(".gal-box:visible").prev().length != 0) {
+            $('.gal-box.galcurr').prev('.gal-box').addClass('galcurr');
+            $(this).removeClass('galcurr');
+        } else {
+            $(".gal-box:last").addClass('galcurr');
+            $(".gal-box:first").removeClass('galcurr');
+        }
+    });
+      
+      
+    });
 
 
 
@@ -65,27 +86,3 @@ $('.gal-tabs a.prv').each(function () {
 });
 
 
-/* displaying total length of gal-box class */
-var galtotal = $('.gal-box').length;
-$('.galtotal').html(galtotal);
-
-/* adding attribute data-id that starts from 1 not 0 */
-$('.gal-box').attr("data-id", function (index) {
-    return (index + 1);
-});
-
-/* displaying data-id equivalent of gal-box class */
-$('.gal-box').each(function () {
-    if ($(this).hasClass('galcurr')) {
-        return $('.galcount').html($(this).attr('data-id'));
-    }
-});
-
-$('body').on('click', '.gal-tabs a', function (e) {
-    e.preventDefault();
-    $('.gal-box').each(function (i, obj) {
-        if ($(this).hasClass('galcurr')) {
-            return $('.galcount').html($(this).attr('data-id'));
-        }
-    });
-});

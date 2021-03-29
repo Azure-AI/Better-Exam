@@ -10,13 +10,48 @@ def send_post():
     return json.loads(r.text)['result']['ip']
 
 
-def test():
-    names = ['Ali', 'Faezeh', 'Arman', 'Afshin']
-    return names
+def questions():
+
+    # some JSON:
+    
+
+    x = {
+        "exam":{
+            "questions":[
+            {
+                "number":"1",
+                "type":"MC",
+                "text":"What is 2+2",
+                "choices":[
+                {
+                    "letter":"A",
+                    "text":"1"
+                },
+                {
+                    "letter":"B",
+                    "text":"4"
+                }
+                ],
+                "answer":None
+            },
+            {
+                "number":"2",
+                "type":"ES",
+                "text":"What is Cloud Computing?",
+                "answer":None
+            }
+            ]
+        }
+        }
+
+    # parse x:
+    y = (x["exam"]["questions"])
+    print(y)
+    return y
 
 
 app = Flask(__name__)
-app.jinja_env.globals.update(send_post=send_post, names =test)
+app.jinja_env.globals.update(send_post=send_post, questions =questions)
 
 @app.route('/')
 def root():
