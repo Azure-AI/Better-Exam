@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 import os
 import secrets
 import shutil
@@ -21,10 +21,6 @@ def create_app():
     # except Exception as e:
     #     print("ERR: instance path does not exist \n {}".format(e))
 
-    @app.route('/', methods=['GET'])
-    def hello():
-        return app.send_static_file('index.html')
-
     # This api is used for generating unique tokens for user to support multiple users at a time
     # Client must send this token in every request header named "token-id"
     @app.route('/gettoken', methods=['GET'])
@@ -43,5 +39,16 @@ def create_app():
 
     from . import exam
     app.register_blueprint(exam.bp)
+
+    app.jinja_env.globals = exam.jinja_globals
+
+
+    @app.route('/', methods=['GET'])
+    def index():
+        return render_template('index.html')
+
+    @app.route('/recorder', methods=['GET'])
+    def recorder():
+        return render_template('recorder.html')
 
     return app

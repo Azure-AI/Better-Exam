@@ -1,16 +1,40 @@
 <!DOCTYPE html>
-
+<html lang="en" >
 <head>
-	<title>HTML and CSS "Hello World"</title>
-	<link rel="stylesheet" href="/static/css/style.css">
+  <meta charset="UTF-8">
+  <title>Exam Assistant</title>
+  <link rel="stylesheet" href="/static/css/test-style.css">
+
 </head>
+<body  id="myElement">
 
-<body>
-	<h1>Hello World Example {{ send_post() }}</h1>
-	<p>This is a very basic "Hello World" example made up in HTML and CSS. See if you can change the size of the header
-		text above.</p>
-	<button onclick="sendData()">SEND</button>
+    <!-- <div id="myElement"></div> -->
+<!-- partial:index.partial.html -->
+<div class="gal-tabs">
+    <a href="javascript:;" class="prv">Prev</a>
+    <span class="galcount"></span>/<span class="galtotal"></span>
+    <a href="javascript:;" class="nxt">Next</a>
+</div>
+
+<div class="gallery-boxes">
+
+
+    <div class="gal-box galcurr">
+        <div class="gal-descrip"><b>{{ names()[0] }}</b></div>
+    </div>
+    {% for name in names()[1:] %}
+    <div class="gal-box">
+        <div class="gal-descrip"><b>{{ name }}</b></div>
+    </div>
+    {% endfor %}
+
+    
+</div>
+<!-- partial -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'>
+</script>
+  <script src='https://hammerjs.github.io/dist/hammer.min.js'></script>
+  <script  src="/static/js/test-script.js"></script>
+
 </body>
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
 </html>

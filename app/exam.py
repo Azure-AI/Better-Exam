@@ -19,6 +19,7 @@ from flask import (
 )
 from flask_expects_json import expects_json
 
+
 bp = Blueprint('exam', __name__, url_prefix='/exam')
 
 
@@ -218,3 +219,13 @@ def json_to_pdf(exam_json, token):
     return ""
 
 
+# FRONT
+
+def names():
+    names = ['Ali', 'Faezeh', 'Arman', 'Afshin']
+    return names
+
+
+jinja_globals = {
+    'names': names
+}
