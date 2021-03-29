@@ -17,37 +17,37 @@ const goRight = ev => {
     $('.gal-box.galcurr').each(function () {
         if ($(".gal-box:visible").next().length != 0) {
 
-            let audio =   $('.gal-box.galcurr').next('.gal-box').find('.ppbutton')
+            let audio = $('.gal-box.galcurr').next('.gal-box').find('.ppbutton')
 
 
             var datasrc = audio.attr('data-src');
-            clicked_id= audio.attr('id');
+            clicked_id = audio.attr('id');
             console.log(clicked_id);
             audio_var.pause();
-            
-            $('.ppbutton').not(audio).each(function(){
+
+            $('.ppbutton').not(audio).each(function () {
                 $(this).removeClass('fa-pause');
-                 $(this).addClass('fa-play'); 
+                $(this).addClass('fa-play');
             });
-            
-            if(audio.hasClass('fa-play')){
-               console.log('play_click');
-               audio_var.src=datasrc;
-               audio.removeClass('fa-play');
-               audio.addClass('fa-pause');
-               console.log(audio_var);
-               audio_var.play();
-             } else {
-               console.log('pause_click');
-               audio.removeClass('fa-pause');
-               audio.addClass('fa-play');
-               console.log(audio_var);
-               audio_var.pause();
-               //audio_var.src='';
-               //audio_var.load();
-               console.log(audio_var);
-             }
-    
+
+            if (audio.hasClass('fa-play')) {
+                console.log('play_click');
+                audio_var.src = datasrc;
+                audio.removeClass('fa-play');
+                audio.addClass('fa-pause');
+                console.log(audio_var);
+                audio_var.play();
+            } else {
+                console.log('pause_click');
+                audio.removeClass('fa-pause');
+                audio.addClass('fa-play');
+                console.log(audio_var);
+                audio_var.pause();
+                //audio_var.src='';
+                //audio_var.load();
+                console.log(audio_var);
+            }
+
             console.log(audio.attr('id'));
 
             $('.gal-box.galcurr').next('.gal-box').addClass('galcurr');
@@ -63,37 +63,37 @@ const goLeft = () => {
     $('.gal-box.galcurr').each(function () {
         if ($(".gal-box:visible").prev().length != 0) {
 
-            let audio =   $('.gal-box.galcurr').prev('.gal-box').find('.ppbutton')
+            let audio = $('.gal-box.galcurr').prev('.gal-box').find('.ppbutton')
 
 
             var datasrc = audio.attr('data-src');
-            clicked_id= audio.attr('id');
+            clicked_id = audio.attr('id');
             console.log(clicked_id);
             audio_var.pause();
-            
-            $('.ppbutton').not(audio).each(function(){
+
+            $('.ppbutton').not(audio).each(function () {
                 $(this).removeClass('fa-pause');
-                 $(this).addClass('fa-play'); 
+                $(this).addClass('fa-play');
             });
-            
-            if(audio.hasClass('fa-play')){
-               console.log('play_click');
-               audio_var.src=datasrc;
-               audio.removeClass('fa-play');
-               audio.addClass('fa-pause');
-               console.log(audio_var);
-               audio_var.play();
-             } else {
-               console.log('pause_click');
-               audio.removeClass('fa-pause');
-               audio.addClass('fa-play');
-               console.log(audio_var);
-               audio_var.pause();
-               //audio_var.src='';
-               //audio_var.load();
-               console.log(audio_var);
-             }
-    
+
+            if (audio.hasClass('fa-play')) {
+                console.log('play_click');
+                audio_var.src = datasrc;
+                audio.removeClass('fa-play');
+                audio.addClass('fa-pause');
+                console.log(audio_var);
+                audio_var.play();
+            } else {
+                console.log('pause_click');
+                audio.removeClass('fa-pause');
+                audio.addClass('fa-play');
+                console.log(audio_var);
+                audio_var.pause();
+                //audio_var.src='';
+                //audio_var.load();
+                console.log(audio_var);
+            }
+
             console.log(audio.attr('id'));
 
             $('.gal-box.galcurr').prev('.gal-box').addClass('galcurr');
@@ -105,19 +105,104 @@ const goLeft = () => {
     });
 }
 
+
+const repeat = () => {
+    $('.gal-box.galcurr').each(function () {
+
+        alert("doublet tap")
+        let audio = $('.gal-box.galcurr').find('.ppbutton')
+
+
+        var datasrc = audio.attr('data-src');
+        clicked_id = audio.attr('id');
+        console.log(clicked_id);
+        audio_var.pause();
+
+        $('.ppbutton').not(audio).each(function () {
+            $(this).removeClass('fa-pause');
+            $(this).addClass('fa-play');
+        });
+
+        if (audio.hasClass('fa-play')) {
+            console.log('play_click');
+            audio_var.src = datasrc;
+            audio.removeClass('fa-play');
+            audio.addClass('fa-pause');
+            console.log(audio_var);
+            audio_var.play();
+        } else {
+            console.log('pause_click');
+            audio.removeClass('fa-pause');
+            audio.addClass('fa-play');
+            console.log(audio_var);
+            audio_var.pause();
+            //audio_var.src='';
+            //audio_var.load();
+            console.log(audio_var);
+        }
+
+        console.log(audio.attr('id'));
+
+
+
+    });
+}
+
+
 mc.on("swipeleft", goRight);
 mc.on("swiperight", goLeft);
+// mc.on("doubletap", repeat);
+
+mc.on('doubletap', function (e) {
+
+    let audio = $('.gal-box.galcurr').find('.ppbutton')
+
+
+    var datasrc = audio.attr('data-src');
+    clicked_id = audio.attr('id');
+    console.log(clicked_id);
+    audio_var.pause();
+    audio_var.src = datasrc;
+    audio_var.play();
+    // alert(clicked_id)
+
+    // $('.ppbutton').not(audio).each(function () {
+    //     $(this).removeClass('fa-pause');
+    //     $(this).addClass('fa-play');
+    // });
+
+    // if (audio.hasClass('fa-play')) {
+    //     console.log('play_click');
+    //     audio_var.src = datasrc;
+    //     audio.removeClass('fa-play');
+    //     audio.addClass('fa-pause');
+    //     console.log(audio_var);
+    //     audio_var.play();
+    // } else {
+    //     console.log('pause_click');
+    //     audio.removeClass('fa-pause');
+    //     audio.addClass('fa-play');
+    //     console.log(audio_var);
+    //     audio_var.pause();
+    //     //audio_var.src='';
+    //     //audio_var.load();
+    //     console.log(audio_var);
+    // }
+
+    console.log(audio.attr('id'));
+
+});
 
 document.onkeyup = e => {
-    switch(e.key) {
+    switch (e.key) {
         case 'ArrowLeft':
             goRight()
             break
-        
+
         case 'ArrowRight':
             goLeft()
             break
-        
+
         default:
             break
     }
