@@ -227,7 +227,6 @@ def questions():
 
     # some JSON:
     
-
     x = {
         "exam":{
             "questions":[
