@@ -16,10 +16,10 @@ def create_app():
         S2T_KEY='',
     )
     app.config.from_pyfile("config.py")
-    try:
-        os.makedirs(app.instance_path)
-    except Exception as e:
-        print("ERR: instance path does not exist \n {}".format(e))
+    # try:
+    #     os.makedirs(app.instance_path)
+    # except Exception as e:
+    #     print("ERR: instance path does not exist \n {}".format(e))
 
     @app.route('/', methods=['GET'])
     def hello():
