@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>CodePen - component: audio player</title>
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.css'><link rel="stylesheet" href="static\css\audio.css">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<div class="container">
+    <h1 class="text-center">Responsive HTML 5 audio player</h1>
+    <hr>
+    <section class="simple">
+        <!-- credit: https://tympanus.net/codrops/2012/12/04/responsive-touch-friendly-audio-player/ -->
+        <div class="row">
+            <div class="col col-md-8 offset-md-2 col-lg-6 offset-lg-3">
+                <h2>MVP:</h2>
+                <div class="audio">
+                    <p class="audio-title">
+                        Listen to: <strong>Blue Ducks Four Floss Five Six</strong>
+                    </p>
+                    <audio preload="auto" controls>
+                        <source src="https://tympanus.net/Development/AudioPlayer/audio/BlueDucks_FourFlossFiveSix.mp3">
+                        <source src="https://tympanus.net/Development/AudioPlayer/audio/BlueDucks_FourFlossFiveSix.ogg">
+                        <source src="https://tympanus.net/Development/AudioPlayer/audio/BlueDucks_FourFlossFiveSix.wav">
+                        <source src="http://techslides.com/demos/samples/sample.aac" type="audio/aac">
+                    </audio>
+                    <div class="audio">
+                        <p class="audio-title">
+                            Listen to: <strong>test aac file</strong>
+                        </p>
+                        <audio preload="auto" controls>
+                            <source src="http://techslides.com/demos/samples/sample.aac" type="audio/aac">
+                        </audio>
+                    </div>
+                    <div class="audio">
+                        <p class="audio-title">
+                            Listen to: <strong>test m4a file</strong>
+                        </p>
+                        <audio preload="auto" controls>
+                            <source src="http://jpfetest.com/assets/sound/pigs/05.m4a" type="audio/mp4">
+                        </audio>
+                    </div>
+                    <h2>v1.0 To do:</h2>
+                    <ul>
+                        <li>Create playlist</li>
+                    </ul>
+                </div>
+            </div>
+            </section>
+    <hr>
+        <section class="custom">
+            <!--    credit: https://codepen.io/tobiasdev/pen/XgVqQL      -->
+            <div class="row">
+                <div class="col col-md-8 offset-md-2 col-lg-6 offset-lg-3">
+                    <h2>Custom style</h2>
+                    <audio id="audiotrack" preload="auto">
+                        <source src="https://tympanus.net/Development/AudioPlayer/audio/BlueDucks_FourFlossFiveSix.mp3">
+                        <source src="https://tympanus.net/Development/AudioPlayer/audio/BlueDucks_FourFlossFiveSix.ogg">
+                        <source src="https://tympanus.net/Development/AudioPlayer/audio/BlueDucks_FourFlossFiveSix.wav">
+                    </audio>
+                    <div class="wrapper">
+                        <div id="player">
+                            <!-- Progress Bar -->
+                            <div id="track">
+                                <div id="progress"></div>
+                            </div>
+                            <!--   title of the track   -->
+                            <div id="track-title">
+                                <p>Listen to: <strong>Blue Ducks Four Floss Five Six</strong></p>
+                            </div>
+                            <!-- Controls -->
+                            <div id="controls">
+                                <div class="icon" id="play"></div>
+                                <div class="icon" id="pause"></div>
+                                <div class="icon" id="stop"></div>
+                                <div class="icon" id="mute"></div>
+                                <div id="volume">
+                                    <div id="level"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <hr>
+<!--         <section>
+            <div class="row">
+                <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
+                    <h2>OR - How about SoundCloud?</h2>
+                    <iframe width="100%" height="300" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/6447900&amp;color=%23ff5500&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;show_teaser=true&amp;visual=true"></iframe>
+                </div>
+            </div>
+        </section> -->
+</div>
+<!-- partial -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script><script  src="\static\js\audio-script.js"></script>
+
+</body>
+</html>

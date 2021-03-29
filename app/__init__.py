@@ -51,4 +51,8 @@ def create_app():
     def recorder():
         return render_template('recorder.html')
 
+    @app.route('/audio', methods=['GET'])
+    def audio():
+        return render_template('audio.html')
+
     return app
