@@ -1,5 +1,8 @@
 var myElement = document.getElementById('myElement');
 
+var clicked_id;
+var audio_var = new Audio();
+
 
 var mc = new Hammer(myElement);
 
@@ -13,6 +16,40 @@ mc.get('swipe').set({
 const goRight = ev => {
     $('.gal-box.galcurr').each(function () {
         if ($(".gal-box:visible").next().length != 0) {
+
+            let audio =   $('.gal-box.galcurr').next('.gal-box').find('.ppbutton')
+
+
+            var datasrc = audio.attr('data-src');
+            clicked_id= audio.attr('id');
+            console.log(clicked_id);
+            audio_var.pause();
+            
+            $('.ppbutton').not(audio).each(function(){
+                $(this).removeClass('fa-pause');
+                 $(this).addClass('fa-play'); 
+            });
+            
+            if(audio.hasClass('fa-play')){
+               console.log('play_click');
+               audio_var.src=datasrc;
+               audio.removeClass('fa-play');
+               audio.addClass('fa-pause');
+               console.log(audio_var);
+               audio_var.play();
+             } else {
+               console.log('pause_click');
+               audio.removeClass('fa-pause');
+               audio.addClass('fa-play');
+               console.log(audio_var);
+               audio_var.pause();
+               //audio_var.src='';
+               //audio_var.load();
+               console.log(audio_var);
+             }
+    
+            console.log(audio.attr('id'));
+
             $('.gal-box.galcurr').next('.gal-box').addClass('galcurr');
             $(this).removeClass('galcurr');
         } else {
@@ -25,6 +62,40 @@ const goRight = ev => {
 const goLeft = () => {
     $('.gal-box.galcurr').each(function () {
         if ($(".gal-box:visible").prev().length != 0) {
+
+            let audio =   $('.gal-box.galcurr').prev('.gal-box').find('.ppbutton')
+
+
+            var datasrc = audio.attr('data-src');
+            clicked_id= audio.attr('id');
+            console.log(clicked_id);
+            audio_var.pause();
+            
+            $('.ppbutton').not(audio).each(function(){
+                $(this).removeClass('fa-pause');
+                 $(this).addClass('fa-play'); 
+            });
+            
+            if(audio.hasClass('fa-play')){
+               console.log('play_click');
+               audio_var.src=datasrc;
+               audio.removeClass('fa-play');
+               audio.addClass('fa-pause');
+               console.log(audio_var);
+               audio_var.play();
+             } else {
+               console.log('pause_click');
+               audio.removeClass('fa-pause');
+               audio.addClass('fa-play');
+               console.log(audio_var);
+               audio_var.pause();
+               //audio_var.src='';
+               //audio_var.load();
+               console.log(audio_var);
+             }
+    
+            console.log(audio.attr('id'));
+
             $('.gal-box.galcurr').prev('.gal-box').addClass('galcurr');
             $(this).removeClass('galcurr');
         } else {

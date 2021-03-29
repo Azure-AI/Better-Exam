@@ -51,11 +51,9 @@
    font: 30px/300px Helvetica, Arial, sans-serif;
  } */
 
- .blue {
-   background: #b31515;
-    overflow: hidden;
-    padding: 10px;
-    color: rgb(38, 52, 235);
-    font-size: 20px;
-    margin-top: -5px;
+
+
+ .ppbutton{
+   font-size: 50px;
+   cursor: pointer;
  }
