@@ -40,7 +40,8 @@ def create_app():
     from . import exam
     app.register_blueprint(exam.bp)
 
-    app.jinja_env.globals = exam.jinja_globals
+
+    app.jinja_env.globals =  { elem.__name__: elem for elem in exam.jinja_globals }
 
 
     @app.route('/', methods=['GET'])

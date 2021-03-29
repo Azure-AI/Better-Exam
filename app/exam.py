@@ -268,8 +268,4 @@ def names():
     return names
 
 
-jinja_globals = {
-    'names': names,
-    'questions': questions
-
-}
+jinja_globals = [names, questions]
