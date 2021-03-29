@@ -15,29 +15,8 @@
 
 		<div class="gal-box galcurr">
 			<div class="gal-descrip"><b>Welcome Page!</b></div>
-		</div>
-		{% for q in questions() %}
-		<div class="gal-box">
-
-			{% if q["type"] == "MC" %}
-			<div class="gal-descrip">
-				<div class="q-num">
-					<p>Question number {{q["number"]}}</p>
-				</div>
-
-			</div>
-			{% endif %}
-
-			{% if q["type"] == "ES" %}
-			<div class="gal-descrip">
-				<div class="q-num">
-					<p>Question number {{q["number"]}}</p>
-				</div>
-
-        <div class="gal-box galcurr">
-            <div class="gal-descrip"><b>Welcome Page!</b></div>
             <a id="ppbutton0" class="ppbutton fa fa-play" data-src="https://kolber.github.io/audiojs/demos/mp3/01-dead-wrong-intro.mp3"></a>
-        </div>
+		</div>
 
         {% for q in questions() %}
 
