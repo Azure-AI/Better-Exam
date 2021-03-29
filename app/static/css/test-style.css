@@ -20,7 +20,7 @@
  .gal-list li{
     display: inline-block;
     vertical-align: top;
- }
+ } 
  .gal-tabs a.prv{
     float: left;
  }
@@ -32,7 +32,8 @@
     margin: 15px auto;
  }
  .gallery-boxes .gal-descrip{
-    background: #383636;
+    background: #0072b2;
+    height: 100vh;
     overflow: hidden;
     padding: 10px;
     color: #fff;
