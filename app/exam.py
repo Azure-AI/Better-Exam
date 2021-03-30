@@ -237,6 +237,10 @@ def json_to_pdf(exam_json, token):
     doc_paragraphs = []
     for question in exam_json["exam"]["questions"]:
         doc_paragraphs.append(Paragraph(question["number"]+". "+question["text"], styles["Normal"]))
+        doc_paragraphs.append(Spacer(1, 1))
+        doc_paragraphs.append(Paragraph("ANSWER: "+question["answer"], styles["Normal"]))
+        doc_paragraphs.append(Spacer(1, 8))
+
     report.build(doc_paragraphs)
     return ""
 
