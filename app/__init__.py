@@ -14,6 +14,7 @@ def create_app():
     app.config.from_mapping(
         SECRET_KEY='hi',
         S2T_KEY='',
+        UPLOAD_FOLDER="app/uploads"
     )
     app.config.from_pyfile("config.py")
     try:
