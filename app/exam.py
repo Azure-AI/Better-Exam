@@ -96,7 +96,7 @@ def es_question_xml(question,user_token_id):
     synthesizer = SpeechSynthesizer(speech_config=speech_config, audio_config=None)
     result = synthesizer.speak_ssml_async(ssml_message).get()
     stream = AudioDataStream(result)
-    stream.save_to_wav_file_async("./app/static/users/"+user_token_id+"/audio/"+question["type"]+question["number"]+".wav")
+    stream.save_to_wav_file_async("./app/static/users/"+user_token_id+"/audio/"+question["number"]+"_"+question["type"]+".wav")
     print("File saved")
 
 
@@ -148,16 +148,24 @@ def generate_question_list(token):
 # 2. Call speech_recognize_continuous_from_file() for Speech to Text
 # 3. Remove the audio file from uploads folder
 # 4. Save answer in the JSON dedicated to this user
-#todo get answer audio and question number from client and add the answer to the exam json
 @bp.route('answer', methods=["POST"])
 def answer_question():
+    token = request.headers["token-id"]
+    qnumber = int(request.form["qnumber"])
     f = request.files['file']
     f.save(os.path.join(current_app.config['UPLOAD_FOLDER'], secure_filename(f.filename)))
     time.sleep(0.5)
-    answer_text = speech_recognize_continuous_from_file(
-        os.path.join(current_app.config['UPLOAD_FOLDER'], secure_filename(f.filename)))
+    #answer_text = speech_recognize_continuous_from_file(os.path.join(current_app.config['UPLOAD_FOLDER'], secure_filename(f.filename)))
+    answer_text = "test text"
     os.remove(os.path.join(current_app.config['UPLOAD_FOLDER'], secure_filename(f.filename)))
-    return answer_text
+    f = open('app/static/users/' + token + '/' + 'exam_json.json', "r+")
+    exam_json = json.load(f)
+    f.close()
+    exam_json["exam"]["questions"][qnumber-1]["answer"] = answer_text
+    f = open('app/static/users/' + token + '/' + 'exam_json.json', "w")
+    json.dump(exam_json, f)
+    f.close()
+    return "Success", 200
 
 
 def speech_recognize_continuous_from_file(filename):
