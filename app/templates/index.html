@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <title>CodePen - Simple previous and next pagination Jquery</title>
     <link rel="stylesheet" href="/static/css/test-style.css">
-    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css'><link rel="stylesheet" href="./style.css">
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css'>
 
 
 </head>
@@ -28,7 +28,7 @@
                     <p>Question number {{q["number"]}}</p>
                 </div>
 
-                <a id="ppbutton{{q["number"]}}" class="ppbutton fa fa-play" data-src="\static\users\test123545\audio\{{q["type"]}}{{q["number"]}}.wav"></a>
+                <a rel="preload" id="ppbutton{{q["number"]}}" class="ppbutton fa fa-play" data-src="\static\users\test123545\audio\{{q["type"]}}{{q["number"]}}.wav"></a>
 
             </div>
 

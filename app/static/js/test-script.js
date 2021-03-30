@@ -14,6 +14,7 @@ mc.get('swipe').set({
 });
 
 const goRight = ev => {
+    console.log("right");
     $('.gal-box.galcurr').each(function () {
         if ($(".gal-box:visible").next().length != 0) {
 
@@ -60,6 +61,7 @@ const goRight = ev => {
 }
 
 const goLeft = () => {
+    console.log("left");
     $('.gal-box.galcurr').each(function () {
         if ($(".gal-box:visible").prev().length != 0) {
 
@@ -107,6 +109,7 @@ const goLeft = () => {
 
 
 const repeat = () => {
+    console.log("repeat");
     $('.gal-box.galcurr').each(function () {
 
         alert("doublet tap")
