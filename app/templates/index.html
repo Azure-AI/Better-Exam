@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>CodePen - Simple previous and next pagination Jquery</title>
+    <link rel="stylesheet" href="/static/css/test-style.css">
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css'>
+
+
+</head>
+
+<body id="myElement">
+	<div class="gallery-boxes">
+
+		<div class="gal-box galcurr">
+			<div class="gal-descrip"><b>Welcome Page!</b></div>
+            <a id="ppbutton0" class="ppbutton fa fa-play" data-src="https://kolber.github.io/audiojs/demos/mp3/01-dead-wrong-intro.mp3"></a>
+		</div>
+
+        {% for q in questions() %}
+
+
+        <div id="gal{{q["number"]}}" class="gal-box">
+
+            <div id="desc{{q["number"]}}" class="gal-descrip">
+                <div class="q-num">
+                    <p>Question number {{q["number"]}}</p>
+                </div>
+
+                <a id="ppbutton{{q["number"]}}" class="ppbutton fa fa-play" data-src="\static\users\test123545\audio\{{q["type"]}}{{q["number"]}}.wav"></a>
+
+            </div>
+
+        </div>
+        {% endfor %}
+
+    </div>
+    <!-- partial -->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'>
+    </script>
+    
+    <script src='https://hammerjs.github.io/dist/hammer.min.js'></script>
+    <script src="/static/js/test-script.js"></script>
+
+</body>
+</html>

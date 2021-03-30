@@ -23,12 +23,12 @@ def create_app():
 
     @app.route('/', methods=['GET'])
     def hello():
-        return app.send_static_file('index.html')
+        return render_template('test.html')
 
     # This api is used for generating unique tokens for user to support multiple users at a time
     # Client must send this token in every request header named "token-id"
     @app.route('/gettoken', methods=['GET'])
-    def settoken():
+    def get_token():
         token = secrets.token_urlsafe(10)
         session[str(token)] = date.today()
         return token
@@ -44,4 +44,6 @@ def create_app():
     from . import exam
     app.register_blueprint(exam.bp)
 
+    app.jinja_env.globals = {elem.__name__: elem for elem in exam.jinja_globals}
     return app
+
