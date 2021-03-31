@@ -197,11 +197,11 @@ mc.on('doubletap', function (e) {
 document.onkeyup = e => {
     switch (e.key) {
         case 'ArrowLeft':
-            goRight()
+            goLeft()
             break
 
         case 'ArrowRight':
-            goLeft()
+            goRight()
             break
 
         default:

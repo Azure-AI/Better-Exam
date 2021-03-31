@@ -6,6 +6,7 @@ from datetime import date
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, session, url_for
 )
+from flask.helpers import send_file, send_from_directory
 from werkzeug.utils import secure_filename
 
 
@@ -40,7 +41,6 @@ def create_app():
 
     app.jinja_env.globals =  { elem.__name__: elem for elem in exam.jinja_globals }
 
-
     @app.route('/', methods=['GET'])
     def index():
         return render_template('index.html')
@@ -52,7 +52,6 @@ def create_app():
     @app.route('/audio', methods=['GET'])
     def audio():
         return render_template('audio.html')
-
-    app.jinja_env.globals = {elem.__name__: elem for elem in exam.jinja_globals}
+    
     return app
 

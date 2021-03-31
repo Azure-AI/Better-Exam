@@ -23,6 +23,35 @@ from datetime import date
 from flask_expects_json import expects_json
 
 
+sample_exam = {
+        "exam": {
+            "questions": [
+                {
+                    "number": "1",
+                    "type": "MC",
+                    "text": "What is 2+2",
+                    "choices": [
+                        {
+                            "letter": "A",
+                            "text": "1"
+                        },
+                        {
+                            "letter": "B",
+                            "text": "4"
+                        }
+                    ],
+                    "answer": None
+                },
+                {
+                    "number": "2",
+                    "type": "ES",
+                    "text": "What is Cloud Computing?",
+                    "answer": None
+                }
+            ]
+        }
+    }
+
 bp = Blueprint('exam', __name__, url_prefix='/exam')
 
 
@@ -247,48 +276,17 @@ def json_to_pdf(exam_json, token):
 
 
 def questions():
-    # some JSON:
-
-    x = {
-        "exam": {
-            "questions": [
-                {
-                    "number": "1",
-                    "type": "MC",
-                    "text": "What is 2+2",
-                    "choices": [
-                        {
-                            "letter": "A",
-                            "text": "1"
-                        },
-                        {
-                            "letter": "B",
-                            "text": "4"
-                        }
-                    ],
-                    "answer": None
-                },
-                {
-                    "number": "2",
-                    "type": "ES",
-                    "text": "What is Cloud Computing?",
-                    "answer": None
-                }
-            ]
-        }
-    }
-
-    # parse x:
-    y = (x["exam"]["questions"])
-    print(y)
-    return x
+    print('Parsing Questions')
+    # get questions from exam JSON:
+    return sample_exam["exam"]["questions"]
 
 def get_token():
     token = secrets.token_urlsafe(10)
     session[str(token)] = date.today()
     return token
+
 def pop_token(token):
-    shutil.rmtree("app/static/users/"+token)
+    shutil.rmtree("app/static/users/" + token)
     session.pop(token, None)
     print(session)
     return "Session Deleted"
