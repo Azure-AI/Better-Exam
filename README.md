@@ -11,4 +11,4 @@ Better Exam is a service that makes it easier for students who are blind or visu
   - https://github.com/Azure-Samples/cognitive-services-speech-sdk/blob/master/samples/python/console/speech_sample.py
   - https://github.com/Azure-Samples/cognitive-services-speech-sdk/issues/345
 - Flask:
-https://flask.palletsprojects.com/en/1.0.x/tutorial/
+  - https://flask.palletsprojects.com/en/1.0.x/tutorial/
