@@ -6,6 +6,7 @@ from datetime import date
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, session, url_for
 )
+from flask.helpers import send_file, send_from_directory
 from werkzeug.utils import secure_filename
 
 
@@ -14,17 +15,14 @@ def create_app():
     app.config.from_mapping(
         SECRET_KEY='hi',
         S2T_KEY='',
+        UPLOAD_FOLDER="app/uploads"
     )
     app.config.from_pyfile("config.py")
-    # try:
-    #     os.makedirs(app.instance_path)
-    # except Exception as e:
-    #     print("ERR: instance path does not exist \n {}".format(e))
 
     # This api is used for generating unique tokens for user to support multiple users at a time
     # Client must send this token in every request header named "token-id"
     @app.route('/gettoken', methods=['GET'])
-    def settoken():
+    def get_token():
         token = secrets.token_urlsafe(10)
         session[str(token)] = date.today()
         return token
@@ -43,6 +41,9 @@ def create_app():
 
     app.jinja_env.globals =  { elem.__name__: elem for elem in exam.jinja_globals }
 
+    @app.route('/test', methods=['GET'])
+    def test():
+        return 'Server is Working'
 
     @app.route('/', methods=['GET'])
     def index():
@@ -52,4 +53,9 @@ def create_app():
     def recorder():
         return render_template('recorder.html')
 
+    @app.route('/audio', methods=['GET'])
+    def audio():
+        return render_template('audio.html')
+    
     return app
+

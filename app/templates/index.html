@@ -2,49 +2,52 @@
 <html lang="en">
 
 <head>
-	<meta charset="UTF-8">
-	<title>Exam Assistant</title>
-	<link rel="stylesheet" href="/static/css/test-style.css">
+    <meta charset="UTF-8">
+    <title>Better Exam - Assistant for the Visually Impaired</title>
+    <link rel="stylesheet" href="/static/css/test-style.css">
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css'>
 
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/asset/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/asset/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/asset/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/static/asset/favicon/site.webmanifest">
+    <link rel="mask-icon" href="/static/asset/favicon/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
 </head>
 
 <body id="myElement">
-	<div class="gallery-boxes">
+    <div class="gallery-boxes">
 
-		<div class="gal-box galcurr">
-			<div class="gal-descrip"><b>Welcome Page!</b></div>
-		</div>
-		{% for q in questions() %}
-		<div class="gal-box">
+        <div class="gal-box galcurr">
+            <div class="gal-descrip"><b>Welcome Page!</b></div>
 
-			{% if q["type"] == "MC" %}
-			<div class="gal-descrip">
-				<div class="q-num">
-					<p>Question number {{q["number"]}}</p>
-				</div>
+        </div>
 
-			</div>
-			{% endif %}
+        {% for q in questions() %}
 
-			{% if q["type"] == "ES" %}
-			<div class="gal-descrip">
-				<div class="q-num">
-					<p>Question number {{q["number"]}}</p>
-				</div>
+        <div id="gal{{q['number']}}" class="gal-box">
+            <div id="desc{{q['number']}}" class="gal-descrip">
 
+                <div class="q-num">
+                    <p>Question number {{q['number']}}</p>
+                </div>
 
-			</div>
-			{% endif %}
+                <a rel="preload" id="ppbutton{{q["number"]}}" class="ppbutton fa fa-play"
+                    data-src="\static\users\test123545\audio\{{q['number']}}-{{q['type']}}.wav"></a>
+            </div>
+        </div>
 
-		</div>
-		{% endfor %}
+        {% endfor %}
 
-	</div>
-	<!-- partial -->
-	<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'>
-	</script>
-	<script src='https://hammerjs.github.io/dist/hammer.min.js'></script>
-	<script src="/static/js/test-script.js"></script>
+    </div>
+    <!-- partial -->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'>
+    </script>
+
+    <script src='https://hammerjs.github.io/dist/hammer.min.js'></script>
+    <script src="/static/js/test-script.js"></script>
 
 </body>
+
 </html>
