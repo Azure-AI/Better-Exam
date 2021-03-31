@@ -156,10 +156,7 @@ mc.on("swiperight", goLeft);
 mc.on('doubletap', function (e) {
 
     let audio = $('.gal-box.galcurr').find('.ppbutton')
-
-
-    
-    var datasrc = audio.attr('data-src');
+    let datasrc = audio.attr('data-src');
     clicked_id = audio.attr('id');
     console.log(clicked_id);
     audio_var.pause();
