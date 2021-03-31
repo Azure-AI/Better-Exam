@@ -39,7 +39,7 @@ def init_exam(token, exam_json):
     with open('app/static/users/'+token+'/'+'exam_json.json', 'w') as f:
         json.dump(exam_json, f)
     print("start operation")
-    #text_to_speech(exam_json, token)
+    text_to_speech(exam_json, token)
     return generate_question_list(token)
 
 
@@ -155,8 +155,8 @@ def answer_question():
     f = request.files['file']
     f.save(os.path.join(current_app.config['UPLOAD_FOLDER'], secure_filename(f.filename)))
     time.sleep(0.5)
-    #answer_text = speech_recognize_continuous_from_file(os.path.join(current_app.config['UPLOAD_FOLDER'], secure_filename(f.filename)))
-    answer_text = "test text"
+    answer_text = speech_recognize_continuous_from_file(os.path.join(current_app.config['UPLOAD_FOLDER'], secure_filename(f.filename)))
+    #answer_text = "test text"
     os.remove(os.path.join(current_app.config['UPLOAD_FOLDER'], secure_filename(f.filename)))
     f = open('app/static/users/' + token + '/' + 'exam_json.json', "r+")
     exam_json = json.load(f)
@@ -214,13 +214,13 @@ def speech_recognize_continuous_from_file(filename):
 # Get audio file for a specific question (User's state like current question is handled on client side):
 # 1. Receive question number as parameter in the url --> qnumber
 # 2. Return the corresponding audio file from app/static/audio
-@bp.route('question', methods=["GET"])
-def question():
-    args = request.args
-    try:
-        return current_app.send_static_file('./users/' + request.headers["token-id"] + '/audio/' + args["qnumber"] + '.wav')
-    except Exception as e:
-        return "file not found", 404
+# @bp.route('question', methods=["GET"])
+# def question():
+#     args = request.args
+#     try:
+#         return current_app.send_static_file('./users/' + request.headers["token-id"] + '/audio/' + args["qnumber"] + '.wav')
+#     except Exception as e:
+#         return "file not found", 404
 
 # Terminate the exam and generate the pdf
 # return the pdf
