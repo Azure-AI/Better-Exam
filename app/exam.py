@@ -54,6 +54,18 @@ sample_exam = {
 
 bp = Blueprint('exam', __name__, url_prefix='/exam')
 
+@bp.route('create', methods=["POST"])
+def create_exam():
+    exam_json = request.json
+    exam_id = secrets.token_urlsafe(5)
+    os.makedirs("app/static/exams/"+exam_id,exist_ok =True)
+    os.makedirs("app/static/exams/"+exam_id+"/audio",exist_ok =True)
+    f = open('app/static/exams/' + exam_id + '/' + 'exam_json.json', "w")
+    json.dump(exam_json, f)
+    f.close()
+    text_to_speech(exam_json, exam_id)
+    
+
 
 # Initializing exam:
 # 1. Get the JSON from client or Processed results of Form Recognizer (schema is available in app/schema.py)
@@ -126,7 +138,7 @@ def es_question_xml(question,user_token_id):
     synthesizer = SpeechSynthesizer(speech_config=speech_config, audio_config=None)
     result = synthesizer.speak_ssml_async(ssml_message).get()
     stream = AudioDataStream(result)
-    stream.save_to_wav_file_async("./app/static/users/"+user_token_id+"/audio/"+question["number"]+"_"+question["type"]+".wav")
+    stream.save_to_wav_file_async("./app/static/exams/"+user_token_id+"/audio/"+question["number"]+"_"+question["type"]+".wav")
     print("File saved")
 
 
@@ -160,7 +172,7 @@ def mc_question_xml(question,user_token_id):
     result = synthesizer.speak_ssml_async(ssml_message).get()
 
     stream = AudioDataStream(result)
-    stream.save_to_wav_file("./app/static/users/"+user_token_id+"/audio/"+question["number"]+"_"+question["type"]+".wav")
+    stream.save_to_wav_file("./app/static/exams/"+user_token_id+"/audio/"+question["number"]+"_"+question["type"]+".wav")
     print("File saved")
 
 def generate_question_list(token):
