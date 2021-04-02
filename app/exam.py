@@ -254,18 +254,21 @@ def answer_question():
     f: FileStorage = request.files.get('data')
     f.save(os.path.join(current_app.config['UPLOAD_FOLDER'], secure_filename(file_name)))
     time.sleep(0.5)
-    answer_text = speech_recognize_continuous_from_file(os.path.join(current_app.config['UPLOAD_FOLDER'], secure_filename(file_name)))
+    answer_text = speech_recognize_continuous_from_file(os.path.join(current_app.config['UPLOAD_FOLDER'], file_name))
     #answer_text = "test text"
-    os.remove(os.path.join(current_app.config['UPLOAD_FOLDER'], secure_filename(file_name)))
+    os.remove(os.path.join(current_app.config['UPLOAD_FOLDER'], file_name))
     f = open('app/static/users/' + token + '/' + 'exam_json.json', "r+")
     exam_json = json.load(f)
     f.close()
+    if exam_json["exam"]["questions"][qnumber-1]["type"] == "MC":
+        answer_text = find_choice(exam_json,answer_text)
     exam_json["exam"]["questions"][qnumber-1]["answer"] = answer_text
     f = open('app/static/users/' + token + '/' + 'exam_json.json', "w")
     json.dump(exam_json, f)
     f.close()
     return "Success", 200
-
+def find_choice(exam_json,answer_text):
+    pass
 
 def speech_recognize_continuous_from_file(filename):
     """performs continuous speech recognition with input from an audio file"""
