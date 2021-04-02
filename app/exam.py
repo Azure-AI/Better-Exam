@@ -1,6 +1,7 @@
 import time
 from azure.cognitiveservices.speech.speech_py_impl import CancellationDetails
 import simplejson as json
+from werkzeug.datastructures import FileStorage
 import app.schema as sc
 import os
 import time
@@ -101,15 +102,16 @@ def send_mail(exam_id, url, email):
 # 4. Categorize question into: Essay(ES), Multiple Choice(MC)
 # 5. Get audio for all questions and save it in app/static/users/<TOKEN>/audio
 # 6. Name audio files based on question number in the exam
-
-def init_exam(token, exam_json):
-    os.makedirs("app/static/users/"+token,exist_ok =True)
-    os.makedirs("app/static/users/"+token+"/audio",exist_ok =True)
-    with open('app/static/users/'+token+'/'+'exam_json.json', 'w') as f:
-        json.dump(exam_json, f)
+@bp.route('/init', methods=['POST'])
+def init_exam(exam_json=sample_exam):
+    token = request.headers['token-id']
+    os.makedirs("app/static/users/" + token, exist_ok =True)
+    os.makedirs("app/static/users/" + token + "/audio", exist_ok =True)
+    # with open('app/static/users/' + token + '/exam_json.json', 'w') as f:
+    #     json.dump(exam_json, f)
     print("start operation")
     text_to_speech(exam_json, token)
-    return generate_question_list(token)
+    return generate_question_list(exam_json, token)
 
 
 # Parses the questions. Creates an audio file for each of them
@@ -165,7 +167,7 @@ def es_question_xml(question,user_token_id):
     synthesizer = SpeechSynthesizer(speech_config=speech_config, audio_config=None)
     result = synthesizer.speak_ssml_async(ssml_message).get()
     stream = AudioDataStream(result)
-    stream.save_to_wav_file_async("./app/static/exams/"+user_token_id+"/audio/"+question["number"]+"_"+question["type"]+".wav")
+    stream.save_to_wav_file_async("./app/static/users/"+user_token_id+"/audio/"+question["number"]+"-"+question["type"]+".wav")
     print("File saved")
 
 
@@ -174,7 +176,7 @@ def mc_question_xml(question,user_token_id):
     speech_config = SpeechConfig(subscription="2a32fa5f2c504b34bd6ba61d496fed6f",region="westeurope")
     synthesizer = SpeechSynthesizer(speech_config=speech_config, audio_config=None)
 
-    # Themp solution - might change
+    # Temp solution - might change
     ssml_string_speak = "<speak version=\"1.0\" xmlns=\"https://www.w3.org/2001/10/synthesis\" xml:lang=\"en-US\">"
     ssml_string_voice = "<voice name=\"en-US-AriaNeural\">"
     ssml_string_prosody = "<prosody rate=\"0.85\">"
@@ -199,34 +201,47 @@ def mc_question_xml(question,user_token_id):
     result = synthesizer.speak_ssml_async(ssml_message).get()
 
     stream = AudioDataStream(result)
-    stream.save_to_wav_file("./app/static/exams/"+user_token_id+"/audio/"+question["number"]+"_"+question["type"]+".wav")
+    stream.save_to_wav_file("./app/static/users/"+user_token_id+"/audio/"+question["number"]+"-"+question["type"]+".wav")
     print("File saved")
 
-def generate_question_list(token):
-    result = []
-    for file in os.listdir("app/static/users/"+token+"/audio"):
-        question_dict = {"qnumber": "", "type": "", "audio_link": ""}
-        question_dict["audio_link"] = "static/users/"+token+"/audio/"+file
-        question_dict["qnumber"] = str(file).split("_")[0]
-        question_dict["type"] = str(file).split("_")[1][:2]
-        result.append(question_dict)
-    return result
+def generate_question_list(exam_json, token):
+    # result = []
+    for question in exam_json['exam']['questions']:
+        question['audio_link'] = '/static/users/{}/audio/{}.wav'.format(token, f"{question['number']}-{question['type']}")
+    
+    with open('app/static/users/' + token + '/exam_json.json', 'w') as f:
+        json.dump(exam_json, f)
+    # for file in os.listdir("app/static/users/"+token+"/audio"):
+    #     question_dict = {"qnumber": "", "type": "", "audio_link": ""}
+    #     question_dict["audio_link"] = "static/users/"+token+"/audio/"+file
+    #     question_dict["qnumber"] = str(file).split("-")[0]
+    #     question_dict["type"] = str(file).split("-")[1][:2]
+    #     result.append(question_dict)
+    return json.dumps(exam_json)
 
 # Process answer of a question:
 # 1. Get the audio file and save it in app/uploads
 # 2. Call speech_recognize_continuous_from_file() for Speech to Text
 # 3. Remove the audio file from uploads folder
 # 4. Save answer in the JSON dedicated to this user
+
+# @app.route('/recorder', methods=["POST"])
+#     def save_file():
+        
+#         return "File Recieved"
+
+
 @bp.route('answer', methods=["POST"])
 def answer_question():
     token = request.headers["token-id"]
     qnumber = int(request.form["qnumber"])
-    f = request.files['file']
-    f.save(os.path.join(current_app.config['UPLOAD_FOLDER'], secure_filename(f.filename)))
+    file_name = request.form.get('fname')
+    f: FileStorage = request.files.get('data')
+    f.save(os.path.join(current_app.config['UPLOAD_FOLDER'], secure_filename(file_name)))
     time.sleep(0.5)
-    answer_text = speech_recognize_continuous_from_file(os.path.join(current_app.config['UPLOAD_FOLDER'], secure_filename(f.filename)))
+    answer_text = speech_recognize_continuous_from_file(os.path.join(current_app.config['UPLOAD_FOLDER'], secure_filename(file_name)))
     #answer_text = "test text"
-    os.remove(os.path.join(current_app.config['UPLOAD_FOLDER'], secure_filename(f.filename)))
+    os.remove(os.path.join(current_app.config['UPLOAD_FOLDER'], secure_filename(file_name)))
     f = open('app/static/users/' + token + '/' + 'exam_json.json', "r+")
     exam_json = json.load(f)
     f.close()
