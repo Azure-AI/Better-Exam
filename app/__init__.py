@@ -44,6 +44,10 @@ def create_app():
 
     app.jinja_env.globals =  { elem.__name__: elem for elem in exam.jinja_globals }
 
+    @app.route('/teacher', methods=['GET'])
+    def teacher():
+        return render_template('teacher.html')
+
     @app.route('/test', methods=['GET'])
     def test():
         return 'Server is Working'

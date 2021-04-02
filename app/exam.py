@@ -68,7 +68,7 @@ def create_exam():
     f = open('app/static/exams/' + exam_id + '/' + 'exam_json.json', "w")
     json.dump(exam_json, f)
     f.close()
-    #text_to_speech(exam_json, exam_id)
+    text_to_speech(exam_json, exam_id)
     url = 'http://localhost:5000/exam/start?id={}'.format(exam_id)
     img = qrcode.make(url)
     img.save('app/static/exams/' + exam_id + '/' + 'qr.png')
@@ -95,6 +95,21 @@ def send_mail(exam_id, url, email):
     mail_server.quit()
     return ""
 
+@bp.route('/start', methods=['Get'])
+def start_exam():
+    exam_id = request.args["id"]
+    token = get_token()
+    os.makedirs("app/static/users/" + token, exist_ok=True)
+    os.makedirs("app/static/users/" + token + "/audio", exist_ok=True)
+    f = open('app/static/exams/' + exam_id + '/' + 'exam_json.json', "r+")
+    exam_json = json.load(f)
+    f.close()
+    with open('app/static/users/' + token + '/exam_json.json', 'w') as f:
+        json.dump(exam_json, f)
+    exam_json_processed = generate_question_list(exam_json, exam_id)
+    print("Token:{}\nExam:{}\n{}".format(token, exam_id, exam_json_processed))
+    return render_template("index.html", token=token, exam_id=exam_id, exam_json=exam_json_processed)
+
 # Initializing exam:
 # 1. Get the JSON from client or Processed results of Form Recognizer (schema is available in app/schema.py)
 # 2. Create folder for user with the value in the token-id header
@@ -104,34 +119,34 @@ def send_mail(exam_id, url, email):
 # 6. Name audio files based on question number in the exam
 @bp.route('/init', methods=['POST'])
 def init_exam(exam_json=sample_exam):
-    token = request.headers['token-id']
-    os.makedirs("app/static/users/" + token, exist_ok =True)
-    os.makedirs("app/static/users/" + token + "/audio", exist_ok =True)
+    # token = request.headers['token-id']
+    # os.makedirs("app/static/users/" + token, exist_ok =True)
+    # os.makedirs("app/static/users/" + token + "/audio", exist_ok =True)
     # with open('app/static/users/' + token + '/exam_json.json', 'w') as f:
     #     json.dump(exam_json, f)
     print("start operation")
-    text_to_speech(exam_json, token)
-    return generate_question_list(exam_json, token)
+    #text_to_speech(exam_json, token)
+    return "success"
 
 
 # Parses the questions. Creates an audio file for each of them
-def text_to_speech(questions_json,token):
+def text_to_speech(questions_json,exam_id):
     es_list,mc_list = question_parser(questions_json)
     print(mc_list)
-    es_question_audio_creation(es_list,token)
-    mc_question_audio_creation(mc_list,token)
+    es_question_audio_creation(es_list,exam_id)
+    mc_question_audio_creation(mc_list,exam_id)
 
 
 
 # Gets the long answer questions in the form of a dict. Creates an audio file for each of them
-def es_question_audio_creation(long_questions,token):
+def es_question_audio_creation(long_questions,exam_id):
     for question in long_questions:
-        es_question_xml(question,token)
+        es_question_xml(question,exam_id)
 
 # Gets the multiple choice questions in the form of a dict. Creates an audio file for each of them
-def mc_question_audio_creation(multiple_choice_questions,token):
+def mc_question_audio_creation(multiple_choice_questions,exam_id):
     for question in multiple_choice_questions:
-        mc_question_xml(question,token)
+        mc_question_xml(question,exam_id)
 
 
 # Gets the whole questions' JSON as input. Seperates the questions based on their type into dicts
@@ -147,7 +162,7 @@ def question_parser(questions_json):
     return es_questions, mc_questions
 
 
-def es_question_xml(question,user_token_id):
+def es_question_xml(question,exam_id):
     # Themp solution - might change
     ssml_string_speak = "<speak version=\"1.0\" xmlns=\"https://www.w3.org/2001/10/synthesis\" xml:lang=\"en-US\">"
     ssml_string_voice = "<voice name=\"en-US-AriaNeural\">"
@@ -167,11 +182,11 @@ def es_question_xml(question,user_token_id):
     synthesizer = SpeechSynthesizer(speech_config=speech_config, audio_config=None)
     result = synthesizer.speak_ssml_async(ssml_message).get()
     stream = AudioDataStream(result)
-    stream.save_to_wav_file_async("./app/static/users/"+user_token_id+"/audio/"+question["number"]+"-"+question["type"]+".wav")
+    stream.save_to_wav_file_async("./app/static/exams/"+exam_id+"/audio/"+question["number"]+"-"+question["type"]+".wav")
     print("File saved")
 
 
-def mc_question_xml(question,user_token_id):
+def mc_question_xml(question,exam_id):
 
     speech_config = SpeechConfig(subscription="2a32fa5f2c504b34bd6ba61d496fed6f",region="westeurope")
     synthesizer = SpeechSynthesizer(speech_config=speech_config, audio_config=None)
@@ -201,23 +216,23 @@ def mc_question_xml(question,user_token_id):
     result = synthesizer.speak_ssml_async(ssml_message).get()
 
     stream = AudioDataStream(result)
-    stream.save_to_wav_file("./app/static/users/"+user_token_id+"/audio/"+question["number"]+"-"+question["type"]+".wav")
+    stream.save_to_wav_file("./app/static/exams/"+exam_id+"/audio/"+question["number"]+"-"+question["type"]+".wav")
     print("File saved")
 
-def generate_question_list(exam_json, token):
+def generate_question_list(exam_json, exam_id):
     # result = []
     for question in exam_json['exam']['questions']:
-        question['audio_link'] = '/static/users/{}/audio/{}.wav'.format(token, f"{question['number']}-{question['type']}")
+        question['audio_link'] = '/static/exams/{}/audio/{}.wav'.format(exam_id, f"{question['number']}-{question['type']}")
     
-    with open('app/static/users/' + token + '/exam_json.json', 'w') as f:
-        json.dump(exam_json, f)
+    # with open('app/static/users/' + token + '/exam_json.json', 'w') as f:
+    #     json.dump(exam_json, f)
     # for file in os.listdir("app/static/users/"+token+"/audio"):
     #     question_dict = {"qnumber": "", "type": "", "audio_link": ""}
     #     question_dict["audio_link"] = "static/users/"+token+"/audio/"+file
     #     question_dict["qnumber"] = str(file).split("-")[0]
     #     question_dict["type"] = str(file).split("-")[1][:2]
     #     result.append(question_dict)
-    return json.dumps(exam_json)
+    return exam_json
 
 # Process answer of a question:
 # 1. Get the audio file and save it in app/uploads
