@@ -2,6 +2,11 @@ var myElement = document.getElementById('myElement');
 
 var clicked_id;
 var audio_var = new Audio();
+
+const beepSound = document.createElement('audio')
+beepSound.setAttribute('src', '/static/asset/audio/beep.wav')
+beepSound.onended = () => toggleRecording(myElement)
+
 var mc = new Hammer(myElement);
 
 //enable all directions
@@ -10,6 +15,10 @@ mc.get('swipe').set({
     threshold: 1,
     velocity: 0.1
 });
+
+mc.get('press').set({
+    time: 1000
+})
 
 const goRight = () => {
     $('.gal-box.galcurr').each(function () {
@@ -148,9 +157,9 @@ const repeat = () => {
     });
 }
 
-
 mc.on("swipeleft", goRight);
 mc.on("swiperight", goLeft);
+mc.on("press", () => beepSound.play())
 // mc.on("doubletap", repeat);
 
 mc.on('doubletap', function (e) {
@@ -162,30 +171,6 @@ mc.on('doubletap', function (e) {
     audio_var.pause();
     audio_var.src = datasrc;
     audio_var.play();
-    // alert(clicked_id)
-
-    // $('.ppbutton').not(audio).each(function () {
-    //     $(this).removeClass('fa-pause');
-    //     $(this).addClass('fa-play');
-    // });
-
-    // if (audio.hasClass('fa-play')) {
-    //     console.log('play_click');
-    //     audio_var.src = datasrc;
-    //     audio.removeClass('fa-play');
-    //     audio.addClass('fa-pause');
-    //     console.log(audio_var);
-    //     audio_var.play();
-    // } else {
-    //     console.log('pause_click');
-    //     audio.removeClass('fa-pause');
-    //     audio.addClass('fa-play');
-    //     console.log(audio_var);
-    //     audio_var.pause();
-    //     //audio_var.src='';
-    //     //audio_var.load();
-    //     console.log(audio_var);
-    // }
 
     console.log(audio.attr('id'));
 

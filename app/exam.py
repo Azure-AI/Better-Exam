@@ -1,6 +1,7 @@
 import time
 from azure.cognitiveservices.speech.speech_py_impl import CancellationDetails
 import simplejson as json
+from werkzeug.datastructures import FileStorage
 import app.schema as sc
 import os
 import time
@@ -217,16 +218,24 @@ def generate_question_list(token):
 # 2. Call speech_recognize_continuous_from_file() for Speech to Text
 # 3. Remove the audio file from uploads folder
 # 4. Save answer in the JSON dedicated to this user
+
+# @app.route('/recorder', methods=["POST"])
+#     def save_file():
+        
+#         return "File Recieved"
+
+
 @bp.route('answer', methods=["POST"])
 def answer_question():
     token = request.headers["token-id"]
     qnumber = int(request.form["qnumber"])
-    f = request.files['file']
-    f.save(os.path.join(current_app.config['UPLOAD_FOLDER'], secure_filename(f.filename)))
+    file_name = request.form.get('fname')
+    f: FileStorage = request.files.get('data')
+    f.save(os.path.join(current_app.config['UPLOAD_FOLDER'], secure_filename(file_name)))
     time.sleep(0.5)
-    answer_text = speech_recognize_continuous_from_file(os.path.join(current_app.config['UPLOAD_FOLDER'], secure_filename(f.filename)))
+    answer_text = speech_recognize_continuous_from_file(os.path.join(current_app.config['UPLOAD_FOLDER'], secure_filename(file_name)))
     #answer_text = "test text"
-    os.remove(os.path.join(current_app.config['UPLOAD_FOLDER'], secure_filename(f.filename)))
+    os.remove(os.path.join(current_app.config['UPLOAD_FOLDER'], secure_filename(file_name)))
     f = open('app/static/users/' + token + '/' + 'exam_json.json', "r+")
     exam_json = json.load(f)
     f.close()

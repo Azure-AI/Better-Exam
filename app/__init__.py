@@ -1,3 +1,4 @@
+import imp
 from flask import Flask, render_template
 import os
 import secrets
@@ -7,8 +8,10 @@ from flask import (
     Blueprint, flash, g, redirect, render_template, request, session, url_for
 )
 from flask.helpers import send_file, send_from_directory
+from werkzeug.datastructures import FileStorage
 from werkzeug.utils import secure_filename
 
+AUDIO_STORE_PATH = 'app/uploads/users'
 
 def create_app():
     app = Flask(__name__, instance_relative_config=True)
@@ -47,7 +50,7 @@ def create_app():
 
     @app.route('/', methods=['GET'])
     def index():
-        return render_template('teacher.html')
+        return render_template('index.html')
 
     @app.route('/recorder', methods=['GET'])
     def recorder():
@@ -56,6 +59,7 @@ def create_app():
     @app.route('/audio', methods=['GET'])
     def audio():
         return render_template('audio.html')
+
     
     return app
 
