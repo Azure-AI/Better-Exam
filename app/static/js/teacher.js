@@ -90,6 +90,6 @@ function submit_exam() {
 
     xhr.open("POST", "/exam/create");
     xhr.setRequestHeader("Content-Type", "application/json");
-
+    document.getElementsByTagName("body")[0].innerHTML = '<div class="alert alert-success">Done! Check your Email.</div>'
     xhr.send(data);
 }
