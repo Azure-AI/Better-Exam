@@ -8,8 +8,8 @@ let exam_json = {
 let qnumber = 0;
 
 function set_email() {
-    var form1 = document.getElementById("form1");
-    console.log(form1);
+    exam_json["exam"]["email"] = document.getElementById("form1").getElementsByTagName("input")[0].value;
+    console.log(exam_json);
     document.getElementById("card2").style.display = "flex";
     document.getElementById("card1").style.display = "none";
 
@@ -78,18 +78,17 @@ function submit_exam() {
             exam_json['exam']['questions'].push(ES_question);
         }
     });
-    console.log(exam_json);
     let data = JSON.stringify(exam_json);
     var xhr = new XMLHttpRequest();
     xhr.withCredentials = true;
 
     xhr.addEventListener("readystatechange", function () {
         if (this.readyState === 4) {
-            console.log(this.responseText);
+            console.log("ready");
         }
     });
 
-    xhr.open("POST", "http://localhost:5000/exam/answer");
+    xhr.open("POST", "/exam/create");
     xhr.setRequestHeader("Content-Type", "application/json");
 
     xhr.send(data);
