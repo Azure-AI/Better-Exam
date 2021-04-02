@@ -244,9 +244,12 @@ def answer_question():
 
 def find_choice(answer_text: str):
     try:
-        return re.search("\w*choice (.)\w*", answer_text.lower()).group(1).upper()
+        return {
+            "whole_answer": answer_text,
+            "choice": re.search(".*choice (.).*", answer_text.lower()).group(1).upper()
+        }
     except:
-        return answer_text
+        return { "whole_answer": answer_text }
 
 def speech_recognize_continuous_from_file(filename):
     """performs continuous speech recognition with input from an audio file"""
