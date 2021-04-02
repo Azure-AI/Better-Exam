@@ -27,31 +27,9 @@ import smtplib
 
 from flask_expects_json import expects_json
 
+import re
 
-exam_json = {
-    "exam": {
-        "questions": [{
-            "number": "1",
-            "type": "MC",
-            "text": "What is 2+2",
-            "choices": [{
-                "letter": "A",
-                "text": "1"
-            }, {
-                "letter": "B",
-                "text": "4"
-            }],
-            "answer": None,
-            "audio_link": "/static/users/kRsyQs4d3myR3A/audio/1-MC.wav"
-        }, {
-            "number": "2",
-            "type": "ES",
-            "text": "What is Cloud Computing?",
-            "answer": None,
-            "audio_link": "/static/users/kRsyQs4d3myR3A/audio/2-ES.wav"
-        }]
-    }
-}
+
 
 bp = Blueprint('exam', __name__, url_prefix='/exam')
 
@@ -114,7 +92,7 @@ def start_exam():
 # 5. Get audio for all questions and save it in app/static/users/<TOKEN>/audio
 # 6. Name audio files based on question number in the exam
 @bp.route('/init', methods=['POST'])
-def init_exam(exam_json=exam_json):
+def init_exam(exam_json):
     # token = request.headers['token-id']
     # os.makedirs("app/static/users/" + token, exist_ok =True)
     # os.makedirs("app/static/users/" + token + "/audio", exist_ok =True)
@@ -257,14 +235,18 @@ def answer_question():
     exam_json = json.load(f)
     f.close()
     if exam_json["exam"]["questions"][qnumber-1]["type"] == "MC":
-        answer_text = find_choice(exam_json,answer_text,qnumber)
+        answer_text = find_choice(answer_text)
     exam_json["exam"]["questions"][qnumber-1]["answer"] = answer_text
     f = open('app/static/users/' + token + '/' + 'exam_json.json', "w")
     json.dump(exam_json, f)
     f.close()
     return "Success", 200
-def find_choice(exam_json,answer_text,qnumber):
-    pass
+
+def find_choice(answer_text: str):
+    try:
+        return re.search("\w*choice (.)\w*", answer_text.lower()).group(1).upper()
+    except:
+        return answer_text
 
 def speech_recognize_continuous_from_file(filename):
     """performs continuous speech recognition with input from an audio file"""
@@ -364,10 +346,10 @@ def email_answers(token, exam_json):
     mail_server.quit()
     return ""
 
-def questions():
-    print('Parsing Questions')
-    # get questions from exam JSON:
-    return exam_json["exam"]["questions"]
+# def questions():
+#     print('Parsing Questions')
+#     # get questions from exam JSON:
+#     return exam_json["exam"]["questions"]
 
 def get_token():
     token = secrets.token_urlsafe(10)
@@ -380,4 +362,4 @@ def pop_token(token):
     print(session)
     return "Session Deleted"
 
-jinja_globals = [questions, get_token, pop_token, init_exam, terminate_exam]
+jinja_globals = [get_token, pop_token, init_exam, terminate_exam]
