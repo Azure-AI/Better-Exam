@@ -23,7 +23,7 @@
             <div class="gal-descrip"><b>Welcome Page!</b></div>
         </div>
         
-        {% for q in questions() %}
+        {% for q in exam_json['exam']['questions'] %}
 
         <div id="gal{{q['number']}}" class="gal-box" qnum="{{ q['number'] }}">
             <div id="desc" class="gal-descrip">
@@ -39,6 +39,10 @@
 
     </div>
     <!-- partial -->
+    <script>
+        const TOKEN = "{{ token }}"
+        localStorage.setItem('token-id', TOKEN)
+    </script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
     <script src='https://hammerjs.github.io/dist/hammer.min.js'></script>
     <script src="/static/js/recorder/recorder.js"></script>
