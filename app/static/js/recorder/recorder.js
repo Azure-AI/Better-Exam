@@ -111,9 +111,12 @@ DEALINGS IN THE SOFTWARE.
   };
 
   Recorder.sendRecording = function (blob, filename) {
+    const qNumber = $('.gal-box:visible').attr('qnum')
+    console.log(qNumber);
+
     var fd = new FormData();
     fd.append('fname', filename || 'output.wav');
-    fd.append('qnumber', 1);
+    fd.append('qnumber', qNumber);
     fd.append('data', blob);
 
     $.ajax({
