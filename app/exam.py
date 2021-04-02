@@ -28,34 +28,30 @@ import smtplib
 from flask_expects_json import expects_json
 
 
-sample_exam = {
-        "exam": {
-            "questions": [
-                {
-                    "number": "1",
-                    "type": "MC",
-                    "text": "What is 2+2",
-                    "choices": [
-                        {
-                            "letter": "A",
-                            "text": "1"
-                        },
-                        {
-                            "letter": "B",
-                            "text": "4"
-                        }
-                    ],
-                    "answer": None
-                },
-                {
-                    "number": "2",
-                    "type": "ES",
-                    "text": "What is Cloud Computing?",
-                    "answer": None
-                }
-            ]
-        }
+exam_json = {
+    "exam": {
+        "questions": [{
+            "number": "1",
+            "type": "MC",
+            "text": "What is 2+2",
+            "choices": [{
+                "letter": "A",
+                "text": "1"
+            }, {
+                "letter": "B",
+                "text": "4"
+            }],
+            "answer": None,
+            "audio_link": "/static/users/kRsyQs4d3myR3A/audio/1-MC.wav"
+        }, {
+            "number": "2",
+            "type": "ES",
+            "text": "What is Cloud Computing?",
+            "answer": None,
+            "audio_link": "/static/users/kRsyQs4d3myR3A/audio/2-ES.wav"
+        }]
     }
+}
 
 bp = Blueprint('exam', __name__, url_prefix='/exam')
 
@@ -118,7 +114,7 @@ def start_exam():
 # 5. Get audio for all questions and save it in app/static/users/<TOKEN>/audio
 # 6. Name audio files based on question number in the exam
 @bp.route('/init', methods=['POST'])
-def init_exam(exam_json=sample_exam):
+def init_exam(exam_json=exam_json):
     # token = request.headers['token-id']
     # os.makedirs("app/static/users/" + token, exist_ok =True)
     # os.makedirs("app/static/users/" + token + "/audio", exist_ok =True)
@@ -350,7 +346,7 @@ def json_to_pdf(exam_json, token):
 def questions():
     print('Parsing Questions')
     # get questions from exam JSON:
-    return sample_exam["exam"]["questions"]
+    return exam_json["exam"]["questions"]
 
 def get_token():
     token = secrets.token_urlsafe(10)

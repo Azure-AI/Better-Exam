@@ -21,22 +21,20 @@
 
         <div class="gal-box galcurr">
             <div class="gal-descrip"><b>Welcome Page!</b></div>
-
         </div>
+        
+        {% for q in questions() %}
 
-                
-        {% for q in exam_json["exam"]["questions"] %}
-        <div id="gal{{q["number"]}}" class="gal-box" qnum="">
+        <div id="gal{{q['number']}}" class="gal-box" qnum="{{ q['number'] }}">
             <div id="desc" class="gal-descrip">
                 <div class="q-num">
-                    <p>Question number {{q}}</p>
+                    <p>Question number {{ q['number'] }}</p>
                 </div>
     
-                <a rel="preload" id="ppbutton{{q["number"]}}" class="ppbutton fa fa-play"
-                    data-src="{{q[audio_link]}}">
-                </a>
+                <a rel="preload" id="ppbutton{{q['number']}}" class="ppbutton fa fa-play" data-src="{{ q['audio_link' ]}}"></a>
             </div>
         </div>
+        
         {% endfor %}
 
     </div>
