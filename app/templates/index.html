@@ -24,6 +24,21 @@
 
         </div>
 
+                
+        {% for q in exam_json["exam"]["questions"] %}
+        <div id="gal{{q["number"]}}" class="gal-box" qnum="">
+            <div id="desc" class="gal-descrip">
+                <div class="q-num">
+                    <p>Question number {{q}}</p>
+                </div>
+    
+                <a rel="preload" id="ppbutton{{q["number"]}}" class="ppbutton fa fa-play"
+                    data-src="{{q[audio_link]}}">
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+
     </div>
     <!-- partial -->
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
