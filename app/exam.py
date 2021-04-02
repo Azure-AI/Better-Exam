@@ -326,11 +326,14 @@ def speech_recognize_continuous_from_file(filename):
 
 # Terminate the exam and generate the pdf
 # return the pdf
-def terminate_exam(token):
+@bp.route('terminate', methods=["POST"])
+def terminate_exam():
+    token = request.headers["token-id"]
     f = open('app/static/users/'+token+'/'+'exam_json.json')
     exam_json = json.load(f)
     json_to_pdf(exam_json, token)
-    return current_app.send_static_file('./users/' + token + '/' + 'report.pdf')
+    email_answers(token, exam_json)
+    return "Answers were sent to the teacher"
 
 
 def json_to_pdf(exam_json, token):
@@ -342,10 +345,28 @@ def json_to_pdf(exam_json, token):
         doc_paragraphs.append(Spacer(1, 1))
         doc_paragraphs.append(Paragraph("ANSWER: "+question["answer"], styles["Normal"]))
         doc_paragraphs.append(Spacer(1, 8))
-
     report.build(doc_paragraphs)
     return ""
-
+def email_answers(token, exam_json):
+    message = EmailMessage()
+    sender = "better.exam.info@gmail.com"
+    recipient = exam_json["exam"]["email"]
+    message['From'] = sender
+    message['To'] = recipient
+    message['Subject'] = "Better Exam - {} Answers".format(exam_json["exam"]["title"])
+    body = "Hey there!\nThanks for using Better Exam.\nExam title: {}\nStudent Name: {}".format(exam_json["exam"]["title"], "NAME")
+    message.set_content(body)
+    attachment_path = 'app/static/users/' + token + '/' + 'report.pdf'
+    mime_type, _ = mimetypes.guess_type(attachment_path)
+    mime_type, mime_subtype = mime_type.split('/', 1)
+    with open(attachment_path, 'rb') as ap:
+        message.add_attachment(ap.read(), maintype=mime_type, subtype=mime_subtype,
+                               filename=os.path.basename(attachment_path))
+    mail_server = smtplib.SMTP_SSL('smtp.gmail.com')
+    mail_server.login(sender, 'B3tt3rExam')
+    mail_server.send_message(message)
+    mail_server.quit()
+    return ""
 
 def questions():
     print('Parsing Questions')
