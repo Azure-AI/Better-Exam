@@ -24,22 +24,6 @@
 
         </div>
 
-        {% for q in questions() %}
-
-        <div id="gal{{q['number']}}" class="gal-box" qnum="{{q['number']}}">
-            <div id="desc{{q['number']}}" class="gal-descrip">
-
-                <div class="q-num">
-                    <p>Question number {{q['number']}}</p>
-                </div>
-
-                <a rel="preload" id="ppbutton{{q["number"]}}" class="ppbutton fa fa-play"
-                    data-src="\static\users\test123545\audio\{{q['number']}}-{{q['type']}}.wav"></a>
-            </div>
-        </div>
-
-        {% endfor %}
-
     </div>
     <!-- partial -->
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>

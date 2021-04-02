@@ -3,6 +3,62 @@ var myElement = document.getElementById('myElement');
 var clicked_id;
 var audio_var = new Audio();
 
+// Initializing Session
+
+const retrieveExam = () => {
+    $.ajax({
+        type: 'POST',
+        beforeSend: function (request) {
+            request.setRequestHeader("token-id", localStorage.getItem('token-id'));
+        },
+        url: '/exam/init',
+        processData: false,
+        contentType: false
+    }).done(function (data) {
+        prepareExam(JSON.parse(data))
+    });
+}
+
+const getToken = () => {
+    $.ajax({
+        type: 'GET',
+        url: '/gettoken',
+        processData: false,
+        contentType: false
+    }).done(function (data) {
+        localStorage.setItem('token-id', data)
+        console.log(localStorage.getItem('token-id'));
+        retrieveExam()
+    });
+}
+
+getToken()
+
+
+const generateQuestionElement = (qnumber, qaudio) => {
+    return `
+    <div id="gal${qnumber}" class="gal-box" qnum="${qnumber}">
+        <div id="desc${qnumber}" class="gal-descrip">
+            <div class="q-num">
+                <p>Question number ${qnumber}</p>
+            </div>
+
+            <a rel="preload" id="ppbutton${qnumber}" class="ppbutton fa fa-play"
+                data-src="${qaudio}">
+            </a>
+        </div>
+    </div>
+    `
+}
+
+
+const prepareExam = (exam) => {
+    for (const q of exam['exam']['questions']) {
+        $('.gallery-boxes').append(generateQuestionElement(q['number'], q['audio_link']))
+    }
+}
+
+
 const beepSound = document.createElement('audio')
 beepSound.setAttribute('src', '/static/asset/audio/beep.wav')
 beepSound.onended = () => toggleRecording(myElement)

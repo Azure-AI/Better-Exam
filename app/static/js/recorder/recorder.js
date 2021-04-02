@@ -122,7 +122,7 @@ DEALINGS IN THE SOFTWARE.
     $.ajax({
       type: 'POST',
       beforeSend: function(request) {
-        request.setRequestHeader("token-id", 'txOXa9TrFzFnpQ');
+        request.setRequestHeader("token-id", localStorage.getItem('token-id'));
       },
       url: '/exam/answer',
       data: fd,
