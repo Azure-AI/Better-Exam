@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Better Exam - Teachers</title>
+    <link rel="stylesheet" href="/static/css/teacher.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <script src="/static/js/teacher.js"></script>
+
+</head>
+<body class="bg-primary">
+<div class="container-fluid bg-primary">
+    <div class="main_container">
+        <div id="card1" class="card" style="">
+            <h2>Welcome to Better Exam</h2>
+            <p>Please enter your email address. After creating the exam, the link and QR code will be sent to this
+                email.</p>
+            <div class="form_container">
+                <form id="form1" action="#" style="width: 70%">
+                    <div class="form-group">
+                        <label for="email">Email address:</label>
+                        <input type="email" class="form-control" id="email">
+                    </div>
+                    <h2></h2>
+                    <button onclick="set_email(); return false" type="submit" class="btn btn-primary">Create Exam
+                    </button>
+                </form>
+            </div>
+        </div>
+        <div id="card2" class="card" style="display: none; width: 70%">
+            <h2>Create And Share Your Exam!</h2>
+
+            <div class="alert alert-info" style="text-align:left">
+                <ul>
+                    <li>At this moment we support 2 types of question: Essay, Multiple Choice</li>
+                    <li>Use the "+" button to add a new question.</li>
+                </ul>
+            </div>
+            <div id="form2" class="form_container">
+                <form style="width: 70%">
+                    <div id="question_area">
+                        <div class="form-group" style="text-align:left">
+                            <label>Exam Title</label>
+                            <input id="exam_title" type="text" class="form-control" required>
+                        </div>
+
+<!--                        <div id="-1" name="question" class="form-group" style="text-align:left; border: 1px lightgray solid; padding: 5px">-->
+<!--                            <label for="email">Question 1 - Essay</label>-->
+<!--                            <textarea rows="4" class="form-control" required></textarea>-->
+<!--                        </div>-->
+
+<!--                        <div id="0" name="question" class="form-group" style="text-align:left; border: 1px lightgray solid; padding: 5px">-->
+<!--                            <label for="email">Question 2 - Multiple Choice <a onclick="remove_element(this.parentElement.parentElement)">Remove</a></label>-->
+<!--                            <textarea rows="2" class="form-control" required></textarea>-->
+<!--                            <label for="email">A.</label>-->
+<!--                            <input type="text" class="form-control" required>-->
+<!--                            <label for="email">B.</label>-->
+<!--                            <input type="text" class="form-control" required>-->
+<!--                            <label for="email">C.</label>-->
+<!--                            <input type="text" class="form-control">-->
+<!--                            <label for="email">D.</label>-->
+<!--                            <input type="text" class="form-control">-->
+<!--                        </div>-->
+<!--                        -->
+                    </div>
+                    <h2></h2>
+                    <div class="form-group" style="text-align:center">
+                        <button onclick="add_ES_question()" class="btn btn-success">Add Essay Question</button>
+                        <button onclick="add_MC_question()" class="btn btn-success">Add Multiple Choice Question
+                        </button>
+                    </div>
+                    <button onclick="submit_exam(); return false" type="submit" class="btn btn-primary">Submit Exam</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+</body>
+
+</html>

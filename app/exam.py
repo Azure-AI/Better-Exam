@@ -19,6 +19,10 @@ from flask import (
 import secrets
 import shutil
 from datetime import date
+import qrcode
+from email.message import EmailMessage
+import mimetypes
+import smtplib
 
 from flask_expects_json import expects_json
 
@@ -54,6 +58,41 @@ sample_exam = {
 
 bp = Blueprint('exam', __name__, url_prefix='/exam')
 
+@bp.route('create', methods=["POST"])
+def create_exam():
+    exam_json = request.json
+    exam_id = secrets.token_urlsafe(5)
+    os.makedirs("app/static/exams/"+exam_id,exist_ok =True)
+    os.makedirs("app/static/exams/"+exam_id+"/audio",exist_ok =True)
+    f = open('app/static/exams/' + exam_id + '/' + 'exam_json.json', "w")
+    json.dump(exam_json, f)
+    f.close()
+    #text_to_speech(exam_json, exam_id)
+    url = 'http://localhost:5000/exam/start?id={}'.format(exam_id)
+    img = qrcode.make(url)
+    img.save('app/static/exams/' + exam_id + '/' + 'qr.png')
+    send_mail(exam_id, url, exam_json["exam"]["email"])
+    return "success", 200
+
+def send_mail(exam_id, url, email):
+    message = EmailMessage()
+    sender = "better.exam.info@gmail.com"
+    recipient = email
+    message['From'] = sender
+    message['To'] = recipient
+    message['Subject'] = "Better Exam - Exam Info"
+    body = "Hey there!\nThanks for using Better Exam.\nExam Link: {}".format(url)
+    message.set_content(body)
+    attachment_path = 'app/static/exams/' + exam_id + '/' + 'qr.png'
+    mime_type, _ = mimetypes.guess_type(attachment_path)
+    mime_type, mime_subtype = mime_type.split('/', 1)
+    with open(attachment_path, 'rb') as ap:
+        message.add_attachment(ap.read(),maintype = mime_type,subtype = mime_subtype,filename = os.path.basename(attachment_path))
+    mail_server = smtplib.SMTP_SSL('smtp.gmail.com')
+    mail_server.login(sender, 'B3tt3rExam')
+    mail_server.send_message(message)
+    mail_server.quit()
+    return ""
 
 # Initializing exam:
 # 1. Get the JSON from client or Processed results of Form Recognizer (schema is available in app/schema.py)
@@ -79,14 +118,14 @@ def text_to_speech(questions_json,token):
     print(mc_list)
     es_question_audio_creation(es_list,token)
     mc_question_audio_creation(mc_list,token)
-    
+
 
 
 # Gets the long answer questions in the form of a dict. Creates an audio file for each of them
 def es_question_audio_creation(long_questions,token):
     for question in long_questions:
         es_question_xml(question,token)
-    
+
 # Gets the multiple choice questions in the form of a dict. Creates an audio file for each of them
 def mc_question_audio_creation(multiple_choice_questions,token):
     for question in multiple_choice_questions:
@@ -112,21 +151,21 @@ def es_question_xml(question,user_token_id):
     ssml_string_voice = "<voice name=\"en-US-AriaNeural\">"
     ssml_string_prosody = "<prosody rate=\"0.85\">"
     ssml_string_break = "<break time=\"500ms\"/>"
-    ssml_string_question_info = "Question" + question["number"] 
+    ssml_string_question_info = "Question" + question["number"]
     ssml_string_question_text =  question["text"]
     ssml_string_prosody_end = "</prosody>"
     ssml_string_voice_end = "</voice>"
     ssml_string_speak_end = "</speak>"
     ssml_message = ssml_string_speak + ssml_string_voice +ssml_string_prosody+ ssml_string_question_info + ssml_string_break + \
             ssml_string_question_text+ssml_string_prosody_end + ssml_string_voice_end + ssml_string_speak_end
-    
+
 
     print(ssml_message)
     speech_config = SpeechConfig(subscription="2a32fa5f2c504b34bd6ba61d496fed6f",region="westeurope")
     synthesizer = SpeechSynthesizer(speech_config=speech_config, audio_config=None)
     result = synthesizer.speak_ssml_async(ssml_message).get()
     stream = AudioDataStream(result)
-    stream.save_to_wav_file_async("./app/static/users/"+user_token_id+"/audio/"+question["number"]+"_"+question["type"]+".wav")
+    stream.save_to_wav_file_async("./app/static/exams/"+user_token_id+"/audio/"+question["number"]+"_"+question["type"]+".wav")
     print("File saved")
 
 
@@ -140,7 +179,7 @@ def mc_question_xml(question,user_token_id):
     ssml_string_voice = "<voice name=\"en-US-AriaNeural\">"
     ssml_string_prosody = "<prosody rate=\"0.85\">"
     ssml_string_break = "<break time=\"500ms\"/>"
-    ssml_string_question_info = "Question" + question["number"] 
+    ssml_string_question_info = "Question" + question["number"]
     ssml_string_question_text =  question["text"]
     choices = question["choices"]
     ssml_string_choices = ''
@@ -149,10 +188,10 @@ def mc_question_xml(question,user_token_id):
     ssml_string_prosody_end = "</prosody>"
     ssml_string_voice_end = "</voice>"
     ssml_string_speak_end = "</speak>"
-    
+
     ssml_message = ssml_string_speak + ssml_string_voice + ssml_string_prosody + ssml_string_question_info + ssml_string_break + \
             ssml_string_question_text +ssml_string_break + ssml_string_choices+ ssml_string_prosody_end +ssml_string_voice_end + ssml_string_speak_end
-    
+
 
     print(ssml_message)
 
@@ -160,7 +199,7 @@ def mc_question_xml(question,user_token_id):
     result = synthesizer.speak_ssml_async(ssml_message).get()
 
     stream = AudioDataStream(result)
-    stream.save_to_wav_file("./app/static/users/"+user_token_id+"/audio/"+question["number"]+"_"+question["type"]+".wav")
+    stream.save_to_wav_file("./app/static/exams/"+user_token_id+"/audio/"+question["number"]+"_"+question["type"]+".wav")
     print("File saved")
 
 def generate_question_list(token):
