@@ -261,13 +261,13 @@ def answer_question():
     exam_json = json.load(f)
     f.close()
     if exam_json["exam"]["questions"][qnumber-1]["type"] == "MC":
-        answer_text = find_choice(exam_json,answer_text)
+        answer_text = find_choice(exam_json,answer_text,qnumber)
     exam_json["exam"]["questions"][qnumber-1]["answer"] = answer_text
     f = open('app/static/users/' + token + '/' + 'exam_json.json', "w")
     json.dump(exam_json, f)
     f.close()
     return "Success", 200
-def find_choice(exam_json,answer_text):
+def find_choice(exam_json,answer_text,qnumber):
     pass
 
 def speech_recognize_continuous_from_file(filename):
