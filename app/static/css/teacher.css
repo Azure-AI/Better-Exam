@@ -49,3 +49,9 @@ body{
 .card p{
     padding: 10px;
 }
+
+#card2 {
+    min-height: 90vh;
+    max-height: 90vh;
+    overflow-y: scroll;
+}
