@@ -43,7 +43,7 @@ def create_exam():
     json.dump(exam_json, f)
     f.close()
     text_to_speech(exam_json, exam_id)
-    url = 'http://localhost:5000/exam/start?id={}'.format(exam_id)
+    url = request.host_url+'exam/start?id={}'.format(exam_id)
     img = qrcode.make(url)
     img.save('app/static/exams/' + exam_id + '/' + 'qr.png')
     send_mail(exam_id, url, exam_json["exam"]["email"])
@@ -82,7 +82,7 @@ def start_exam():
         json.dump(exam_json, f)
     exam_json_processed = generate_question_list(exam_json, exam_id)
     print("Token:{}\nExam:{}\n{}".format(token, exam_id, exam_json_processed))
-    return render_template("index.html", token=token, exam_id=exam_id, exam_json=exam_json_processed)
+    return render_template("exam.html", token=token, exam_id=exam_id, exam_json=exam_json_processed)
 
 # Initializing exam:
 # 1. Get the JSON from client or Processed results of Form Recognizer (schema is available in app/schema.py)
@@ -352,7 +352,7 @@ def email_answers(token, exam_json):
     message['From'] = sender
     message['To'] = recipient
     message['Subject'] = "Better Exam - {} Answers".format(exam_json["exam"]["title"])
-    body = "Hey there!\nThanks for using Better Exam.\nExam title: {}\nStudent Name: {}".format(exam_json["exam"]["title"], "NAME")
+    body = "Hey there!\nThanks for using Better Exam.\nExam title: {}\nStudent Name: {}".format(exam_json["exam"]["title"], exam_json["exam"]["name"])
     message.set_content(body)
     attachment_path = 'app/static/users/' + token + '/' + 'report.pdf'
     mime_type, _ = mimetypes.guess_type(attachment_path)
