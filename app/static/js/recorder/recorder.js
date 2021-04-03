@@ -117,14 +117,11 @@ DEALINGS IN THE SOFTWARE.
     fd.append('fname', filename || 'output.wav');
     fd.append('data', blob);
 
-    if (qNumber == 0) {
+    if (qNumber == 0) { // name div
       urlApi = 'name'
-    } else {
+    } else {  // question div
       fd.append('qnumber', qNumber);
     }
-    console.log(qNumber);
-
-
 
     $.ajax({
       type: 'POST',
@@ -136,7 +133,11 @@ DEALINGS IN THE SOFTWARE.
       processData: false,
       contentType: false
     }).done(function (data) {
-      console.log(data);
+      if (qNumber == 0) {
+        // TODO
+      } else {
+        answerSubmit.play()
+      }
     });
   }
 

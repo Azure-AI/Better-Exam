@@ -52,6 +52,8 @@ function toggleRecording( e ) {
         audioRecorder.stop();
         e.classList.remove("recording");
         audioRecorder.getBuffers( gotBuffers );
+        directionSound.setAttribute('src', '/static/asset/audio/rec-start.wav')
+
     } else {
         // start recording
         if (!audioRecorder)
@@ -61,6 +63,7 @@ function toggleRecording( e ) {
         audioRecorder.clear();
         audioRecorder.record();
         audioContext.resume();
+        directionSound.setAttribute('src', '/static/asset/audio/rec-finish.wav')
     }
 }
 
