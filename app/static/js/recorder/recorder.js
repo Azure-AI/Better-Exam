@@ -112,19 +112,26 @@ DEALINGS IN THE SOFTWARE.
 
   Recorder.sendRecording = function (blob, filename) {
     const qNumber = $('.gal-box:visible').attr('qnum')
-    console.log(qNumber);
-
+    const urlApi = '/exam/answer'
     var fd = new FormData();
     fd.append('fname', filename || 'output.wav');
-    fd.append('qnumber', qNumber);
     fd.append('data', blob);
+
+    if (qNumber == 0){
+      urlApi = 'exam/name'
+    }else{
+      fd.append('qnumber', qNumber);
+    }
+    console.log(qNumber);
+
+
 
     $.ajax({
       type: 'POST',
       beforeSend: function(request) {
         request.setRequestHeader("token-id", localStorage.getItem('token-id'));
       },
-      url: '/exam/answer',
+      url: urlApi,
       data: fd,
       processData: false,
       contentType: false
