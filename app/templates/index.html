@@ -16,11 +16,43 @@
     <meta name="theme-color" content="#ffffff">
 </head>
 
-<body id="myElement">
+<body id="myElement" >
     <div class="gallery-boxes">
 
         <div class="gal-box galcurr" qnum="0">
-            <div class="gal-descrip"><b>Welcome Page!</b></div>
+            
+            <div onload="hello()"></div>
+            <div class="gal-descrip"><b>Welcome Page!</b>
+            
+                <a rel="preload" id="ppbutton0" class="ppbutton fa fa-play"
+                data-src="/static/greetings/first.wav"></a>
+            
+            </div>
+
+        </div>
+
+        <div class="gal-box" qnum="0">
+            
+            
+            <div class="gal-descrip"><b>Welcome Page!</b>
+            
+                <a rel="preload" id="ppbutton0" class="ppbutton fa fa-play"
+                data-src="/static/asset/audio/Instruction1.wav"></a>
+            
+            </div>
+
+        </div>
+
+        <div class="gal-box" qnum="0">
+            
+            
+            <div class="gal-descrip"><b>Instruction Page!</b>
+            
+                <a rel="preload" id="ppbutton0" class="ppbutton fa fa-play"
+                data-src="static/asset/audio/Instruction2.wav"></a>
+            
+            </div>
+
         </div>
 
         {% for q in exam_json['exam']['questions'] %}

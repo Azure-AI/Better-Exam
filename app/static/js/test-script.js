@@ -214,6 +214,21 @@ const repeat = () => {
     });
 }
 
+
+
+function hi() {
+    // alert("hi")
+    goLeft()
+  }
+
+function hello(){
+	// alert('Hello world! in func hello');
+    goRight()
+}
+$(function(){
+	$('div[onload]').trigger('onload');
+});
+
 mc.on("swipeleft", goRight);
 mc.on("swiperight", goLeft);
 mc.on("press", () => beepSound.play())
