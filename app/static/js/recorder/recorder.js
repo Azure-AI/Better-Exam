@@ -125,14 +125,14 @@ DEALINGS IN THE SOFTWARE.
 
     $.ajax({
       type: 'POST',
-      beforeSend: function (request) {
+      beforeSend: request => {
         request.setRequestHeader("token-id", localStorage.getItem('token-id'));
       },
       url: urlApi,
       data: fd,
       processData: false,
       contentType: false
-    }).done(function (data) {
+    }).done(_ => {
       if (qNumber == 0) {
         // TODO
       } else {

@@ -10,6 +10,11 @@ directionSound.onended = () => toggleRecording(myElement)
 const answerSubmit = document.createElement('audio')
 answerSubmit.setAttribute('src', '/static/asset/audio/ans-submit.wav')
 
+const examTerminate = document.createElement('audio')
+examTerminate.setAttribute('src', '/static/asset/audio/exam-terminate.wav')
+
+let isOnLastPage = false
+
 var mc = new Hammer(myElement);
 
 //enable all directions
@@ -23,51 +28,69 @@ mc.get('press').set({
     time: 1000
 })
 
+const terminateExam = () => {
+    $.ajax({
+        type: 'POST',
+        beforeSend: function (request) {
+            request.setRequestHeader("token-id", localStorage.getItem('token-id'));
+        },
+        url: 'terminate',
+        processData: false,
+        contentType: false
+    }).done(_ => {
+        examTerminate.play()
+    })
+}
+
 const goRight = () => {
-    $('.gal-box.galcurr').each(function () {
-        if ($(".gal-box:visible").next().length != 0) {
-
-            let audio = $('.gal-box.galcurr').next('.gal-box').find('.ppbutton')
-
-
-            var datasrc = audio.attr('data-src');
-            clicked_id = audio.attr('id');
-            console.log(clicked_id);
-            audio_var.pause();
-
-            $('.ppbutton').not(audio).each(function () {
-                $(this).removeClass('fa-pause');
-                $(this).addClass('fa-play');
-            });
-
-            if (audio.hasClass('fa-play')) {
-                console.log('play_click');
-                audio_var.src = datasrc;
-                audio.removeClass('fa-play');
-                audio.addClass('fa-pause');
-                console.log(audio_var);
-                audio_var.play();
-            } else {
-                console.log('pause_click');
-                audio.removeClass('fa-pause');
-                audio.addClass('fa-play');
-                console.log(audio_var);
+    if ($('.gal-box:visible').attr('islastpage') === 'true') {
+        console.log('Finalizing exam');
+        terminateExam()
+    } else {
+        $('.gal-box.galcurr').each(function () {
+            if ($(".gal-box:visible").next().length != 0) {
+    
+                let audio = $('.gal-box.galcurr').next('.gal-box').find('.ppbutton')
+    
+                var datasrc = audio.attr('data-src');
+                clicked_id = audio.attr('id');
+                console.log(clicked_id);
                 audio_var.pause();
-                //audio_var.src='';
-                //audio_var.load();
-                console.log(audio_var);
+    
+                $('.ppbutton').not(audio).each(function () {
+                    $(this).removeClass('fa-pause');
+                    $(this).addClass('fa-play');
+                });
+    
+                if (audio.hasClass('fa-play')) {
+                    console.log('play_click');
+                    audio_var.src = datasrc;
+                    audio.removeClass('fa-play');
+                    audio.addClass('fa-pause');
+                    console.log(audio_var);
+                    audio_var.play();
+                } else {
+                    console.log('pause_click');
+                    audio.removeClass('fa-pause');
+                    audio.addClass('fa-play');
+                    console.log(audio_var);
+                    audio_var.pause();
+                    //audio_var.src='';
+                    //audio_var.load();
+                    console.log(audio_var);
+                }
+    
+                console.log(audio.attr('id'));
+    
+                console.log('GO RIGHT');
+                $('.gal-box.galcurr').next('.gal-box').addClass('galcurr');
+                $(this).removeClass('galcurr');
+            } else {
+                $(".gal-box:first").addClass('galcurr');
+                $(".gal-box:last").removeClass('galcurr');
             }
-
-            console.log(audio.attr('id'));
-
-            console.log('GO RIGHT');
-            $('.gal-box.galcurr').next('.gal-box').addClass('galcurr');
-            $(this).removeClass('galcurr');
-        } else {
-            $(".gal-box:first").addClass('galcurr');
-            $(".gal-box:last").removeClass('galcurr');
-        }
-    });
+        });   
+    }
 }
 
 const goLeft = () => {
@@ -164,15 +187,15 @@ const repeat = () => {
 function hi() {
     // alert("hi")
     goLeft()
-  }
+}
 
-function hello(){
-	// alert('Hello world! in func hello');
+function hello() {
+    // alert('Hello world! in func hello');
     goRight()
 }
 
-$(function(){
-	$('div[onload]').trigger('onload');
+$(function () {
+    $('div[onload]').trigger('onload');
 });
 
 mc.on("swipeleft", goRight);
