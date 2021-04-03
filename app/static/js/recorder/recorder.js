@@ -112,24 +112,32 @@ DEALINGS IN THE SOFTWARE.
 
   Recorder.sendRecording = function (blob, filename) {
     const qNumber = $('.gal-box:visible').attr('qnum')
-    console.log(qNumber);
-
+    let urlApi = 'answer'
     var fd = new FormData();
     fd.append('fname', filename || 'output.wav');
-    fd.append('qnumber', qNumber);
     fd.append('data', blob);
+
+    if (qNumber == 0) { // name div
+      urlApi = 'name'
+    } else {  // question div
+      fd.append('qnumber', qNumber);
+    }
 
     $.ajax({
       type: 'POST',
-      beforeSend: function(request) {
+      beforeSend: request => {
         request.setRequestHeader("token-id", localStorage.getItem('token-id'));
       },
-      url: '/exam/answer',
+      url: urlApi,
       data: fd,
       processData: false,
       contentType: false
-    }).done(function (data) {
-      console.log(data);
+    }).done(_ => {
+      if (qNumber == 0) {
+        nameSubmit.play()
+      } else {
+        answerSubmit.play()
+      }
     });
   }
 

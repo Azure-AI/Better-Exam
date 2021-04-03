@@ -16,13 +16,45 @@
     <meta name="theme-color" content="#ffffff">
 </head>
 
-<body id="myElement">
+<body id="myElement" >
     <div class="gallery-boxes">
 
-        <div class="gal-box galcurr">
-            <div class="gal-descrip"><b>Welcome Page!</b></div>
+        <div class="gal-box galcurr" qnum="0">
+            
+            <div onload="hello()"></div>
+            <div class="gal-descrip"><b>Welcome Page!</b>
+            
+                <a rel="preload" id="ppbutton0" class="ppbutton fa fa-play"
+                data-src="/static/greetings/first.wav"></a>
+            
+            </div>
+
         </div>
-        
+
+        <div class="gal-box" qnum="0">
+            
+            
+            <div class="gal-descrip"><b>Welcome Page!</b>
+            
+                <a rel="preload" id="ppbutton0" class="ppbutton fa fa-play"
+                data-src="/static/asset/audio/instruction1.wav"></a>
+            
+            </div>
+
+        </div>
+
+        <div class="gal-box" qnum="0">
+            
+            
+            <div class="gal-descrip"><b>Instruction Page!</b>
+            
+                <a rel="preload" id="ppbutton0" class="ppbutton fa fa-play"
+                data-src="/static/asset/audio/instruction2.wav"></a>
+            
+            </div>
+
+        </div>
+
         {% for q in exam_json['exam']['questions'] %}
 
         <div id="gal{{q['number']}}" class="gal-box" qnum="{{ q['number'] }}">
@@ -30,12 +62,24 @@
                 <div class="q-num">
                     <p>Question number {{ q['number'] }}</p>
                 </div>
-    
-                <a rel="preload" id="ppbutton{{q['number']}}" class="ppbutton fa fa-play" data-src="{{ q['audio_link' ]}}"></a>
+
+                <a rel="preload" id="ppbutton{{q['number']}}" class="ppbutton fa fa-play"
+                    data-src="{{ q['audio_link' ]}}"></a>
             </div>
         </div>
-        
+
         {% endfor %}
+        
+        <div class="gal-box" islastpage="true">
+            
+            <div class="gal-descrip"><b>Exam Finished.</b>
+            
+                <a rel="preload" id="ppbutton0" class="ppbutton fa fa-play"
+                data-src="/static/asset/audio/exam-finish.wav"></a>
+            
+            </div>
+
+        </div>
 
     </div>
     <!-- partial -->
@@ -46,7 +90,7 @@
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
     <script src='https://hammerjs.github.io/dist/hammer.min.js'></script>
     <script src="/static/js/recorder/recorder.js"></script>
-	<script src="/static/js/recorder/main.js"></script>
+    <script src="/static/js/recorder/main.js"></script>
     <script src="/static/js/test-script.js"></script>
 
 </body>
