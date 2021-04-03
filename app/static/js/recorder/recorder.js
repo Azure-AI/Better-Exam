@@ -112,14 +112,14 @@ DEALINGS IN THE SOFTWARE.
 
   Recorder.sendRecording = function (blob, filename) {
     const qNumber = $('.gal-box:visible').attr('qnum')
-    const urlApi = '/exam/answer'
+    let urlApi = 'answer'
     var fd = new FormData();
     fd.append('fname', filename || 'output.wav');
     fd.append('data', blob);
 
-    if (qNumber == 0){
-      urlApi = 'exam/name'
-    }else{
+    if (qNumber == 0) {
+      urlApi = 'name'
+    } else {
       fd.append('qnumber', qNumber);
     }
     console.log(qNumber);
@@ -128,7 +128,7 @@ DEALINGS IN THE SOFTWARE.
 
     $.ajax({
       type: 'POST',
-      beforeSend: function(request) {
+      beforeSend: function (request) {
         request.setRequestHeader("token-id", localStorage.getItem('token-id'));
       },
       url: urlApi,

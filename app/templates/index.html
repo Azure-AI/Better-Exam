@@ -19,10 +19,10 @@
 <body id="myElement">
     <div class="gallery-boxes">
 
-        <div class="gal-box galcurr">
+        <div class="gal-box galcurr" qnum="0">
             <div class="gal-descrip"><b>Welcome Page!</b></div>
         </div>
-        
+
         {% for q in exam_json['exam']['questions'] %}
 
         <div id="gal{{q['number']}}" class="gal-box" qnum="{{ q['number'] }}">
@@ -30,11 +30,12 @@
                 <div class="q-num">
                     <p>Question number {{ q['number'] }}</p>
                 </div>
-    
-                <a rel="preload" id="ppbutton{{q['number']}}" class="ppbutton fa fa-play" data-src="{{ q['audio_link' ]}}"></a>
+
+                <a rel="preload" id="ppbutton{{q['number']}}" class="ppbutton fa fa-play"
+                    data-src="{{ q['audio_link' ]}}"></a>
             </div>
         </div>
-        
+
         {% endfor %}
 
     </div>
@@ -46,7 +47,7 @@
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
     <script src='https://hammerjs.github.io/dist/hammer.min.js'></script>
     <script src="/static/js/recorder/recorder.js"></script>
-	<script src="/static/js/recorder/main.js"></script>
+    <script src="/static/js/recorder/main.js"></script>
     <script src="/static/js/test-script.js"></script>
 
 </body>
