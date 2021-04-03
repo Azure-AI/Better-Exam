@@ -304,6 +304,23 @@ def speech_recognize_continuous_from_file(filename):
 
 # Terminate the exam and generate the pdf
 # return the pdf
+@bp.route('name', methods=["POST"])
+def set_name():
+    token = request.headers["token-id"]
+    file_name = request.form.get('fname')
+    f: FileStorage = request.files.get('data')
+    f.save(os.path.join(current_app.config['UPLOAD_FOLDER'], secure_filename(file_name)))
+    name = speech_recognize_continuous_from_file(os.path.join(current_app.config['UPLOAD_FOLDER'], file_name))
+    os.remove(os.path.join(current_app.config['UPLOAD_FOLDER'], file_name))
+    f = open('app/static/users/' + token + '/' + 'exam_json.json', "r+")
+    exam_json = json.load(f)
+    f.close()
+    exam_json["exam"]["name"]= name
+    f = open('app/static/users/' + token + '/' + 'exam_json.json', "w")
+    json.dump(exam_json, f)
+    f.close()
+    return "Name added", 200
+
 @bp.route('terminate', methods=["POST"])
 def terminate_exam():
     token = request.headers["token-id"]
