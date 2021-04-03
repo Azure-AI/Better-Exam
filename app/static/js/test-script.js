@@ -10,6 +10,9 @@ directionSound.onended = () => toggleRecording(myElement)
 const answerSubmit = document.createElement('audio')
 answerSubmit.setAttribute('src', '/static/asset/audio/ans-submit.wav')
 
+const nameSubmit = document.createElement('audio')
+nameSubmit.setAttribute('src', '/static/asset/audio/name-submit.wav')
+
 const examTerminate = document.createElement('audio')
 examTerminate.setAttribute('src', '/static/asset/audio/exam-terminate.wav')
 

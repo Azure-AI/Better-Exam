@@ -134,7 +134,7 @@ DEALINGS IN THE SOFTWARE.
       contentType: false
     }).done(_ => {
       if (qNumber == 0) {
-        // TODO
+        nameSubmit.play()
       } else {
         answerSubmit.play()
       }
