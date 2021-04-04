@@ -100,14 +100,14 @@ function initAudio() {
     // if (!navigator.requestAnimationFrame)
     //     navigator.requestAnimationFrame = navigator.webkitRequestAnimationFrame || navigator.mozRequestAnimationFrame;
 
-
     navigator.mediaDevices.getUserMedia({
         video: false,
         audio: true
     }).then(stream => {
-        window.localStream = stream; // A
-        window.localAudio.srcObject = stream; // B
-        window.localAudio.autoplay = true; // C
+        // window.localStream = stream; // A
+        // window.localAudio.srcObject = stream; // B
+        // window.localAudio.autoplay = true; // C
+        gotStream(stream)
     }).catch(err => {
         alert('Error getting audio');
         console.log("u got an error:" + err)
