@@ -4,23 +4,23 @@ var clicked_id;
 var audio_var = new Audio();
 
 const recordStart = document.createElement('audio')
-recordStart.setAttribute('src', '/static/asset/audio/rec-start.wav')
+recordStart.setAttribute('src', '/static/asset/audio/rec-start.mp3')
 
 recordStart.onended = () => {
     startRecording(myElement)
 }
 
 const recordFinish = document.createElement('audio')
-recordFinish.setAttribute('src', '/static/asset/audio/rec-finish.wav')
+recordFinish.setAttribute('src', '/static/asset/audio/rec-finish.mp3')
 
 const answerSubmit = document.createElement('audio')
-answerSubmit.setAttribute('src', '/static/asset/audio/ans-submit.wav')
+answerSubmit.setAttribute('src', '/static/asset/audio/ans-submit.mp3')
 
 const nameSubmit = document.createElement('audio')
-nameSubmit.setAttribute('src', '/static/asset/audio/name-submit.wav')
+nameSubmit.setAttribute('src', '/static/asset/audio/name-submit.mp3')
 
 const examTerminate = document.createElement('audio')
-examTerminate.setAttribute('src', '/static/asset/audio/exam-terminate.wav')
+examTerminate.setAttribute('src', '/static/asset/audio/exam-terminate.mp3')
 
 const audios = [recordStart, recordFinish, answerSubmit, nameSubmit, examTerminate]
 let audiosToBeLoaded = audios.length
