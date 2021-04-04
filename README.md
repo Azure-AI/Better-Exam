@@ -37,8 +37,9 @@ The platform works as follow:
 ### Server:
 
 We use Flask and Python for the server side of our platform. Using Flask, we wrote several APIs to let our client get and post information to the server. The main function of our server side was to execute the appropriate action in response to client requests. Our server is also where we communicate with Azure Cognitive services to generate the audio and text files. The details of how Azure services were used in our project are a follow:
-Azure Cognitive Service - Text-to-Speech: We used the Text-to-Speech service to send SSMLs containing each of the exam questions to Azure servers where these questions were converted into audio recordings. By using the neural voices and tinkering with the SSML, we created voice recordings really close to natural human talk. 
-Azure Cognitive Service - Speech-to-Text: We used a Speech-to-Text service to create text answers to each question. Students' answers, which were previously recorded, were sent to the service and the returned text was inserted into a JSON containing the exam questions.  In the end, a PDF file was generated using this JSON. We used the Continues Speech Detection function of the Speech-to-Text API so that we would not face any problem with long voice recordings.
+..* Azure Cognitive Service - Text-to-Speech: We used the Text-to-Speech service to send SSMLs containing each of the exam questions to Azure servers where these questions were converted into audio recordings. By using the neural voices and tinkering with the SSML, we created voice recordings really close to natural human talk. 
+..* Azure Cognitive Service - Speech-to-Text: We used a Speech-to-Text service to create text answers to each question. Students' answers, which were previously recorded, were sent to the service and the returned text was inserted into a JSON containing the exam questions.  In the end, a PDF file was generated using this JSON. We used the Continues Speech Detection function of the Speech-to-Text API so that we would not face any problem with long voice recordings.
+
 We also used Azure App Services to deploy a live version of our project on the internet. Azure App Services made the deployment process super easy, since we just had to give our project’s git repository to Azure App Service and everything else was done by Azure automatically. 
 
 
