@@ -61,57 +61,60 @@ const terminateExam = () => {
 }
 
 const goRight = () => {
-    if ($('.gal-box:visible').attr('islastpage') === 'true') {
+    if ($('.gal-box:visible').attr('islastpage') === 'true') return
+
+    if ($('.gal-box:visible').attr('isfinalizepage') === 'true') {
         console.log('Finalizing exam');
         terminateExam()
-    } else {
-        $('.gal-box.galcurr').each(function () {
-            if ($(".gal-box:visible").next().length != 0) {
-    
-                let audio = $('.gal-box.galcurr').next('.gal-box').find('.ppbutton')
-    
-                var datasrc = audio.attr('data-src');
-                clicked_id = audio.attr('id');
-                console.log(clicked_id);
-                audio_var.pause();
-    
-                $('.ppbutton').not(audio).each(function () {
-                    $(this).removeClass('fa-pause');
-                    $(this).addClass('fa-play');
-                });
-    
-                if (audio.hasClass('fa-play')) {
-                    console.log('play_click');
-                    audio_var.src = datasrc;
-                    audio.removeClass('fa-play');
-                    audio.addClass('fa-pause');
-                    console.log(audio_var);
-                    audio_var.play();
-                } else {
-                    console.log('pause_click');
-                    audio.removeClass('fa-pause');
-                    audio.addClass('fa-play');
-                    console.log(audio_var);
-                    audio_var.pause();
-                    //audio_var.src='';
-                    //audio_var.load();
-                    console.log(audio_var);
-                }
-    
-                console.log(audio.attr('id'));
-    
-                console.log('GO RIGHT');
-                $('.gal-box.galcurr').next('.gal-box').addClass('galcurr');
-                $(this).removeClass('galcurr');
-            } else {
-                $(".gal-box:first").addClass('galcurr');
-                $(".gal-box:last").removeClass('galcurr');
-            }
-        });   
     }
+    $('.gal-box.galcurr').each(function () {
+        if ($(".gal-box:visible").next().length != 0) {
+
+            let audio = $('.gal-box.galcurr').next('.gal-box').find('.ppbutton')
+
+            var datasrc = audio.attr('data-src');
+            clicked_id = audio.attr('id');
+            console.log(clicked_id);
+            audio_var.pause();
+
+            $('.ppbutton').not(audio).each(function () {
+                $(this).removeClass('fa-pause');
+                $(this).addClass('fa-play');
+            });
+
+            if (audio.hasClass('fa-play')) {
+                console.log('play_click');
+                audio_var.src = datasrc;
+                audio.removeClass('fa-play');
+                audio.addClass('fa-pause');
+                console.log(audio_var);
+                audio_var.play();
+            } else {
+                console.log('pause_click');
+                audio.removeClass('fa-pause');
+                audio.addClass('fa-play');
+                console.log(audio_var);
+                audio_var.pause();
+                //audio_var.src='';
+                //audio_var.load();
+                console.log(audio_var);
+            }
+
+            console.log(audio.attr('id'));
+
+            console.log('GO RIGHT');
+            $('.gal-box.galcurr').next('.gal-box').addClass('galcurr');
+            $(this).removeClass('galcurr');
+        } else {
+            $(".gal-box:first").addClass('galcurr');
+            $(".gal-box:last").removeClass('galcurr');
+        }
+    });
 }
 
 const goLeft = () => {
+    if ($('.gal-box:visible').attr('isfirstpage') === 'true') return
+
     console.log("left");
     $('.gal-box.galcurr').each(function () {
         if ($(".gal-box:visible").prev().length != 0) {
