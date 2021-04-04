@@ -22,6 +22,17 @@ nameSubmit.setAttribute('src', '/static/asset/audio/name-submit.wav')
 const examTerminate = document.createElement('audio')
 examTerminate.setAttribute('src', '/static/asset/audio/exam-terminate.wav')
 
+const audios = [recordStart, recordFinish, answerSubmit, nameSubmit, examTerminate]
+let audiosToBeLoaded = audios.length
+
+for (const audioFile of audios) {
+    audioFile.oncanplaythrough = () => {
+        if (--audiosToBeLoaded == 0) {
+            console.log('All loaded');
+        }
+    }
+}
+
 var mc = new Hammer(myElement);
 
 //enable all directions
