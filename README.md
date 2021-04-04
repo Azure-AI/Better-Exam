@@ -23,15 +23,15 @@ This project uses the Text-to-Speech and Speech-to-Text services from Azure Cogn
 Teachers can use the exam platform we created for them to write the exam questions, which include long-answer questions, short-answer questions and multiple choice questions, and generate a link for the exam. The students can then join the exam via the generated link.
 The students will first have to state their name for the exam and then they are greeted with instructions on how they can use the system. We use basic swipe and tap mechanics to make working with the platform an intuitive experience. 
 The platform works as follow:
-The teacher enters the questions into the system.
-The exam questions are converted into a JSON file which includes the information about the exam.
-Each question’s text is sent to the Azure Text-to-Speech service from our server and the returned WAV file is stored on the server under the audio files related to this specific exam.
-A link is generated for the particular exam which should be distributed among the students.
-The students enter the exam via the generated link, speak with the platform as instructed and state their name.
-The students are greeted with an optional tutorial on how to use the platform.
-Each question is on a separate page and students can travers between them by swiping left and right. On each page, first the question’s audio is played out. Then, the students can record their own answer to the question.
-The recorded voice is sent to our servers and is converted to the text by using the Azure Speech-to-Text service.
-At the end of the exam, all the generated for each student and the question texts are combined into one final PDF file that the teacher has access to.
+1. The teacher enters the questions into the system.
+2. The exam questions are converted into a JSON file which includes the information about the exam.
+3. Each question’s text is sent to the Azure Text-to-Speech service from our server and the returned WAV file is stored on the server under the audio files related to this specific exam.
+4. A link is generated for the particular exam which should be distributed among the students.
+5. The students enter the exam via the generated link, speak with the platform as instructed and state their name.
+6. The students are greeted with an optional tutorial on how to use the platform.
+7. Each question is on a separate page and students can travers between them by swiping left and right. On each page, first the question’s audio is played out. Then, the students can record their own answer to the question.
+8. The recorded voice is sent to our servers and is converted to the text by using the Azure Speech-to-Text service.
+9. At the end of the exam, all the generated for each student and the question texts are combined into one final PDF file that the teacher has access to.
 
 ## How we built it
 ### Server:
