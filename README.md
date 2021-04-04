@@ -33,7 +33,9 @@ The platform works as follow:
 8. The recorded voice is sent to our servers and is converted to the text by using the Azure Speech-to-Text service.
 9. At the end of the exam, all the generated for each student and the question texts are combined into one final PDF file that the teacher has access to.
 <br/>
+
 ## How we built it
+
 ### Server:
 
 We use Flask and Python for the server side of our platform. Using Flask, we wrote several APIs to let our client get and post information to the server. The main function of our server side was to execute the appropriate action in response to client requests. Our server is also where we communicate with Azure Cognitive services to generate the audio and text files. The details of how Azure services were used in our project are a follow:
