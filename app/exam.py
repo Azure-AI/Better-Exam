@@ -33,8 +33,8 @@ bp = Blueprint('exam', __name__, url_prefix='/exam')
 @bp.route('create', methods=["POST"])
 def create_exam():
     exam_json = request.json
-    exam_id = "DEMO"
-    # exam_id = secrets.token_urlsafe(5)
+    # exam_id = "DEMO"
+    exam_id = secrets.token_urlsafe(5)
     os.makedirs("app/static/exams/"+exam_id,exist_ok =True)
     os.makedirs("app/static/exams/"+exam_id+"/audio",exist_ok =True)
     f = open('app/static/exams/' + exam_id + '/' + 'exam_json.json', "w")
