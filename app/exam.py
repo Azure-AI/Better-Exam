@@ -244,7 +244,7 @@ def answer_question():
 
 def find_choice(answer_text: str):
     try:
-        return re.search(".*choice (.).*", answer_text.lower()).group(1).upper()
+        return re.search(".*choice (\w+).*", answer_text.lower()).group(1)
     except:
         return answer_text
 
