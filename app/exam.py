@@ -26,17 +26,15 @@ import mimetypes
 import smtplib
 
 from flask_expects_json import expects_json
-
 import re
-
-
 
 bp = Blueprint('exam', __name__, url_prefix='/exam')
 
 @bp.route('create', methods=["POST"])
 def create_exam():
     exam_json = request.json
-    exam_id = secrets.token_urlsafe(5)
+    exam_id = "DEMO"
+    # exam_id = secrets.token_urlsafe(5)
     os.makedirs("app/static/exams/"+exam_id,exist_ok =True)
     os.makedirs("app/static/exams/"+exam_id+"/audio",exist_ok =True)
     f = open('app/static/exams/' + exam_id + '/' + 'exam_json.json', "w")
@@ -56,7 +54,7 @@ def send_mail(exam_id, url, email):
     message['From'] = sender
     message['To'] = recipient
     message['Subject'] = "Better Exam - Exam Info"
-    body = "Hey there!\nThanks for using Better Exam.\nExam Link: {}".format(url)
+    body = "Hey there!\nThanks for using Better Exam.\nExam ID:{}\nExam Link: {}".format(exam_id, url)
     message.set_content(body)
     attachment_path = 'app/static/exams/' + exam_id + '/' + 'qr.png'
     mime_type, _ = mimetypes.guess_type(attachment_path)
@@ -78,10 +76,12 @@ def start_exam():
     f = open('app/static/exams/' + exam_id + '/' + 'exam_json.json', "r+")
     exam_json = json.load(f)
     f.close()
+    if request.args["email"]:
+        exam_json["exam"]["email"] = request.args["email"]
     with open('app/static/users/' + token + '/exam_json.json', 'w') as f:
         json.dump(exam_json, f)
     exam_json_processed = generate_question_list(exam_json, exam_id)
-    print("Token:{}\nExam:{}\n{}".format(token, exam_id, exam_json_processed))
+    # print("Token:{}\nExam:{}\n{}".format(token, exam_id, exam_json_processed))
     return render_template("exam.html", token=token, exam_id=exam_id, exam_json=exam_json_processed)
 
 # Initializing exam:

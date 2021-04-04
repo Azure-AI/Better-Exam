@@ -41,29 +41,38 @@
                 </div>
             </form>
             <button onclick="start_exam()" class="btn btn-primary" style="transform: scale(1.2)">Let's
-                    Start!
-                </button>
+                Start!
+            </button>
         </div>
     </div>
     <div class="row_container">
-        <a href="/exam/start?id=DEMO">
-            <div class="card">
-                <h1><i class="fa fa-file-text-o fa-3x"></i></h1>
-                <h2>Take a Demo Test!</h2>
-            </div>
-        </a>
+        <div class="card">
+            <h1><i class="fa fa-file-text-o fa-2x"></i></h1>
+            <h2>Take a Demo Test!</h2>
+            <form action="">
+                <div class="form-group">
+                    <input id="email" type="email" class="form-control" style="transform: scale(1.2)"
+                           placeholder="Your Email Here!"
+                           required>
+                </div>
+            </form>
+            <button onclick="start_demo()" class="btn btn-primary" style="transform: scale(1.2)">Demo
+            </button>
+        </div>
     </div>
 </div>
 </div>
 <script>
-    function reqListener() {
-        console.log(this.responseText);
-    }
-
     function start_exam() {
         let exam_id = document.getElementById("exam_id").value;
         if (exam_id) {
-            window.location = "/exam/start?id="+exam_id;
+            window.location = "/exam/start?id=" + exam_id;
+        }
+    }
+    function start_demo() {
+        let email = document.getElementById("email").value;
+        if (email) {
+            window.location = "/exam/start?id=DEMO&email=" + email;
         }
     }
 </script>
