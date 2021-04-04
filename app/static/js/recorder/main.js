@@ -45,25 +45,29 @@ function doneEncoding( blob ) {
     recIndex++;
 }
 
+const stopRecording = e => {
+    console.log('Recording stopped');
+    audioRecorder.stop();
+    e.classList.remove("recording");
+    audioRecorder.getBuffers( gotBuffers );
+    recordFinish.play()
+}
+
+const startRecording = e => {
+    if (!audioRecorder)
+    return;
+    console.log('Recording started');
+    e.classList.add("recording");
+    audioRecorder.clear();
+    audioRecorder.record();
+    audioContext.resume();
+}
+
 function toggleRecording( e ) {
     if (e.classList.contains("recording")) {
-        // stop recording
-        console.log('Recording stopped');
-        audioRecorder.stop();
-        e.classList.remove("recording");
-        audioRecorder.getBuffers( gotBuffers );
-        directionSound.setAttribute('src', '/static/asset/audio/rec-start.wav')
-
+        stopRecording(e)
     } else {
-        // start recording
-        if (!audioRecorder)
-            return;
-        console.log('Recording started');
-        e.classList.add("recording");
-        audioRecorder.clear();
-        audioRecorder.record();
-        audioContext.resume();
-        directionSound.setAttribute('src', '/static/asset/audio/rec-finish.wav')
+        recordStart.play()
     }
 }
 

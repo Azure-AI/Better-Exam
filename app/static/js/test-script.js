@@ -3,9 +3,15 @@ var myElement = document.getElementById('myElement');
 var clicked_id;
 var audio_var = new Audio();
 
-const directionSound = document.createElement('audio')
-directionSound.setAttribute('src', '/static/asset/audio/rec-start.wav')
-directionSound.onended = () => toggleRecording(myElement)
+const recordStart = document.createElement('audio')
+recordStart.setAttribute('src', '/static/asset/audio/rec-start.wav')
+
+recordStart.onended = () => {
+    startRecording(myElement)
+}
+
+const recordFinish = document.createElement('audio')
+recordFinish.setAttribute('src', '/static/asset/audio/rec-finish.wav')
 
 const answerSubmit = document.createElement('audio')
 answerSubmit.setAttribute('src', '/static/asset/audio/ans-submit.wav')
@@ -15,8 +21,6 @@ nameSubmit.setAttribute('src', '/static/asset/audio/name-submit.wav')
 
 const examTerminate = document.createElement('audio')
 examTerminate.setAttribute('src', '/static/asset/audio/exam-terminate.wav')
-
-let isOnLastPage = false
 
 var mc = new Hammer(myElement);
 
@@ -203,7 +207,7 @@ $(function () {
 
 mc.on("swipeleft", goRight);
 mc.on("swiperight", goLeft);
-mc.on("press", () => directionSound.play())
+mc.on("press", () => toggleRecording(myElement))
 // mc.on("doubletap", repeat);
 
 mc.on('doubletap', function (e) {
