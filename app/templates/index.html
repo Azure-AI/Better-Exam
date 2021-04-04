@@ -5,21 +5,67 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/asset/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/asset/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/asset/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/static/asset/favicon/site.webmanifest">
+    <link rel="mask-icon" href="/static/asset/favicon/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+
     <meta charset="UTF-8">
-    <title>test</title>
+    <title>Better Exam</title>
 </head>
 <body>
-<div class="container-fluid bg-primary main_container">
-    <div class="card">
-        <h1>Welcome to Better Exam!</h1>
-        <h2>Personal exam Assistant for Visually Impaired</h2>
-        <a href="https://betterexam.azurewebsites.net/teacher">Teachers' Page</a>
+<h1 id="welcome">Welcome to Better Exam!</h1>
+<div class="container-fluid main_container">
+    <div class="row_container">
+        <a href="/teacher">
+            <div class="card" style="min-height: 300px; max-height: 300px">
+                <h1><i class="fa fa-edit fa-3x"></i></h1>
+                <h2>Create an Exam</h2>
+            </div>
+        </a>
+        <div class="card" style="min-height: 300px; max-height: 300px">
+            <h1><i class="fa fa-rocket fa-2x"></i></h1>
+            <h2>Have a Code?</h2>
+            <form action="">
+                <div class="form-group">
+                    <input id="exam_id" type="text" class="form-control" style="transform: scale(1.2)"
+                           placeholder="Exam Code Here!"
+                           required>
+                </div>
+            </form>
+            <button onclick="start_exam()" class="btn btn-primary" style="transform: scale(1.2)">Let's
+                    Start!
+                </button>
+        </div>
+    </div>
+    <div class="row_container">
+        <a href="/exam/start?id=DEMO">
+            <div class="card">
+                <h1><i class="fa fa-file-text-o fa-3x"></i></h1>
+                <h2>Take a Demo Test!</h2>
+            </div>
+        </a>
     </div>
 </div>
 </div>
-</form>
+<script>
+    function reqListener() {
+        console.log(this.responseText);
+    }
+
+    function start_exam() {
+        let exam_id = document.getElementById("exam_id").value;
+        if (exam_id) {
+            window.location = "/exam/start?id="+exam_id;
+        }
+    }
+</script>
 </body>
 </html>
