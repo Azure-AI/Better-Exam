@@ -15,13 +15,13 @@ Better Exam is a service that makes it easier for students who are visually impa
 
 
 ## Motivation
-With the more attention that is being paid to accessibility for all people, we thought that the traditional format for exams could be enhanced so that the people with disabilities, specially the visually impaired, can have a better experience. 
-Many parts of the modern society and life is still not suitable for people with disabilities; education is one of them. Education is a vital part of modern life, but not everyone has an equal chance at it. Although there has been significant improvements in this regard in recent years, many gifted students don’t get the chance to realize their full potential owing to the lacking educational facilities in their area. This is the main reason we wanted to make a system that could be accessed and used by anyone. We didn't want to create a complex system that needed many instructions or special hardwares to function properly, which is why we came up with the idea for Better Exam.
+With the more attention that is being paid to accessibility for all people, we thought that the traditional format for exams could be enhanced so that the people with disabilities, specially the visually impaired, can have a better experience.<br/>
+Many parts of the modern society and life is still not suitable for people with disabilities; education is one of them. Education is a vital part of modern life, but not everyone has an equal chance at it. Although there has been significant improvements in this regard in recent years, many gifted students don’t get the chance to realize their full potential owing to the lacking educational facilities in their area. This is the main reason we wanted to make a system that could be accessed and used by anyone. We didn't want to create a complex system that needed many instructions or special hardwares to function properly, which is why we came up with the idea for **Better Exam**. <br/>
 Better Exam is an online web platform which lets the students take their exams with only the use of their voice and simple button press/screen touch. This application can be especially useful in times like now, when most students cannot attend their schools due to problems, such as COVID-19 pandemic, and the schools’ virtual learning systems are not prepared to handle them.
 ## What it does
 This project uses the Text-to-Speech and Speech-to-Text services from Azure Cognitive Services to both read the questions for the students and write their answers in a PDF file. 
 Teachers can use the exam platform we created for them to write the exam questions, which include long-answer questions, short-answer questions and multiple choice questions, and generate a link for the exam. The students can then join the exam via the generated link.
-The students will first have to state their name for the exam and then they are greeted with instructions on how they can use the system. We use basic swipe and tap mechanics to make working with the platform an intuitive experience. 
+The students will first have to state their name for the exam and then they are greeted with instructions on how they can use the system. We use basic swipe and tap mechanics to make working with the platform an intuitive experience. <br/>
 The platform works as follow:
 1. The teacher enters the questions into the system.
 2. The exam questions are converted into a JSON file which includes the information about the exam.
@@ -32,7 +32,7 @@ The platform works as follow:
 7. Each question is on a separate page and students can travers between them by swiping left and right. On each page, first the question’s audio is played out. Then, the students can record their own answer to the question.
 8. The recorded voice is sent to our servers and is converted to the text by using the Azure Speech-to-Text service.
 9. At the end of the exam, all the generated for each student and the question texts are combined into one final PDF file that the teacher has access to.
-
+<br/>
 ## How we built it
 ### Server:
 
@@ -48,14 +48,16 @@ We also used Azure App Services to deploy a live version of our project on the i
 We used HTML, CSS, Javascript, Jinja2 and Bootstrap to write the client side. On the client side, teachers can enter exam questions in specific forms. After writing all of the questions, a JSON is created containing all of these questions and is then sent over to the server for processing. Also, a link is generated for the exam and the teacher can share it with the students.
 Students connect to the exam using the shared link. What the students will be interacting with is a series of pages that each have their own specific audio recordings. These audio recordings are sent over to the client side from the server based on the page that the student is on. To interact with the pages, several simple gestures are defined that will be explained at the beginning of the exam using an audio recording. On each question page, first the audio recording is played, then students can use the defined gestures to record their answer, and finally the audio recording is submitted to the server side so that it can be converted into text.
 Our main focus on the client side was to make the interaction as intuitive as possible so that students don’t get confused with complex instructions and the risk of forgetting the instructions is minimized.
+<br/>
 ## Challenges we ran into:
-One of the main challenges we faced was deciding on how we wanted to obtain the exam questions. At first we planned on using the Azure Form Recognizer service to extract the question texts from exam papers but the variety of exam papers and the personal preferences in writing them made it so that we decided on using our own platform for writing the exam.
-One other challenge was designing the client side in a way that it can be both intuitive and simple to use while keeping the possibility of mistakes when using it to a minimum. We believe the current client is pretty good but there is always room for improvements, especially after getting feedback from users.
-The last challenge was using the Speech services. This was our first time working with these services and at the beginning we had some problem finding the proper API to use and how to actually make use of the services. But the well-written documentation for the APIs and sample codes helped us a lot in solving this challenge. 
-What we learned:
+One of the main challenges we faced was deciding on how we wanted to obtain the exam questions. At first we planned on using the Azure Form Recognizer service to extract the question texts from exam papers but the variety of exam papers and the personal preferences in writing them made it so that we decided on using our own platform for writing the exam.<br/>
+One other challenge was designing the client side in a way that it can be both intuitive and simple to use while keeping the possibility of mistakes when using it to a minimum. We believe the current client is pretty good but there is always room for improvements, especially after getting feedback from users.<br/>
+The last challenge was using the Speech services. This was our first time working with these services and at the beginning we had some problem finding the proper API to use and how to actually make use of the services. But the well-written documentation for the APIs and sample codes helped us a lot in solving this challenge. <br/>
+<br/>
+## What we learned:
 
 ## What's next for Better Exam:
-Right now we are only supporting the english language in the MVP of our project. However, with the variety of supported languages by Azure Speech services and Azure Translator, the usage of the Better Exam platform can be expanded greatly.
+Right now we are only supporting the english language in the MVP of our project. However, with the variety of supported languages by Azure Speech services and Azure Translator, the usage of the Better Exam platform can be expanded greatly.<br/>
 Also, with the advancement of Azure Computer Vision and Azure Form Recognizer, we might be able to use them effectively to extract the text the exam questions form papers besides our current teacher’s client.
 
 
