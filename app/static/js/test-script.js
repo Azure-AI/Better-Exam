@@ -202,12 +202,10 @@ const repeat = () => {
     });
 }
 
-function hi() {
-    // alert("hi")
-    goLeft()
-}
+
 
 function hello() {
+    // alert("hi")
     goRight()
 }
 
