@@ -76,7 +76,7 @@ def start_exam():
     f = open('app/static/exams/' + exam_id + '/' + 'exam_json.json', "r+")
     exam_json = json.load(f)
     f.close()
-    if request.args["email"]:
+    if 'email' in request.args.keys():
         exam_json["exam"]["email"] = request.args["email"]
     with open('app/static/users/' + token + '/exam_json.json', 'w') as f:
         json.dump(exam_json, f)
