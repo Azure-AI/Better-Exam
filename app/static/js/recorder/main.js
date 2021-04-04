@@ -32,16 +32,16 @@ var recIndex = 0;
 */
 
 function saveAudio() {
-    audioRecorder.exportWAV( doneEncoding );
+    audioRecorder.exportWAV(doneEncoding);
 }
 
 
-function gotBuffers( buffers ) {
-    audioRecorder.exportWAV( doneEncoding );
+function gotBuffers(buffers) {
+    audioRecorder.exportWAV(doneEncoding);
 }
 
-function doneEncoding( blob ) {
-    Recorder.sendRecording( blob, "myRecording" + ((recIndex<10)?"0":"") + recIndex + ".wav" );
+function doneEncoding(blob) {
+    Recorder.sendRecording(blob, "myRecording" + ((recIndex < 10) ? "0" : "") + recIndex + ".wav");
     recIndex++;
 }
 
@@ -49,13 +49,13 @@ const stopRecording = e => {
     console.log('Recording stopped');
     audioRecorder.stop();
     e.classList.remove("recording");
-    audioRecorder.getBuffers( gotBuffers );
+    audioRecorder.getBuffers(gotBuffers);
     recordFinish.play()
 }
 
 const startRecording = e => {
     if (!audioRecorder)
-    return;
+        return;
     console.log('Recording started');
     e.classList.add("recording");
     audioRecorder.clear();
@@ -63,7 +63,7 @@ const startRecording = e => {
     audioContext.resume();
 }
 
-function toggleRecording( e ) {
+function toggleRecording(e) {
     if (e.classList.contains("recording")) {
         stopRecording(e)
     } else {
@@ -82,39 +82,50 @@ function gotStream(stream) {
 
     analyserNode = audioContext.createAnalyser();
     analyserNode.fftSize = 2048;
-    inputPoint.connect( analyserNode );
+    inputPoint.connect(analyserNode);
 
-    audioRecorder = new Recorder( inputPoint );
+    audioRecorder = new Recorder(inputPoint);
 
     zeroGain = audioContext.createGain();
     zeroGain.gain.value = 0.0;
-    inputPoint.connect( zeroGain );
-    zeroGain.connect( audioContext.destination );
+    inputPoint.connect(zeroGain);
+    zeroGain.connect(audioContext.destination);
 }
 
 function initAudio() {
-        if (!navigator.getUserMedia)
-            navigator.getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
-        if (!navigator.cancelAnimationFrame)
-            navigator.cancelAnimationFrame = navigator.webkitCancelAnimationFrame || navigator.mozCancelAnimationFrame;
-        if (!navigator.requestAnimationFrame)
-            navigator.requestAnimationFrame = navigator.webkitRequestAnimationFrame || navigator.mozRequestAnimationFrame;
+    // if (!navigator.getUserMedia)
+    //     navigator.getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+    // if (!navigator.cancelAnimationFrame)
+    //     navigator.cancelAnimationFrame = navigator.webkitCancelAnimationFrame || navigator.mozCancelAnimationFrame;
+    // if (!navigator.requestAnimationFrame)
+    //     navigator.requestAnimationFrame = navigator.webkitRequestAnimationFrame || navigator.mozRequestAnimationFrame;
 
-    navigator.getUserMedia(
-        {
-            "audio": {
-                "mandatory": {
-                    "googEchoCancellation": "false",
-                    "googAutoGainControl": "false",
-                    "googNoiseSuppression": "false",
-                    "googHighpassFilter": "false"
-                },
-                "optional": []
-            },
-        }, gotStream, function(e) {
-            alert('Error getting audio');
-            console.log(e);
-        });
+
+    navigator.mediaDevices.getUserMedia({
+        video: false,
+        audio: true
+    }).then(stream => {
+        window.localStream = stream; // A
+        window.localAudio.srcObject = stream; // B
+        window.localAudio.autoplay = true; // C
+    }).catch(err => {
+        alert('Error getting audio');
+        console.log("u got an error:" + err)
+    });
+    // navigator.getUserMedia({
+    //     "audio": {
+    //         "mandatory": {
+    //             "googEchoCancellation": "false",
+    //             "googAutoGainControl": "false",
+    //             "googNoiseSuppression": "false",
+    //             "googHighpassFilter": "false"
+    //         },
+    //         "optional": []
+    //     },
+    // }, gotStream, function (e) {
+    //     alert('Error getting audio');
+    //     console.log(e);
+    // });
 }
 
-window.addEventListener('load', initAudio );
+window.addEventListener('load', initAudio);

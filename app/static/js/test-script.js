@@ -208,7 +208,6 @@ function hi() {
 }
 
 function hello() {
-    // alert('Hello world! in func hello');
     goRight()
 }
 
