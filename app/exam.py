@@ -342,7 +342,7 @@ def json_to_pdf(exam_json, token):
                 doc_paragraphs.append(Paragraph(question["choices"][i]["letter"]+". "+question["choices"][i]["text"], styles["Normal"]))
         doc_paragraphs.append(Spacer(1, 1))
         doc_paragraphs.append(Paragraph("ANSWER: "+question["answer"], styles["Normal"]))
-        doc_paragraphs.append(Spacer(1, 8))
+        doc_paragraphs.append(Spacer(1, 10))
     report.build(doc_paragraphs)
     return ""
 def email_answers(token, exam_json):
