@@ -56,11 +56,11 @@ function submit_exam() {
                 "type": "MC",
                 "text": question.childNodes[3].value,
                 "choices": [
-                    {"letter": "A", "text": question.childNodes[7].value}, {
-                        "letter": "B",
+                    {"letter": "1", "text": question.childNodes[7].value}, {
+                        "letter": "2",
                         "text": question.childNodes[11].value
-                    }, {"letter": "C", "text": question.childNodes[15].value}, {
-                        "letter": "D",
+                    }, {"letter": "3", "text": question.childNodes[15].value}, {
+                        "letter": "4",
                         "text": question.childNodes[19].value
                     }
                 ],
