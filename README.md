@@ -12,3 +12,7 @@ Better Exam is a service that makes it easier for students who are visually impa
   - https://github.com/Azure-Samples/cognitive-services-speech-sdk/issues/345
 - Flask:
   - https://flask.palletsprojects.com/en/1.0.x/tutorial/
+
+
+# H2
+Motivation
