@@ -68,9 +68,7 @@ function toggleRecording(e) {
     if (e.classList.contains("recording")) {
         stopRecording(e)
     } else {
-        console.log(recordStart)
         recordStart.play()
-        startRecording(myElement)
     }
 }
 

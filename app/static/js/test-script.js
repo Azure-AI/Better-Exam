@@ -6,9 +6,9 @@ var audio_var = new Audio();
 const recordStart = document.createElement('audio')
 recordStart.setAttribute('src', '/static/asset/audio/rec-start.mp3')
 
-// recordStart.onended = () => {
-//     startRecording(myElement)
-// }
+recordStart.onended = () => {
+    startRecording(myElement)
+}
 
 const recordFinish = document.createElement('audio')
 recordFinish.setAttribute('src', '/static/asset/audio/rec-finish.mp3')
