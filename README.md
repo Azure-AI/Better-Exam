@@ -35,7 +35,7 @@ At a high level, this system can be broken into three major sections:
 - Server
 - Client
 
-![architecture](/app/static/asset/image/arch.jpeg)
+![architecture](/app/static/asset/image/arch.jpg)
 ### 🖥 Server:
 
 We use Flask and Python for the server side of our platform. Using Flask, we wrote several APIs to let our client get and post information to the server. The main function of our server side was to execute the appropriate action in response to client requests. Our server is also where we communicate with Azure Cognitive services to generate the audio and text files. The details of how Azure services were used in our project are a follow:
