@@ -58,9 +58,6 @@ One of the main challenges we faced was deciding on how we wanted to obtain the 
 
 One other challenge was designing the client-side in a way that can be both intuitive and simple to use while keeping the possibility of mistakes when using it to a minimum. We believe the current client is pretty good but there is always room for improvements, especially after getting feedback from users.<br/>
 
-There was also an issue with the cellphone's client that the platform and how well in understood the gestures was highly dependant on the internet's speed and general quality. This issue is still not solved and sometimes the performance is amazing while other times actions are not registered. 
-
-
 The last challenge was using the Speech services. This was our first time working with these services and at the beginning, we had some problem finding the proper API to use and how to actually make use of the services. But the well-written documentation for the APIs and sample codes helped us a lot in solving this challenge. <br/>
 
 
