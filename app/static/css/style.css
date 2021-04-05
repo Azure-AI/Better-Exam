@@ -5,9 +5,8 @@
  
 
 
-h1 {
-    color: #C26356;
-    font-size: 60px;
+#welcome {
+    font-size: 50px;
     /* font-family: Menlo, Monaco, fixed-width; */
     font-family: 'M PLUS', sans-serif; 
     color: white;
@@ -61,6 +60,7 @@ body {
       transition: 0.3s;
   
   }
+
   .card:hover{
       transform: scale(1.01);
       background-color: #212121;
