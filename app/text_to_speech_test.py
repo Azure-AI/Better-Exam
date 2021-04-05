@@ -3,7 +3,7 @@ from azure.cognitiveservices.speech.audio import AudioOutputConfig
 import azure.cognitiveservices.speech as speechsdk
 
 
-message ="<break time=\"2000ms\"/>, Hello, I am BEAM, your personal exam assistant. I will be guiding you through your exam. Please first tell me your name by long tapping on the screen."
+message ="<break time=\"2000ms\"/>, Hello, I am BEAM, your personal exam assistant. I will be guiding you through your exam. Please first tell me your name by long tapping on the screen. When you finished saying your name long tap on thescreen again to submit it"
 message2 = "Before starting your exam, I need to let you know about some basic instructions of exam, <break time=\"200ms\"/> "\
 "If you already know the instructions you can swipe left to start your exam <break time=\"2000ms\"/>,"\
 "Exam pages have one question each and by swiping left and right, you can jump between pages. <break time=\"500ms\"/>"\
@@ -25,7 +25,7 @@ ssml_string_voice_end = "</voice>"
 ssml_string_speak_end = "</speak>"
 
 
-ssml_message = ssml_string_speak + ssml_string_voice +ssml_string_prosody+message2 +ssml_string_prosody_end + ssml_string_voice_end + ssml_string_speak_end
+ssml_message = ssml_string_speak + ssml_string_voice +ssml_string_prosody+message +ssml_string_prosody_end + ssml_string_voice_end + ssml_string_speak_end
 
 
 print(ssml_message)
@@ -33,5 +33,5 @@ speech_config = SpeechConfig(subscription="2a32fa5f2c504b34bd6ba61d496fed6f",reg
 synthesizer = SpeechSynthesizer(speech_config=speech_config, audio_config=None)
 result = synthesizer.speak_ssml_async(ssml_message).get()
 stream = AudioDataStream(result)
-stream.save_to_wav_file_async("instruction2.mp3")
+stream.save_to_wav_file_async("instruction1.mp3")
 print("File saved")
