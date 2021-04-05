@@ -72,7 +72,7 @@ One other challenge was designing the client-side in a way that can be both intu
 The last challenge was using the Speech services. This was our first time working with these services and at the beginning, we had some problem finding the proper API to use and how to actually make use of the services. But the well-written documentation for the APIs and sample codes helped us a lot in solving this challenge. <br/>
 
 
-## What we learned
+## 👓 What we learned
 
 During this project, we learned to work with Azure Cognitive Services, specially Text-to-Speech and Speech-to-Text service, which was an amazing experience. We didn't fully test the limits of these services, but from what we could see, working with them was super easy and the results were outstanding. We also honed our programming skills and knowledge during the course of the development which were all valuable experiences. 
 
