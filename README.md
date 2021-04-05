@@ -63,10 +63,15 @@ The last challenge was using the Speech services. This was our first time workin
 
 ## What we learned
 
+During this project, we learned to work with Azure Cognitive Services, specially Text-to-Speech and Speech-to-Text service, which was an amazing experience. We didn't fully test the limits of these services, but from what we could see, working with them was super easy and the results were outstanding. We also honed our programming skills and knowledge during the course of the development which were all valuable experiences. 
+
 ## 🎯 What's next for Better Exam
 Right now we are only supporting English in the MVP of our project. However, with the variety of supported languages by Azure Speech services and Azure Translator, the usage of the Better Exam platform can be expanded greatly.<br/>
 
 Also, with the advancement of Azure Computer Vision and Azure Form Recognizer, we might be able to use them effectively to extract the text the exam questions from papers besides our current teacher’s client.
+
+Better Exam is currently optimized only for desktop browsers. We plan to bring it to mobile phones in the near future
+
 
 ## 📚 Attribution
 - Azure:
