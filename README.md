@@ -24,7 +24,7 @@ In details:
 - The students are greeted with an optional tutorial on how to use the platform.
 - Each question is on a separate page and students can travers between them by swiping left and right. On each page, first the question’s audio is played out. Then, the students can record their own answer to the question.
 - The recorded voice is sent to our servers and is converted to the text by using the Azure Speech-to-Text service.
-- At the end of the exam, all the generated for each student and the question texts are combined into one final PDF file that the teacher has access to.
+- At the end of the exam, all the answers and questions are combined into one final PDF file and emailed to the teacher.
 
 ## 🔧 How we built it
 ### 🖼 The Big Picture:
