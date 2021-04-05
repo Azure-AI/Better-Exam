@@ -54,7 +54,7 @@ Students connect to the exam using the shared link. What the students will be in
 Our main focus on the client side was to make the interaction as intuitive as possible so that students don’t get confused with complex instructions and the risk of forgetting the instructions is minimized.
 <br/>
 
-## 🧗 Challenges we ran into:
+## 🧗 Challenges we ran into
 One of the main challenges we faced was deciding on how we wanted to obtain the exam questions. At first we planned on using the Azure Form Recognizer service to extract the question texts from exam papers but the variety of exam papers and the personal preferences in writing them made it so that we decided on using our own platform for writing the exam.<br/>
 
 One other challenge was designing the client side in a way that it can be both intuitive and simple to use while keeping the possibility of mistakes when using it to a minimum. We believe the current client is pretty good but there is always room for improvements, especially after getting feedback from users.<br/>
@@ -62,9 +62,9 @@ One other challenge was designing the client side in a way that it can be both i
 The last challenge was using the Speech services. This was our first time working with these services and at the beginning we had some problem finding the proper API to use and how to actually make use of the services. But the well-written documentation for the APIs and sample codes helped us a lot in solving this challenge. <br/>
 
 
-## What we learned:
+## What we learned
 
-## 🎯 What's next for Better Exam:
+## 🎯 What's next for Better Exam
 Right now we are only supporting the english language in the MVP of our project. However, with the variety of supported languages by Azure Speech services and Azure Translator, the usage of the Better Exam platform can be expanded greatly.<br/>
 
 Also, with the advancement of Azure Computer Vision and Azure Form Recognizer, we might be able to use them effectively to extract the text the exam questions form papers besides our current teacher’s client.
