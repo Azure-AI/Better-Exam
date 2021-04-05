@@ -1,15 +1,4 @@
-<p align="center"><a href="https://betterexam.herokuapp.com" target="_blank" rel="noopener noreferrer"><img width="150" src="/app/static/asset/favicon/android-chrome-192x192.png" alt="Better Exam Logo"></a></p>
-
-<p align="center">
-  <a href="https://www.python.org/"><img src="https://forthebadge.com/images/badges/made-with-python.svg" alt="python"></a>
-</p>
-
-<p align="center">
-  <a href="https://betterexam.herokuapp.com" target="_blank"><img src="https://img.shields.io/website-up-down-green-red/http/betterexam.herokuapp.com.svg" alt="website status"></a>
-  <a href="LICENSE"><img src="https://img.shields.io/github/license/Azure-AI/Azure-AI-Hackaton.svg" alt="license"></a>
-</p>
-
-
+![logo](/app/static/asset/favicon/android-chrome-192x192.png)
 # ⭐️ Better Exam
 Better Exam is a service that makes it easier for students who are visually impaired to take an exam. The core functionality of this service is built on Azure [Cognitive Speech Services](https://azure.microsoft.com/en-us/services/cognitive-services/speech-services/). 
 
@@ -52,7 +41,7 @@ We use Flask and Python for the server-side of our platform. Using Flask, we wro
 * **Azure Cognitive Service - Text-to-Speech:** We used the Text-to-Speech service to send SSMLs containing each of the exam questions to Azure servers where these questions were converted into audio recordings. By using the neural voices and tinkering with the SSML, we created voice recordings really close to natural human talk. 
 * **Azure Cognitive Service - Speech-to-Text:** We used a Speech-to-Text service to create text answers to each question. Students' answers, which were previously recorded, were sent to the service and the returned text was inserted into a JSON containing the exam questions.  In the end, a PDF file was generated using this JSON. We used the Continues Speech Detection function of the Speech-to-Text API so that we would not face any problem with long voice recordings.
 <br/>
-We also used Azure App Services to deploy a live version of our project on the internet. Azure App Services made the deployment process super easy since we just had to give our project’s git repository to Azure App Service and everything else was done by Azure automatically. 
+We also used Azure App Services and Heroku to deploy a live version of our project on the internet. Azure App Services made the deployment process super easy since we just had to give our project’s git repository to Azure App Service and everything else was done by Azure automatically. 
 
 
 ### 📱 Client:
@@ -68,6 +57,9 @@ Our main focus on the client-side was to make the interaction as intuitive as po
 One of the main challenges we faced was deciding on how we wanted to obtain the exam questions. At first, we planned on using the Azure Form Recognizer service to extract the question texts from exam papers but the variety of exam papers and the personal preferences in writing them made it so that we decided on using our own platform for writing the exam.<br/>
 
 One other challenge was designing the client-side in a way that can be both intuitive and simple to use while keeping the possibility of mistakes when using it to a minimum. We believe the current client is pretty good but there is always room for improvements, especially after getting feedback from users.<br/>
+
+There was also an issue with the cellphone's client that the platform and how well in understood the gestures was highly dependant on the internet's speed and general quality. This issue is still not solved and sometimes the performance is amazing while other times actions are not registered. 
+
 
 The last challenge was using the Speech services. This was our first time working with these services and at the beginning, we had some problem finding the proper API to use and how to actually make use of the services. But the well-written documentation for the APIs and sample codes helped us a lot in solving this challenge. <br/>
 
