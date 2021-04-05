@@ -1,6 +1,6 @@
 ![logo](/app/static/asset/favicon/android-chrome-192x192.png)
 # Better Exam
-Better Exam is a service that makes it easier for students who are visually impaired to take an exam. The core functionality of this service is built on Azure Cognitive Services. 
+Better Exam is a service that makes it easier for students who are visually impaired to take an exam. The core functionality of this service is built on Azure [Cognitive Speech Services](https://azure.microsoft.com/en-us/services/cognitive-services/speech-services/). 
 
 ## Motivation
 With the more attention that is being paid to accessibility for all people, we thought that the traditional format for exams could be enhanced so that the people with disabilities, specially the visually impaired, can have a better experience.<br/>
@@ -24,8 +24,6 @@ The platform works as follow:
 7. Each question is on a separate page and students can travers between them by swiping left and right. On each page, first the question’s audio is played out. Then, the students can record their own answer to the question.
 8. The recorded voice is sent to our servers and is converted to the text by using the Azure Speech-to-Text service.
 9. At the end of the exam, all the generated for each student and the question texts are combined into one final PDF file that the teacher has access to.
-<br/>
-
 
 ## How we built it
 
