@@ -1,17 +1,18 @@
 ![logo](/app/static/asset/favicon/android-chrome-192x192.png)
-# Better Exam
+# ⭐️ Better Exam
 Better Exam is a service that makes it easier for students who are visually impaired to take an exam. The core functionality of this service is built on Azure [Cognitive Speech Services](https://azure.microsoft.com/en-us/services/cognitive-services/speech-services/). 
 
+
 ## 💡 Motivation
-With the more attention that is being paid to accessibility for all people, we thought that the traditional format for exams could be enhanced so that the people with disabilities, specially the visually impaired, can have a better experience.<br/>
+With the more attention that is being paid to accessibility for all people, we thought that the traditional format for exams could be enhanced so that the people with disabilities, specially the visually impaired, can have a better experience.
 
-Many parts of the modern society and life is still not suitable for people with disabilities; education is one of them. Education is a vital part of modern life, but not everyone has an equal chance at it. Although there has been significant improvements in this regard in recent years, many gifted students don’t get the chance to realize their full potential owing to the lacking educational facilities in their area. This is the main reason we wanted to make a system that could be accessed and used by anyone. We didn't want to create a complex system that needed many instructions or special hardwares to function properly, which is why we came up with the idea for **Better Exam**. <br/>
+Many parts of the modern society and life is still not suitable for people with disabilities; education is one of them. Education is a vital part of modern life, but not everyone has an equal chance at it. Although there has been significant improvements in this regard in recent years, many gifted students don’t get the chance to realize their full potential owing to the lacking educational facilities in their area. That's why we came up with the idea of **Better Exam**.
 
-Better Exam is an online web platform which lets the students take their exams with only the use of their voice and simple button press/screen touch. This application can be especially useful in times like now, when most students cannot attend their schools due to problems, such as COVID-19 pandemic, and the schools’ virtual learning systems are not prepared to handle them.
+**Better Exam** is an online web platform (soon with a Mobile Application) which lets the students take their exams by only using their **voice** and **intuitive touch screen gestures**. This application can be especially useful in times like now, when most students cannot attend their schools due to problems, such as COVID-19 pandemic, and the schools’ virtual learning systems are not prepared to handle them.
 
 ## 🚀 What it does
-This project uses the Text-to-Speech and Speech-to-Text services from Azure Cognitive Services to both read the questions for the students and write their answers in a PDF file. 
-Teachers can use the exam platform we created for them to write the exam questions, which include long-answer questions, short-answer questions and multiple choice questions, and generate a link for the exam. The students can then join the exam via the generated link. <br/>
+This project uses **the Text-to-Speech** and **Speech-to-Text** services from Azure Cognitive Services to both *read the questions* for the students and *write their answers* in a PDF file. 
+Teachers can use the exam platform we created for them to design and publish exams. Our service supports long-answer, short-answer, and multiple choice questions right now, but more will be added in the future. At last, the system generates a link and a QR code for the exam to make publishing an exam easier for both in-person and remote conditions. The students can then access the exam at home via the generated link or at school by simply scanning the QR with the help of their teacher. <br/>
 
 The students will first have to state their name for the exam and then they are greeted with instructions on how they can use the system. We use basic swipe and tap mechanics to make working with the platform an intuitive experience.
 The platform works as follow:
