@@ -64,6 +64,7 @@ const startRecording = e => {
 }
 
 function toggleRecording(e) {
+    console.log("Hold detected!");
     if (e.classList.contains("recording")) {
         stopRecording(e)
     } else {
