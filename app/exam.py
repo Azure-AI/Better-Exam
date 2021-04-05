@@ -25,8 +25,13 @@ from email.message import EmailMessage
 import mimetypes
 import smtplib
 
+import os
+
 from flask_expects_json import expects_json
 import re
+
+ENV_VARS = os.environ
+print(ENV_VARS)
 
 bp = Blueprint('exam', __name__, url_prefix='/exam')
 
@@ -49,7 +54,7 @@ def create_exam():
 
 def send_mail(exam_id, url, email):
     message = EmailMessage()
-    sender = "better.exam.info@gmail.com"
+    sender = ENV_VARS.get('SENDER_EMAIL')
     recipient = email
     message['From'] = sender
     message['To'] = recipient
@@ -62,7 +67,7 @@ def send_mail(exam_id, url, email):
     with open(attachment_path, 'rb') as ap:
         message.add_attachment(ap.read(),maintype = mime_type,subtype = mime_subtype,filename = os.path.basename(attachment_path))
     mail_server = smtplib.SMTP_SSL('smtp.gmail.com')
-    mail_server.login(sender, 'B3tt3rExam')
+    mail_server.login(sender, ENV_VARS.get('SENDER_EMAIL_PASS'))
     mail_server.send_message(message)
     mail_server.quit()
     return ""
@@ -152,7 +157,7 @@ def es_question_xml(question,exam_id):
 
 
     print(ssml_message)
-    speech_config = SpeechConfig(subscription="2a32fa5f2c504b34bd6ba61d496fed6f",region="westeurope")
+    speech_config = SpeechConfig(subscription=ENV_VARS.get('AZURE_SUB_KEY'),region=ENV_VARS.get('AZURE_REGION'))
     synthesizer = SpeechSynthesizer(speech_config=speech_config, audio_config=None)
     result = synthesizer.speak_ssml_async(ssml_message).get()
     stream = AudioDataStream(result)
@@ -162,7 +167,7 @@ def es_question_xml(question,exam_id):
 
 def mc_question_xml(question,exam_id):
 
-    speech_config = SpeechConfig(subscription="2a32fa5f2c504b34bd6ba61d496fed6f",region="westeurope")
+    speech_config = SpeechConfig(subscription=ENV_VARS.get('AZURE_SUB_KEY'),region=ENV_VARS.get('AZURE_REGION'))
     synthesizer = SpeechSynthesizer(speech_config=speech_config, audio_config=None)
 
     # Temp solution - might change
@@ -251,7 +256,7 @@ def find_choice(answer_text: str):
 def speech_recognize_continuous_from_file(filename):
     """performs continuous speech recognition with input from an audio file"""
     # <SpeechContinuousRecognitionWithFile>
-    speech_config = speechsdk.SpeechConfig(subscription="2a32fa5f2c504b34bd6ba61d496fed6f", region="westeurope")
+    speech_config = speechsdk.SpeechConfig(subscription=ENV_VARS.get('AZURE_SUB_KEY'), region=ENV_VARS.get('AZURE_REGION'))
     audio_config = speechsdk.audio.AudioConfig(filename=filename)
     speech_recognizer = speechsdk.SpeechRecognizer(speech_config=speech_config, audio_config=audio_config)
 
