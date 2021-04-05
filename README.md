@@ -15,7 +15,7 @@ Many parts of the modern society and life is still not suitable for people with 
 - Students can access exams via special **links** or **QR codes** which their teachers would provide. This way, teachers can **publish an exam in a flash**.
 - Teachers can use the **exam design tool** we created to design exams. Our service supports long-answer, short-answer, and multiple choice questions right now, but more will be added in the future. At last, the system generates a link and a QR code for the exam to make publishing an exam easier for both **in-person and remote conditions**.
 
-The platform works as follow:
+In details:
 - The teacher enters the questions into the system.
 - The exam questions are converted into a JSON file which includes the information about the exam.
 - Each question’s text is sent to the Azure Text-to-Speech service from our server and the returned WAV file is stored on the server under the audio files related to this specific exam.
