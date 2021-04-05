@@ -64,6 +64,10 @@ def create_app():
     def audio():
         return render_template('audio.html')
 
+    @app.route('/arman', methods=['GET'])
+    def audio():
+        return render_template('arman.html')
+
     
     return app
 
