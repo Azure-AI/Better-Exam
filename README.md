@@ -1,18 +1,6 @@
+![logo](/app/static/asset/favicon/android-chrome-192x192.png)
 # Better Exam
 Better Exam is a service that makes it easier for students who are visually impaired to take an exam. The core functionality of this service is built on Azure Cognitive Services. 
-
-## Architecture
-
-## Design
-
-## Attribution
-- Azure:
-  - https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/get-started-speech-to-text?tabs=windowsinstall&pivots=programming-language-python#continuous-recognition
-  - https://github.com/Azure-Samples/cognitive-services-speech-sdk/blob/master/samples/python/console/speech_sample.py
-  - https://github.com/Azure-Samples/cognitive-services-speech-sdk/issues/345
-- Flask:
-  - https://flask.palletsprojects.com/en/1.0.x/tutorial/
-
 
 ## Motivation
 With the more attention that is being paid to accessibility for all people, we thought that the traditional format for exams could be enhanced so that the people with disabilities, specially the visually impaired, can have a better experience.<br/>
@@ -73,5 +61,13 @@ The last challenge was using the Speech services. This was our first time workin
 Right now we are only supporting the english language in the MVP of our project. However, with the variety of supported languages by Azure Speech services and Azure Translator, the usage of the Better Exam platform can be expanded greatly.<br/>
 
 Also, with the advancement of Azure Computer Vision and Azure Form Recognizer, we might be able to use them effectively to extract the text the exam questions form papers besides our current teacher’s client.
+
+## Attribution
+- Azure:
+  - https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/get-started-speech-to-text?tabs=windowsinstall&pivots=programming-language-python#continuous-recognition
+  - https://github.com/Azure-Samples/cognitive-services-speech-sdk/blob/master/samples/python/console/speech_sample.py
+  - https://github.com/Azure-Samples/cognitive-services-speech-sdk/issues/345
+- Flask:
+  - https://flask.palletsprojects.com/en/1.0.x/tutorial/
 
 
