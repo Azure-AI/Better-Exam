@@ -11,8 +11,9 @@ Many parts of the modern society and life is still not suitable for people with 
 **Better Exam** is an online web platform (soon with a Mobile Application) which lets the students take their exams by only using their **voice** and **intuitive touch screen gestures**. This application can be especially useful in times like now, when most students cannot attend their schools due to problems, such as COVID-19 pandemic, and the schools’ virtual learning systems are not prepared to handle them.
 
 ## 🚀 What it does
-This project uses **the Text-to-Speech** and **Speech-to-Text** services from Azure Cognitive Services to both *read the questions* for the students and *write their answers* in a PDF file. 
-Teachers can use the exam platform we created for them to design and publish exams. Our service supports long-answer, short-answer, and multiple choice questions right now, but more will be added in the future. At last, the system generates a link and a QR code for the exam to make publishing an exam easier for both in-person and remote conditions. The students can then access the exam at home via the generated link or at school by simply scanning the QR with the help of their teacher. <br/>
+- **Better Exam** uses the **Text-to-Speech** and **Speech-to-Text** services from Azure Cognitive Services to both ***read the questions*** for the students and ***write their answers*** in a PDF file. 
+- Students can access exams via special **links** or **QR codes** which their teachers would provide. This way, teachers can **publish an exam in a flash**.
+- Teachers can use the **exam design tool** we created to design exams. Our service supports long-answer, short-answer, and multiple choice questions right now, but more will be added in the future. At last, the system generates a link and a QR code for the exam to make publishing an exam easier for both **in-person and remote conditions**.
 
 The students will first have to state their name for the exam and then they are greeted with instructions on how they can use the system. We use basic swipe and tap mechanics to make working with the platform an intuitive experience.
 The platform works as follow:
