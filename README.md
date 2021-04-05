@@ -64,7 +64,7 @@ The last challenge was using the Speech services. This was our first time workin
 ## What we learned
 
 ## 🎯 What's next for Better Exam
-Right now we are only supporting the english language in the MVP of our project. However, with the variety of supported languages by Azure Speech services and Azure Translator, the usage of the Better Exam platform can be expanded greatly.<br/>
+Right now we are only supporting English in the MVP of our project. However, with the variety of supported languages by Azure Speech services and Azure Translator, the usage of the Better Exam platform can be expanded greatly.<br/>
 
 Also, with the advancement of Azure Computer Vision and Azure Form Recognizer, we might be able to use them effectively to extract the text the exam questions form papers besides our current teacher’s client.
 
