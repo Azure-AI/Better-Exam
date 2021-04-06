@@ -16,6 +16,8 @@
 Better Exam is a service that makes it easier for students who are visually impaired to take an exam. The core functionality of this service is built on Azure [Cognitive Speech Services](https://azure.microsoft.com/en-us/services/cognitive-services/speech-services/). 
 
 Check out our demo video:
+
+
 [![Demo](http://img.youtube.com/vi/9JhEJ3t6EK8/0.jpg)](http://www.youtube.com/watch?v=9JhEJ3t6EK8 "Demo")
 
 ## 💡 Motivation
