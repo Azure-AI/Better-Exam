@@ -50,7 +50,7 @@ def create_app():
 
     @app.route('/test', methods=['GET'])
     def test():
-        return render_template('test.html')
+        return 'Server is Working'
 
     @app.route('/', methods=['GET'])
     def index():
