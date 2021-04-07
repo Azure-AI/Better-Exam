@@ -7,7 +7,7 @@
 <p align="center">
   <a href="https://www.python.org/downloads/"><img src="https://img.shields.io/badge/python-3.8+-blue.svg" alt="python version"></a>
   <a href="https://betterexam.herokuapp.com" target="_blank"><img src="https://img.shields.io/website-up-down-green-red/http/betterexam.herokuapp.com.svg" alt="website status"></a>
-  <a href="https://github.com/Azure-AI/Azure-AI-Hackaton/actions/workflows/main_betterexam.yml"><img src="https://github.com/Azure-AI/Azure-AI-Hackaton/actions/workflows/main_betterexam.yml/badge.svg" alt="license"></a>
+  <a href="https://github.com/Azure-AI/Azure-AI-Hackaton/actions/workflows/main.yml"><img src="https://github.com/Azure-AI/Azure-AI-Hackaton/actions/workflows/main.yml/badge.svg" alt="license"></a>
   <a href="https://visitor-badge.glitch.me/badge?page_id=Azure-AI.Azure-AI-Hackaton"><img src="https://visitor-badge.glitch.me/badge?page_id=Azure-AI.Azure-AI-Hackaton" alt="license"></a>
   <a href="LICENSE"><img src="https://img.shields.io/github/license/Azure-AI/Azure-AI-Hackaton.svg" alt="license"></a>
 </p>
